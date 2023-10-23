@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Magnifier from '../../assets/magnifier.svg?react';
+import Magnifier from '../../assets/images/magnifier.svg?react';
 
 const StyledSearchBar = styled.form`
   position: relative;
