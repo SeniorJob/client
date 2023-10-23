@@ -1,6 +1,7 @@
 import tw from 'tailwind-styled-components';
 import styled from 'styled-components';
 import { SearchBar } from './SearchBar';
+import { NavMenu } from './NavMenu';
 
 const StyledHeader = styled.header`
   display: flex;
@@ -25,7 +26,7 @@ export const Header = () => {
     <StyledHeader>
       <Logo>매우멋진로고</Logo>
       <SearchBar />
-      <div>nav 메뉴</div>
+      <NavMenu />
       <div>회원 기능</div>
     </StyledHeader>
   );
