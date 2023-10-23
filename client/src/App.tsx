@@ -1,9 +1,11 @@
-import "./App.css";
+import './App.css';
+import { Header } from './components/Header';
 
 function App() {
   return (
     <>
-      <div>초기 구성</div>
+      <Header />
+      메인페이지
     </>
   );
 }
