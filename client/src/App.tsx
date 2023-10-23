@@ -1,9 +1,10 @@
 import "./App.css";
+import TabContainer from "./components/openClass/TabContainer";
 
 function App() {
   return (
     <>
-      <div>초기 구성</div>
+      <TabContainer />
     </>
   );
 }
