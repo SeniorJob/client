@@ -16,7 +16,6 @@ const StyledHeader = styled.header`
 `;
 
 const Logo = tw.div`
-  w-10
   items-center
   text-center
 `;
@@ -24,7 +23,7 @@ const Logo = tw.div`
 export const Header = () => {
   return (
     <StyledHeader>
-      <Logo>로고</Logo>
+      <Logo>매우멋진로고</Logo>
       <SearchBar />
       <div>nav 메뉴</div>
       <div>회원 기능</div>
