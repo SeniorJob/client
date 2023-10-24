@@ -14,6 +14,11 @@ const SearchBarInput = styled.input`
   padding: 7.8px 9.1px 7.8px 40px;
   background-color: rgba(217, 217, 217, 0.6);
   border-radius: 1rem;
+  &:focus-within {
+    outline: none;
+    box-shadow: 0 0 5px 2px #1dc078;
+    transition: 0.3s all ease;
+  }
 `;
 
 const Icon = styled.div`
