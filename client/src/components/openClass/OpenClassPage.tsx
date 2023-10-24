@@ -2,7 +2,7 @@ import tw from 'tailwind-styled-components';
 import TabContainer from './TabContainer';
 
 const Container = tw.div`
-    max-w-lg
+    max-w-2xl
 `;
 
 const OpenClassPage = () => {
