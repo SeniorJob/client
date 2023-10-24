@@ -2,20 +2,25 @@ import tw from 'tailwind-styled-components';
 
 const Container = tw.div`
     flex-col
-
     p-6
+    pb-2
+
+    border-b-2
+    border-black
 `;
 
 const Title = tw.div`
     font-bold
+    text-2xl
 `;
 
 const Tabs = tw.div`
     flex
     gap-4
     justify-center
-
     p-4
+    text-gray-500
+    font-bold
 `;
 
 const Tab = tw.div`
@@ -31,6 +36,7 @@ const Tab = tw.div`
 
    hover:bg-signature
    hover:font-bold
+   hover:text-black
 `;
 
 const TabContainer = () => {
