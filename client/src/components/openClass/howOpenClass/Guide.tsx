@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import styled from 'styled-components';
 import tw from 'tailwind-styled-components';
 
 const Container = tw.div`
@@ -15,6 +16,27 @@ const InfomationBox = tw.div`
     bg-white
 `;
 
+// 임시 텍스트 박스
+const TemporaryBox = styled.div`
+  width: 300px;
+  height: 300px;
+  border: 1px solid red;
+  margin: 0 20px;
+`;
+
+const OpenButton = tw.button`
+    flex
+    m-auto
+
+    bg-purple-400
+    hover:bg-purple-700
+    text-white
+    font-bold
+    py-2
+    px-4
+    rounded
+`;
+
 interface GuideProps {
   activeTab: number;
 }
@@ -27,9 +49,18 @@ const Guide: FC<GuideProps> = ({ activeTab }) => {
   ];
 
   return (
-    <Container>
-      <InfomationBox>{ContentArray[activeTab]}</InfomationBox>
-    </Container>
+    <>
+      <Container>
+        <InfomationBox>{ContentArray[activeTab]}</InfomationBox>
+        <div className="my-4">{'예시)'}</div>
+        <div className="flex justify-center">
+          <TemporaryBox />
+          <TemporaryBox />
+        </div>
+      </Container>
+
+      <OpenButton>강좌개설하기</OpenButton>
+    </>
   );
 };
 
