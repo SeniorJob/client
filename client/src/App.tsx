@@ -1,14 +1,13 @@
 import './App.css';
 import { Header } from './components/header/Header';
-import TabContainer from './components/openClass/TabContainer';
+import OpenClassPage from './components/openClass/OpenClassPage';
 
 function App() {
   return (
-    <>
+    <div className="App">
       <Header />
-      메인페이지
-      <TabContainer />
-    </>
+      <OpenClassPage />
+    </div>
   );
 }
 
