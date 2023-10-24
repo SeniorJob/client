@@ -2,7 +2,11 @@ import tw from 'tailwind-styled-components';
 import TabContainer from './TabContainer';
 
 const Container = tw.div`
-    max-w-2xl
+// 임시
+    max-w-4xl 
+    
+    justify-center
+    m-auto
 `;
 
 const OpenClassPage = () => {
