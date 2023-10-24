@@ -10,12 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/styled": "^11.11.0",
     "@types/styled-components": "^5.1.29",
     "eslint-config-prettier": "^9.0.0",
     "prettier": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-components": "^6.1.0",
+    "twin.macro": "^3.4.0",
     "zustand": "^4.4.4"
   },
   "devDependencies": {
