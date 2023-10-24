@@ -1,19 +1,20 @@
 import styled from 'styled-components';
-import { StyledMenu } from '../../assets/styles/MenuStyle';
+import { StyledUserMenu } from '../../assets/styles/MenuStyle';
 
 const MenuList = styled.div`
   display: flex;
+  gap: 0.8rem;
 `;
 
 export const UserMenu = () => {
   return (
     <MenuList>
-      <StyledMenu>
+      <StyledUserMenu>
         <a href="#">로그인</a>
-      </StyledMenu>
-      <StyledMenu>
+      </StyledUserMenu>
+      <StyledUserMenu>
         <a href="#">회원가입</a>
-      </StyledMenu>
+      </StyledUserMenu>
     </MenuList>
   );
 };
