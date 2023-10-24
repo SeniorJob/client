@@ -5,6 +5,7 @@ export const StyledMenu = styled.div`
   padding: 0.5rem 1rem;
   border-radius: 1.5rem;
   &:hover {
-    background-color: rgba(217, 217, 217, 0.6);
+    color: var(--primaryColor);
   }
+  color: #4a4a4a;
 `;
