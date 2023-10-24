@@ -1,4 +1,5 @@
 import tw from 'tailwind-styled-components';
+import { FC } from 'react';
 
 const Container = tw.div`
     flex-col
@@ -23,6 +24,10 @@ const Tabs = tw.div`
     font-bold
 `;
 
+interface TabContainerProps {
+  setActiveTab: (index: number) => void;
+}
+
 const Tab = tw.div`
     border-solid
     border-1
@@ -39,16 +44,16 @@ const Tab = tw.div`
    hover:text-black
 `;
 
-const TabContainer = () => {
+const TabContainer: FC<TabContainerProps> = ({ setActiveTab }) => {
   return (
     <>
       <Container>
         <Title>{'OOO'}님의 강좌개설</Title>
 
         <Tabs>
-          <Tab>기본정보입력</Tab>
-          <Tab>강좌상세내용</Tab>
-          <Tab>개설정보확인</Tab>
+          <Tab onClick={() => setActiveTab(0)}>기본정보입력</Tab>
+          <Tab onClick={() => setActiveTab(1)}>강좌상세내용</Tab>
+          <Tab onClick={() => setActiveTab(2)}>개설정보확인</Tab>
         </Tabs>
       </Container>
     </>
