@@ -10,13 +10,17 @@ const Container = tw.div`
 `;
 
 const InfomationBox = tw.div`
+    flex
+    items-center
     p-4
     border-2
+    h-28
+    text-xl
 
     bg-white
 `;
 
-// 임시 텍스트 박스
+// 예시 이미지가 들어갈 박스
 const TemporaryBox = styled.div`
   width: 300px;
   height: 300px;
