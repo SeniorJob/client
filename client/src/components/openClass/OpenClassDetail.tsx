@@ -42,12 +42,10 @@ const OpenClassDetail = () => {
             </select>
           </form>
         </SelectArea>
-        {/* TODO: 추후 추가 */}
         <SelectArea>
           <SubTitle>강좌 대표 이미지</SubTitle>
           <ImageUploader />
         </SelectArea>
-
         <SelectArea>
           <SubTitle>강좌 제목</SubTitle>
           <OneLineTextBox
@@ -68,6 +66,7 @@ const OpenClassDetail = () => {
         </SelectArea>
         <SelectArea>
           <SubTitle>학습 대상</SubTitle>
+          <OneLineTextBox placeholder="예) 음식을 좋아하는 누구나!" />
         </SelectArea>
         <SelectArea>
           <SubTitle>강좌 날짜 선택</SubTitle>
