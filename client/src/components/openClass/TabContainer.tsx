@@ -34,6 +34,8 @@ const Tab = tw.div`
     rounded-xl
     cursor-pointer
 
+    text-2xl
+
     px-4
     py-1
 
