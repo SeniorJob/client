@@ -16,7 +16,6 @@ const Login = () => {
 
 export default Login;
 
-//전역 스타일
 const LoginLayout = tw.div`
     flex
     items-center
