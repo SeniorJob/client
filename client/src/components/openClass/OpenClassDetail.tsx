@@ -1,5 +1,5 @@
 import tw from 'tailwind-styled-components';
-import DragDrop from '../../utils/DragDrop';
+import ImageUploader from '../../utils/ImageUploader';
 
 const Container = tw.div`
     m-4
@@ -45,7 +45,7 @@ const OpenClassDetail = () => {
         {/* TODO: 추후 추가 */}
         <SelectArea>
           <SubTitle>강좌 대표 이미지</SubTitle>
-          <DragDrop />
+          <ImageUploader />
         </SelectArea>
 
         <SelectArea>
