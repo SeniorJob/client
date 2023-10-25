@@ -1,4 +1,5 @@
 import tw from 'tailwind-styled-components';
+import DragDrop from '../../utils/DragDrop';
 
 const Container = tw.div`
     m-4
@@ -15,10 +16,14 @@ const SelectArea = tw.div`
     mb-8
 `;
 
-const OneLineTextBox = tw.textarea`
+const TextBox = tw.textarea`
     ml-4
     p-2
     w-3/4
+    h-48
+`;
+
+const OneLineTextBox = tw(TextBox)`
     resize-none
     h-10
 `;
@@ -40,6 +45,7 @@ const OpenClassDetail = () => {
         {/* TODO: 추후 추가 */}
         <SelectArea>
           <SubTitle>강좌 대표 이미지</SubTitle>
+          <DragDrop />
         </SelectArea>
 
         <SelectArea>
@@ -58,6 +64,7 @@ const OpenClassDetail = () => {
         </SelectArea>
         <SelectArea>
           <SubTitle>강좌 소개</SubTitle>
+          <TextBox placeholder="강좌의 목적 또는 학습목표의 내용을 간략하게 기재해 다른 사람들에게 소개해보세요!"></TextBox>
         </SelectArea>
         <SelectArea>
           <SubTitle>학습 대상</SubTitle>
