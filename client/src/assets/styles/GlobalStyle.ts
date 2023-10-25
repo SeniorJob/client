@@ -11,4 +11,11 @@ export const GlobalStyle = styled.createGlobalStyle`
   :root {
     --primaryColor: #1dc078;
   }
+
+  .container {
+    max-width: 1200px;
+    position: relative;
+    margin: 0 auto;
+    flex-grow: 1;
+  }
 `;
