@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import Pause from '../../assets/images/pause.svg?react';
+import Play from '../../assets/images/play.svg?react';
 // Swiper 관련 모듈 Import
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination, Controller } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -17,21 +20,75 @@ const CustomSlide = styled(SwiperSlide)`
 
 const CustomSwiper = styled(Swiper)`
   --swiper-theme-color: var(--primaryColor);
+  .swiper-pagination {
+    position: relative;
+    top: 0;
+  }
+`;
+
+const PageController = styled.div`
+  display: flex;
+  align-items: center;
+  height: 64px;
+  border-bottom: 1px solid #e9ecef;
+`;
+
+const ControllerBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  width: 135px;
+  height: 36px;
+  font-size: 0.875rem;
+  color: #fff;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
+const PrevButton = styled.button`
+  &::before {
+    content: '〈';
+  }
+`;
+const NextButton = styled.button`
+  &::before {
+    content: '〉';
+  }
 `;
 
 export const ClassRecommend = () => {
+  const [controlledSwiper, setControlledSwiper] = useState<SwiperClass | null>(
+    null,
+  );
+
+  // 일시정지 버튼
+  const toggleAutoplay = () => {
+    if (controlledSwiper) {
+      controlledSwiper.autoplay.running
+        ? controlledSwiper.autoplay.stop()
+        : controlledSwiper.autoplay.start();
+    }
+    console.log(controlledSwiper?.autoplay);
+  };
+
   return (
     <section>
       <CustomSwiper
+        onSwiper={swiper => {
+          setControlledSwiper(swiper);
+          console.log(swiper);
+        }}
         autoplay={{
           delay: 3500,
-          disableOnInteraction: false,
+          disableOnInteraction: true,
         }}
         loop={true}
-        pagination={{
-          type: 'fraction',
-        }}
-        navigation={true}
+        // pagination={{
+        //   type: 'fraction',
+        // }}
+        // navigation={true}
         modules={[Autoplay, Navigation, Pagination, Controller]}
         className="mySwiper"
       >
@@ -41,8 +98,19 @@ export const ClassRecommend = () => {
         <CustomSlide>Slide 4</CustomSlide>
         <CustomSlide>Slide 5</CustomSlide>
         <CustomSlide>Slide 6</CustomSlide>
+        <PageController>
+          <div className="container">
+            <ControllerBox>
+              {/* prev, next, pause 버튼 */}
+              <PrevButton onClick={() => controlledSwiper?.slidePrev()} />
+              <button onClick={toggleAutoplay}>
+                {controlledSwiper?.autoplay.running ? <Pause /> : <Play />}
+              </button>
+              <NextButton onClick={() => controlledSwiper?.slideNext()} />
+            </ControllerBox>
+          </div>
+        </PageController>
       </CustomSwiper>
-      <div></div>
     </section>
   );
 };
