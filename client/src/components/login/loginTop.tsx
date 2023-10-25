@@ -1,4 +1,4 @@
-import tw from 'tailwind-styled-components';
+import styled from 'styled-components';
 
 const LoginTop = () => {
   return (
@@ -10,13 +10,13 @@ const LoginTop = () => {
 
 export default LoginTop;
 
-const LoginTopDivBox = tw.div`
+const LoginTopDivBox = styled.div`
   :last-child {
     text-align: right;
   }
   margin-bottom: 5%;
 `;
-const LoginTopText = tw.h1`
+const LoginTopText = styled.h1`
   font-size: 30px;
   font-weight: 900;
 `;

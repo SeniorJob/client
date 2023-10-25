@@ -1,4 +1,4 @@
-import tw from 'tailwind-styled-components';
+import styled from 'styled-components';
 import IdIcon from '../../assets/images/IdIcon.svg';
 import PwIcon from '../../assets/images/PwIcon.svg';
 const LoginDown = () => {
@@ -39,14 +39,14 @@ const LoginDown = () => {
 
 export default LoginDown;
 
-const LoginDivBox = tw.div``;
+const LoginDivBox = styled.div``;
 
-const LoginDownDivBox = tw.div`
+const LoginDownDivBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
 `;
-const LoginLeftDivBox = tw.div`
+const LoginLeftDivBox = styled.div`
   width: 300px;
   height: 200px;
   margin: 0px 0px 0px 0px;
@@ -56,30 +56,30 @@ const LoginLeftDivBox = tw.div`
     font-size: 40px;
   }
 `;
-const LoginLeftText = tw.h2`
+const LoginLeftText = styled.h2`
   font-size: 24px;
 `;
-const LoginRightDivBox = tw.div`
+const LoginRightDivBox = styled.div`
   width: 300px;
   padding: 0px 10px 10px 10px;
 `;
 
-const AccountHelpBox = tw.div`
+const AccountHelpBox = styled.div`
   display: flex;
   justify-content: space-around;
   font-size: 16px;
   font-weight: 700;
 `;
 
-const LoginBtnBox = tw.button`
+const LoginBtnBox = styled.button`
   margin-top: 10px;
 `;
 
-const SignBtnBox = tw.button`
+const SignBtnBox = styled.button`
   margin-top: 10px;
 `;
 
-const LoginMainBtn = tw.div`
+const LoginMainBtn = styled.div`
   text-align: center;
   padding: 10px;
   height: 50px;
@@ -97,9 +97,9 @@ const LoginMainBtn = tw.div`
   }
 `;
 
-const LoginInPutForm = tw.div``;
+const LoginInPutForm = styled.div``;
 
-const InputWrapper = tw.div`
+const InputWrapper = styled.div`
   display: flex;
   width: 100%;
   height: 50px;
@@ -112,7 +112,7 @@ const InputWrapper = tw.div`
   }
 `;
 
-const Input = tw.input`
+const Input = styled.input`
   width: 80%;
   padding: 10px;
 
