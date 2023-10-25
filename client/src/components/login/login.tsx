@@ -27,7 +27,8 @@ const LoginLayout= styled.div`
 const LoginContents= styled.div`
         width: 970px;
         height: 600px;
-        border: 1px solid black;
+        border: 1px solid gray;
         margin-top: 10%;
         padding: 5% 5% 5% 5%; 
+        box-shadow: 1px 1px 10px;
 `;
