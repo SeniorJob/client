@@ -1,5 +1,5 @@
 import tw from 'tailwind-styled-components';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
 const Container = tw.div`
     flex-col
@@ -25,6 +25,7 @@ const Tabs = tw.div`
 `;
 
 interface TabContainerProps {
+  activeTab: number;
   setActiveTab: (index: number) => void;
 }
 
@@ -51,12 +52,9 @@ const Tab = tw.div<TabProps>`
    hover:text-black
 `;
 
-const TabContainer: FC<TabContainerProps> = ({ setActiveTab }) => {
-  const [activeTab, setActiveTabLocal] = useState(0);
-
+const TabContainer: FC<TabContainerProps> = ({ setActiveTab, activeTab }) => {
   const handleTabClick = (index: number) => {
     setActiveTab(index);
-    setActiveTabLocal(index);
   };
 
   return (
