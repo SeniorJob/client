@@ -1,5 +1,5 @@
+import styled from 'styled-components';
 import tw from 'tailwind-styled-components';
-
 import LoginTop from './loginTop';
 import LoginDown from './loginDown';
 
@@ -21,7 +21,7 @@ const LoginLayout = tw.div`
     items-center
     justify-center
 `;
-const LoginContents = tw.div`
+const LoginContents = styled.div`
   width: 970px;
   height: 600px;
   border: 1px solid gray;
