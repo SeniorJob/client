@@ -13,11 +13,18 @@ const Container = tw.div`
 
 const OpenClassPage = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const [showGuide, setShowGuide] = useState(true);
+
+  const handleOpenClick = () => {
+    setShowGuide(false);
+  };
 
   return (
     <Container>
       <TabContainer setActiveTab={setActiveTab} />
-      <Guide activeTab={activeTab} />
+      {showGuide && (
+        <Guide activeTab={activeTab} onOpenClick={handleOpenClick} />
+      )}
     </Container>
   );
 };

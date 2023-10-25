@@ -45,7 +45,10 @@ interface GuideProps {
   activeTab: number;
 }
 
-const Guide: FC<GuideProps> = ({ activeTab }) => {
+const Guide: FC<GuideProps & { onOpenClick: () => void }> = ({
+  activeTab,
+  onOpenClick,
+}) => {
   const ContentArray = [
     '기본정보입력란에서는 개설하시고자 하는 강좌의 제목, 카테고리(외식, 운전, 서비스, 사무직), 강좌목적, 날짜선택 등 강좌의 핵심 정보를 입력해주세요!',
     '강좌상세내용 입력란에서는 주차별 수업 목표와 내용(학습계획, 강의주제, 사용교재) 등을 상세히 작성할 수 있고 필요한 만큼 주차별 입력란을 만들어 사용할 수 있고 마지막으로 강의가 종료될때 수강생의 수료기준을 설정할수 있습니다.',
@@ -63,7 +66,7 @@ const Guide: FC<GuideProps> = ({ activeTab }) => {
         </div>
       </Container>
 
-      <OpenButton>강좌개설하기</OpenButton>
+      <OpenButton onClick={onOpenClick}>강좌개설하기</OpenButton>
     </>
   );
 };
