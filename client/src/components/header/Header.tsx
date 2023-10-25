@@ -9,6 +9,7 @@ const StyledHeader = styled.header`
   position: sticky;
   background: white;
   top: 0;
+  z-index: 100;
   align-items: stretch;
   gap: 1.3rem;
   width: 100%;
@@ -23,6 +24,7 @@ const HeaderBox = styled.div`
   flex-grow: 1;
   display: block;
   margin: 0 auto;
+  padding: 0 32px;
   max-width: 1200px;
 `;
 
