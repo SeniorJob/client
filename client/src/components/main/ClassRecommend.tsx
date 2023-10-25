@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Pause from '../../assets/images/pause.svg?react';
 import Play from '../../assets/images/play.svg?react';
 // Swiper 관련 모듈 Import
-import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide, SwiperClass } from 'swiper/react';
 import { Autoplay, Navigation, Pagination, Controller } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -59,27 +59,27 @@ const NextButton = styled.button`
 `;
 
 export const ClassRecommend = () => {
-  const [controlledSwiper, setControlledSwiper] = useState<SwiperClass | null>(
-    null,
-  );
+  const [swiper, setSwiper] = useState<SwiperClass | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   // 일시정지 버튼
   const toggleAutoplay = () => {
-    if (controlledSwiper) {
-      controlledSwiper.autoplay.running
-        ? controlledSwiper.autoplay.stop()
-        : controlledSwiper.autoplay.start();
+    if (swiper) {
+      if (swiper.autoplay.running) {
+        swiper.autoplay.stop();
+        setIsPlaying(false);
+      } else {
+        swiper.autoplay.start();
+        setIsPlaying(true);
+      }
     }
-    console.log(controlledSwiper?.autoplay);
+    console.log(swiper?.autoplay);
   };
 
   return (
     <section>
       <CustomSwiper
-        onSwiper={swiper => {
-          setControlledSwiper(swiper);
-          console.log(swiper);
-        }}
+        onSwiper={setSwiper}
         autoplay={{
           delay: 3500,
           disableOnInteraction: true,
@@ -102,11 +102,11 @@ export const ClassRecommend = () => {
           <div className="container">
             <ControllerBox>
               {/* prev, next, pause 버튼 */}
-              <PrevButton onClick={() => controlledSwiper?.slidePrev()} />
+              <PrevButton onClick={() => swiper?.slidePrev()} />
               <button onClick={toggleAutoplay}>
-                {controlledSwiper?.autoplay.running ? <Pause /> : <Play />}
+                {isPlaying ? <Pause /> : <Play />}
               </button>
-              <NextButton onClick={() => controlledSwiper?.slideNext()} />
+              <NextButton onClick={() => swiper?.slideNext()} />
             </ControllerBox>
           </div>
         </PageController>
