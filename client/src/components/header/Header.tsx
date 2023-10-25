@@ -7,6 +7,8 @@ import { UserMenu } from './UserMenu';
 const StyledHeader = styled.header`
   display: flex;
   position: sticky;
+  background: white;
+  top: 0;
   align-items: stretch;
   gap: 1.3rem;
   width: 100%;
