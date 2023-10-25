@@ -1,3 +1,14 @@
+import styled from 'styled-components';
+import { ClassRecommend } from '../../components/main/ClassRecommend';
+
+const Main = styled.main`
+  min-height: 800px;
+`;
+
 export const MainPage = () => {
-  return <div>메인 페이지</div>;
+  return (
+    <Main>
+      <ClassRecommend />
+    </Main>
+  );
 };
