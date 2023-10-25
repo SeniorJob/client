@@ -2,9 +2,20 @@ import styled from 'styled-components';
 
 export const StyledMenu = styled.div`
   cursor: pointer;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.9rem;
   border-radius: 1.5rem;
   &:hover {
-    background-color: rgba(217, 217, 217, 0.6);
+    color: var(--primaryColor);
+  }
+  color: #4a4a4a;
+`;
+
+export const StyledUserMenu = styled(StyledMenu)`
+  color: var(--primaryColor);
+  border: 2px solid var(--primaryColor);
+  transition: 0.3s all ease;
+  &:hover {
+    background-color: var(--primaryColor);
+    color: white;
   }
 `;
