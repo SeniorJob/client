@@ -13,6 +13,7 @@ const Container = tw.div`
 
 const SubTitle = tw.div`
     text-lg
+    font-bold
 `;
 
 const SelectArea = tw.div`

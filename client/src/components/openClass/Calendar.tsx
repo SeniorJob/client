@@ -22,7 +22,7 @@ const Calendar: React.FC = () => {
   };
 
   return (
-    <div className="ml-4">
+    <div>
       <label>모집 마감 날짜: </label>
       <input
         className="w-44"
