@@ -1,13 +1,18 @@
 import tw from 'tailwind-styled-components';
 import styled from 'styled-components';
 import SingUpFrom from './SignUpFrom';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 const SignUp = () => {
   return (
     <SignLayout>
       <SignDivBox>
         <SignTopText>회원가입</SignTopText>
-        <SignTopSlider>슬라이드 텍스트</SignTopSlider>
+        <Swiper slidesPerView={1}>
+          <SwiperSlide>슬라이드 1</SwiperSlide>
+          <SwiperSlide>슬라이드 2</SwiperSlide>
+          <SwiperSlide>슬라이드 3</SwiperSlide>
+        </Swiper>
         <SingUpFrom />
       </SignDivBox>
     </SignLayout>
@@ -28,9 +33,5 @@ const SignDivBox = tw.div`
 const SignTopText = styled.h1`
   font-size: 24px;
   margin-bottom: 5px;
-  text-align: center;
-`;
-const SignTopSlider = styled.div`
-  margin-bottom: 30px;
   text-align: center;
 `;

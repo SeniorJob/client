@@ -20,10 +20,9 @@ const LoginLayout = tw.div`
     justify-center
 `;
 const LoginContents = styled.div`
-  width: 350px;
+  width: 450px;
   height: 500px;
   margin-top: 7%;
   padding: 5% 5% 5% 5%;
-  box-shadow: 1px 1px 10px;
   border-radius: 8px;
 `;

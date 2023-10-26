@@ -54,4 +54,6 @@ const SignUpBtn = tw.div`
   p-[12px]
   
   cursor-pointer
+  bg-[#1DC078]
+  text-[#fff]
 `;
