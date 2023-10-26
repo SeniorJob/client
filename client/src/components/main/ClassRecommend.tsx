@@ -61,6 +61,22 @@ const PaginationWrapper = styled.div`
   overflow: hidden;
   height: 36px;
   width: 100%;
+  .left-gradient {
+    position: absolute;
+    width: 15px;
+    height: 100%;
+    left: 0;
+    background-image: linear-gradient(90deg, #fff, hsla(0, 0%, 100%, 0));
+    z-index: 71;
+  }
+  .right-gradient {
+    position: absolute;
+    width: 15px;
+    height: 100%;
+    right: 0;
+    background-image: linear-gradient(90deg, hsla(0, 0%, 100%, 0), #fff);
+    z-index: 71;
+  }
 `;
 
 const CustomBullets = styled.div<{ curIndex: number }>`
@@ -71,7 +87,7 @@ const CustomBullets = styled.div<{ curIndex: number }>`
   display: flex;
   z-index: 71;
   height: 36px;
-  transform: translateX(${props => (props.curIndex >= 5 ? '-12%' : '0')});
+  transform: ${props => (props.curIndex >= 6 ? `translate(-249px, 0px)` : '0')};
   transition: transform 0.3s ease; /* 움직임을 부드럽게 만들기 위한 트랜지션 */
 
   .swiper-pagination-bullet {
@@ -199,6 +215,8 @@ export const ClassRecommend = () => {
                 className="swiper-pagination"
                 curIndex={curIndex}
               />
+              {curIndex >= 6 ? <div className="left-gradient" /> : null}
+              {curIndex <= 7 ? <div className="right-gradient" /> : null}
             </PaginationWrapper>
           </div>
         </PageController>
