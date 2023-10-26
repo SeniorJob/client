@@ -98,8 +98,8 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
           <SubTitle>계좌번호</SubTitle>
           <OneLineTextBox placeholder="ex) '-' 없이 입력해주세요" />
         </SelectArea>
+        <OpenButton onClick={() => nextTab()}>다음으로</OpenButton>
       </Container>
-      <OpenButton onClick={() => nextTab()}>다음으로</OpenButton>
     </>
   );
 };
