@@ -1,9 +1,9 @@
 import tw from 'tailwind-styled-components';
-import ImageUploader from '../../utils/ImageUploader';
+import ImageUploader from '../../../utils/ImageUploader';
 import 'react-calendar/dist/Calendar.css';
-import MadeCalendar from './Calendar';
-import { OneLineTextBox, TextBox } from '../../utils/TextBox';
-import LectureCountInput from './CountInput';
+import MadeCalendar from '../../../utils/Calendar';
+import { OneLineTextBox, TextBox } from '../../../utils/TextBox';
+import LectureCountInput from '../../../utils/CountInput';
 
 const Container = tw.div`
     m-4
@@ -21,7 +21,7 @@ const SelectArea = tw.div`
     mb-8
 `;
 
-const OpenClassDetail = () => {
+const EnterClassInfomation = () => {
   return (
     <>
       <Container>
@@ -97,4 +97,4 @@ const OpenClassDetail = () => {
   );
 };
 
-export default OpenClassDetail;
+export default EnterClassInfomation;

@@ -2,7 +2,7 @@ import tw from 'tailwind-styled-components';
 import TabContainer from './TabContainer';
 import Guide from './howOpenClass/Guide';
 import { useState } from 'react';
-import OpenClassDetail from './OpenClassDetail';
+import EnterClassInfomation from './classDetail/EnterClassInfomation';
 
 const Container = tw.div`
 // 임시
@@ -27,7 +27,7 @@ const OpenClassPage = () => {
       {showGuide ? (
         <Guide activeTab={activeTab} onOpenClick={handleOpenClick} />
       ) : (
-        <OpenClassDetail />
+        <EnterClassInfomation />
       )}
     </Container>
   );
