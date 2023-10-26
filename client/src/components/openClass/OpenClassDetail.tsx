@@ -58,24 +58,23 @@ const OpenClassDetail = () => {
         <SelectArea>
           <SubTitle>강좌 제목</SubTitle>
           <OneLineTextBox
-            onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-              if (
-                e.key === 'Enter' ||
-                (e.currentTarget.value.length >= 30 && e.key !== 'Backspace')
-              ) {
-                e.preventDefault(); // 엔터 입력 방지 및 30자 초과 입력 방지
-              }
-            }}
-            placeholder="강좌 제목을 입력해주세요. 30자 이하"
+            maxLength={30}
+            placeholder="강좌 제목을 입력해주세요. (30자 이하)"
           />
         </SelectArea>
         <SelectArea>
           <SubTitle>강좌 소개</SubTitle>
-          <TextBox placeholder="강좌의 목적 또는 학습목표의 내용을 간략하게 기재해 다른 사람들에게 소개해보세요!"></TextBox>
+          <TextBox
+            maxLength={200}
+            placeholder="강좌의 목적 또는 학습목표의 내용을 간략하게 기재해 다른 사람들에게 소개해보세요! (200자 이하)"
+          ></TextBox>
         </SelectArea>
         <SelectArea>
           <SubTitle>학습 대상</SubTitle>
-          <OneLineTextBox placeholder="예) 음식을 좋아하는 누구나!" />
+          <OneLineTextBox
+            maxLength={30}
+            placeholder="예) 음식을 좋아하는 누구나! (30자 이하)"
+          />
         </SelectArea>
         <SelectArea>
           <SubTitle>강좌 날짜 선택</SubTitle>
