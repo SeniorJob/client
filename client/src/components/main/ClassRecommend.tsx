@@ -31,6 +31,7 @@ const PageController = styled.div`
 
 const ControllerBox = styled.div`
   display: flex;
+  flex-shrink: 0;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -51,6 +52,44 @@ const PrevButton = styled.button`
 const NextButton = styled.button`
   &::before {
     content: '〉';
+  }
+`;
+
+const PaginationWrapper = styled.div`
+  position: relative;
+  display: block;
+  overflow: hidden;
+  height: 36px;
+  width: 100%;
+`;
+
+const CustomBullets = styled.div`
+  position: absolute;
+  bottom: 0 !important;
+  left: 0 !important;
+  top: 0 !important;
+  display: flex;
+  z-index: 71;
+  height: 36px;
+
+  .swiper-pagination-bullet {
+    flex: 0 0 auto;
+    min-width: 120px;
+    padding: 0 1rem;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #495057;
+    border-radius: 20px;
+    box-shadow: inset 0 0 0 1px #ced4da;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  .swiper-pagination-bullet-active {
+    color: #00c471;
+    box-shadow: inset 0 0 0 2px #00c471;
   }
 `;
 
@@ -91,6 +130,19 @@ export const ClassRecommend = () => {
           delay: 3500,
           disableOnInteraction: false,
         }}
+        pagination={{
+          el: '.swiper-pagination',
+          clickable: true,
+          renderBullet: function (index, className) {
+            return (
+              '<div class="' +
+              className +
+              '"><span>' +
+              '여기에 데이터' +
+              '</span></div>'
+            );
+          },
+        }}
         loop={true}
         modules={[Autoplay, Navigation, Pagination, Controller]}
         className="mySwiper"
@@ -103,7 +155,7 @@ export const ClassRecommend = () => {
         <CustomSlide>Slide 5</CustomSlide>
         <CustomSlide>Slide 6</CustomSlide>
         <PageController>
-          <div className="container">
+          <div className="container flex items-center gap-10">
             <ControllerBox>
               <div className="custom-pagination flex-1">
                 {index} / {swiper?.slides.length}
@@ -127,6 +179,9 @@ export const ClassRecommend = () => {
                 />
               </div>
             </ControllerBox>
+            <PaginationWrapper>
+              <CustomBullets className="swiper-pagination"></CustomBullets>
+            </PaginationWrapper>
           </div>
         </PageController>
       </CustomSwiper>
