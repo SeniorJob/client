@@ -90,6 +90,7 @@ const CustomBullets = styled.div<{ curIndex: number }>`
     box-shadow: inset 0 0 0 1px #ced4da;
     background-color: #fff;
     cursor: pointer;
+    opacity: unset;
   }
   .swiper-pagination-bullet-active {
     color: #00c471;
@@ -134,7 +135,7 @@ export const ClassRecommend = () => {
   };
 
   return (
-    <section>
+    <section className="banner">
       <CustomSwiper
         onSwiper={setSwiper}
         autoplay={{
