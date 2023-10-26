@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import tw from 'tailwind-styled-components';
 import { StyledMenu } from '../../assets/styles/MenuStyle';
+import { Link } from 'react-router-dom';
 
 const StyledNav = styled.nav`
   ul {
@@ -20,17 +21,17 @@ export const NavMenu = () => {
       <ul>
         <li>
           <StyledMenu>
-            <a href="#">강좌탐색</a>
+            <Link to="#">강좌탐색</Link>
           </StyledMenu>
         </li>
         <li>
           <StyledMenu>
-            <a href="#">강좌개설</a>
+            <Link to="/openclass">강좌개설</Link>
           </StyledMenu>
         </li>
         <li>
           <StyledMenu>
-            <a href="#">강좌제안</a>
+            <Link to="#">강좌제안</Link>
           </StyledMenu>
         </li>
       </ul>
