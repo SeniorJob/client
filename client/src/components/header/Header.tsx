@@ -1,8 +1,8 @@
-import tw from 'tailwind-styled-components';
 import styled from 'styled-components';
 import { SearchBar } from './SearchBar';
 import { NavMenu } from './NavMenu';
 import { UserMenu } from './UserMenu';
+import images from '../../assets/images/images';
 
 const StyledHeader = styled.header`
   display: flex;
@@ -40,10 +40,12 @@ const NavBar = styled.div`
   align-items: center;
 `;
 
-const Logo = tw.div`
-  flex
-  items-center
-  text-center
+const Logo = styled.div`
+  display: flex;
+  align-items: center;
+  img {
+    width: 180px;
+  }
 `;
 
 export const Header = () => {
@@ -51,7 +53,9 @@ export const Header = () => {
     <StyledHeader>
       <HeaderBox>
         <HeaderContent>
-          <Logo>매우멋진로고</Logo>
+          <Logo>
+            <img src={images.logo} alt="Page Main Logo" />
+          </Logo>
           <SearchBar />
           <NavBar>
             <NavMenu />
