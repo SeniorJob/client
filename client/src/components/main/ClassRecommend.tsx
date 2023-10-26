@@ -87,7 +87,7 @@ const CustomBullets = styled.div<{ curIndex: number }>`
   display: flex;
   z-index: 71;
   height: 36px;
-  transform: ${props => (props.curIndex >= 6 ? `translate(-249px, 0px)` : '0')};
+  transform: ${props => (props.curIndex >= 6 ? `translateX(-200px)` : '0')};
   transition: transform 0.3s ease; /* 움직임을 부드럽게 만들기 위한 트랜지션 */
 
   .swiper-pagination-bullet {
