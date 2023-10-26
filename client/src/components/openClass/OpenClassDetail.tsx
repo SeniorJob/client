@@ -1,8 +1,8 @@
 import tw from 'tailwind-styled-components';
 import ImageUploader from '../../utils/ImageUploader';
-import Calendar from 'react-calendar';
-import { useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
+import MadeCalendar from './Calendar';
+import { OneLineTextBox, TextBox } from '../../utils/TextBox';
 
 const Container = tw.div`
     m-4
@@ -19,25 +19,7 @@ const SelectArea = tw.div`
     mb-8
 `;
 
-const TextBox = tw.textarea`
-    ml-4
-    p-2
-    w-3/4
-    h-48
-`;
-
-const OneLineTextBox = tw(TextBox)`
-    resize-none
-    h-10
-`;
-
-type ValuePiece = Date | null;
-
-type Value = ValuePiece | [ValuePiece, ValuePiece];
-
 const OpenClassDetail = () => {
-  const [value, onChange] = useState<Value>(new Date());
-
   return (
     <>
       <Container>
@@ -78,7 +60,7 @@ const OpenClassDetail = () => {
         </SelectArea>
         <SelectArea>
           <SubTitle>강좌 날짜 선택</SubTitle>
-          <Calendar onChange={onChange} value={value} />
+          <MadeCalendar />
         </SelectArea>
         <SelectArea>
           <SubTitle>최대 참가자 수</SubTitle>
