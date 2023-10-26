@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Magnifier from '../../assets/images/magnifier.svg?react';
 
 const Contents = styled.div`
   display: flex;
@@ -36,6 +37,17 @@ const MainSearchBar = styled.input`
   }
 `;
 
+const SearchButton = styled.button`
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  background-color: inherit;
+  border: unset;
+  outline: none;
+`;
+
 export const MainSearch = () => {
   return (
     <section className="search pt-8 pb-6">
@@ -49,6 +61,9 @@ export const MainSearch = () => {
               type="text"
               placeholder="배우고 싶은 지식을 입력해보세요."
             />
+            <SearchButton>
+              <Magnifier width={28} height={28} />
+            </SearchButton>
           </SearchWrapper>
         </Contents>
       </div>
