@@ -60,7 +60,7 @@ const NextButton = styled.button`
 
 export const ClassRecommend = () => {
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
 
   // 일시정지 버튼
   const toggleAutoplay = () => {
