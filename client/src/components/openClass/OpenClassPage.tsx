@@ -3,6 +3,8 @@ import TabContainer from './TabContainer';
 import Guide from './howOpenClass/Guide';
 import { useState } from 'react';
 import EnterClassInfomation from './classDetail/EnterClassInfomation';
+import ClassDetail from './classDetail/ClassDetail';
+import Confirmation from './classDetail/Confirmation';
 
 const Container = tw.div`
 // 임시
@@ -26,8 +28,12 @@ const OpenClassPage = () => {
       <TabContainer activeTab={activeTab} setActiveTab={setActiveTab} />
       {showGuide ? (
         <Guide activeTab={activeTab} onOpenClick={handleOpenClick} />
-      ) : (
+      ) : activeTab === 0 ? (
         <EnterClassInfomation />
+      ) : activeTab === 1 ? (
+        <ClassDetail />
+      ) : (
+        <Confirmation />
       )}
     </Container>
   );
