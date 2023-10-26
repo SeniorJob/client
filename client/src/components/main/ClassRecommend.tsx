@@ -71,9 +71,7 @@ const CustomBullets = styled.div<{ curIndex: number }>`
   display: flex;
   z-index: 71;
   height: 36px;
-  transform: translateX(
-    ${props => (props.curIndex >= 5 ? '-12%' : '0')}
-  ); /* 조건에 따른 transform 스타일 적용 */
+  transform: translateX(${props => (props.curIndex >= 5 ? '-12%' : '0')});
   transition: transform 0.3s ease; /* 움직임을 부드럽게 만들기 위한 트랜지션 */
 
   .swiper-pagination-bullet {
@@ -81,6 +79,7 @@ const CustomBullets = styled.div<{ curIndex: number }>`
     min-width: 120px;
     padding: 0 1rem;
     height: 36px;
+    margin: 0 0.25rem !important;
     line-height: 36px;
     text-align: center;
     font-size: 0.875rem;
@@ -144,8 +143,6 @@ export const ClassRecommend = () => {
         }}
         pagination={{
           el: '.swiper-pagination',
-          // dynamicBullets: true,
-          // dynamicMainBullets: 6,
           clickable: true,
           renderBullet: function (index, className) {
             return (
@@ -201,7 +198,7 @@ export const ClassRecommend = () => {
               <CustomBullets
                 className="swiper-pagination"
                 curIndex={curIndex}
-              ></CustomBullets>
+              />
             </PaginationWrapper>
           </div>
         </PageController>
