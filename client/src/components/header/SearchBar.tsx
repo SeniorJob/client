@@ -22,7 +22,7 @@ const SearchBarInput = styled.input`
   }
 `;
 
-const Icon = styled.div`
+const SearchButton = styled.button`
   position: absolute;
   left: calc(11px + 1rem);
   color: black;
@@ -31,9 +31,9 @@ const Icon = styled.div`
 export const SearchBar = () => {
   return (
     <StyledSearchBar>
-      <Icon>
+      <SearchButton>
         <Magnifier width="25" height="25" />
-      </Icon>
+      </SearchButton>
       <SearchBarInput type="text" placeholder="검색어를 입력하세요" />
     </StyledSearchBar>
   );
