@@ -3,6 +3,7 @@ import { SearchBar } from './SearchBar';
 import { NavMenu } from './NavMenu';
 import { UserMenu } from './UserMenu';
 import images from '../../assets/images/images';
+import { Link } from 'react-router-dom';
 
 const StyledHeader = styled.header`
   display: flex;
@@ -54,7 +55,9 @@ export const Header = () => {
       <HeaderBox>
         <HeaderContent>
           <Logo>
-            <img src={images.logo} alt="Page Main Logo" />
+            <Link to={'/'}>
+              <img src={images.logo} alt="Page Main Logo" />
+            </Link>
           </Logo>
           <SearchBar />
           <NavBar>
