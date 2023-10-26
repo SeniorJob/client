@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 interface CountInputProps {
-  labelTitle: React.ReactNode;
+  labelTitle?: React.ReactNode;
   labelText: React.ReactNode;
 }
 
@@ -20,10 +20,11 @@ const CountInput: React.FC<CountInputProps> = ({ labelTitle, labelText }) => {
       <label>{labelTitle}</label>
       <input
         type="number"
-        value={count || 0}
+        value={count || ''}
         onChange={e => handleCount(e.target.value)}
         min={0}
         max={7}
+        placeholder="5"
       />
       <div className="text-stone-500">{labelText}</div>
     </div>

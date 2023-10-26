@@ -43,21 +43,21 @@ const OpenClassDetail = () => {
           <SubTitle>강좌 제목</SubTitle>
           <OneLineTextBox
             maxLength={30}
-            placeholder="강좌 제목을 입력해주세요. (30자 이하)"
+            placeholder="ex) 강좌 제목을 입력해주세요. (30자 이하)"
           />
         </SelectArea>
         <SelectArea>
           <SubTitle>강좌 소개</SubTitle>
           <TextBox
             maxLength={200}
-            placeholder="강좌의 목적 또는 학습목표의 내용을 간략하게 기재해 다른 사람들에게 소개해보세요! (200자 이하)"
+            placeholder="ex) 강좌의 목적 또는 학습목표의 내용을 간략하게 기재해 다른 사람들에게 소개해보세요! (200자 이하)"
           ></TextBox>
         </SelectArea>
         <SelectArea>
           <SubTitle>학습 대상</SubTitle>
           <OneLineTextBox
             maxLength={30}
-            placeholder="예) 음식을 좋아하는 누구나! (30자 이하)"
+            placeholder="ex) 음식을 좋아하는 누구나! (30자 이하)"
           />
         </SelectArea>
         <SelectArea>
@@ -70,21 +70,27 @@ const OpenClassDetail = () => {
         </SelectArea>
         <SelectArea>
           <SubTitle>최대 참가자 수</SubTitle>
+          <LectureCountInput labelText="강좌에 참가할 수 있는 최대 인원을 설정해쥇요!" />
         </SelectArea>
         <SelectArea>
           <SubTitle>지역</SubTitle>
+          <OneLineTextBox placeholder="ex) 경기도 안양시 만안구 삼덕로 37번길 22" />
         </SelectArea>
         <SelectArea>
           <SubTitle>가격</SubTitle>
+          <OneLineTextBox placeholder="ex) 15000" />
         </SelectArea>
         <SelectArea>
           <SubTitle>은행</SubTitle>
+          <OneLineTextBox placeholder="ex) 은행을 입력해주세요" />
         </SelectArea>
         <SelectArea>
-          <SubTitle>계좌이름</SubTitle>
+          <SubTitle>예금주</SubTitle>
+          <OneLineTextBox placeholder="ex) 신이어" />
         </SelectArea>
         <SelectArea>
           <SubTitle>계좌번호</SubTitle>
+          <OneLineTextBox placeholder="ex) '-' 없이 입력해주세요" />
         </SelectArea>
       </Container>
     </>
