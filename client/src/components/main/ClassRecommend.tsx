@@ -95,6 +95,7 @@ export const ClassRecommend = () => {
         modules={[Autoplay, Navigation, Pagination, Controller]}
         className="mySwiper"
       >
+        {/* 나중에 여기에 강의 데이터 mapping 하면 됨 */}
         <CustomSlide>Slide 1</CustomSlide>
         <CustomSlide>Slide 2</CustomSlide>
         <CustomSlide>Slide 3</CustomSlide>
