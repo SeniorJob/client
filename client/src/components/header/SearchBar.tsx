@@ -6,19 +6,25 @@ const StyledSearchBar = styled.form`
   width: 220px;
   display: flex;
   align-items: center;
+  padding: 0 1rem;
 `;
 
 const SearchBarInput = styled.input`
   width: 100%;
   height: 35px;
   padding: 7.8px 9.1px 7.8px 40px;
-  background-color: rgba(217, 217, 217, 0.6);
+  background-color: #f6f6f6;
   border-radius: 1rem;
+  &:focus-within {
+    outline: none;
+    box-shadow: 0 0 5px 2px #1dc078;
+    transition: 0.3s all ease;
+  }
 `;
 
 const Icon = styled.div`
   position: absolute;
-  left: 11px;
+  left: calc(11px + 1rem);
   color: black;
 `;
 

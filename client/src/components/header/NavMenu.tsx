@@ -10,8 +10,8 @@ const StyledNav = styled.nav`
 `;
 
 const Nav = tw(StyledNav)`
-  text-xl
-  font-semibold
+  text-lg
+  font-medium
 `;
 
 export const NavMenu = () => {

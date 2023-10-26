@@ -1,6 +1,5 @@
-import tw from 'twin.macro';
-import styled from '@emotion/styled';
-
+import styled from 'styled-components';
+import tw from 'tailwind-styled-components';
 import LoginTop from './loginTop';
 import LoginDown from './loginDown';
 
@@ -17,13 +16,11 @@ const Login = () => {
 
 export default Login;
 
-//전역 스타일
-const LoginLayout = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const LoginLayout = tw.div`
+    flex
+    items-center
+    justify-center
 `;
-
 const LoginContents = styled.div`
   width: 970px;
   height: 600px;
