@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Pause from '../../assets/images/pause.svg?react';
 import Play from '../../assets/images/play.svg?react';
@@ -20,10 +20,6 @@ const CustomSlide = styled(SwiperSlide)`
 
 const CustomSwiper = styled(Swiper)`
   --swiper-theme-color: var(--primaryColor);
-  .swiper-pagination {
-    position: relative;
-    top: 0;
-  }
 `;
 
 const PageController = styled.div`
@@ -61,6 +57,15 @@ const NextButton = styled.button`
 export const ClassRecommend = () => {
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [index, setIndex] = useState<number>(1);
+
+  useEffect(() => {
+    if (swiper) {
+      swiper.on('slideChange', () => {
+        setIndex(swiper.realIndex + 1);
+      });
+    }
+  }, [swiper]);
 
   // 일시정지 버튼
   const toggleAutoplay = () => {
@@ -68,9 +73,11 @@ export const ClassRecommend = () => {
       if (swiper.autoplay.running) {
         swiper.autoplay.stop();
         setIsPlaying(false);
+        console.log(swiper.activeIndex);
       } else {
         swiper.autoplay.start();
         setIsPlaying(true);
+        console.log(swiper.activeIndex);
       }
     }
     console.log(swiper?.autoplay);
@@ -82,13 +89,9 @@ export const ClassRecommend = () => {
         onSwiper={setSwiper}
         autoplay={{
           delay: 3500,
-          disableOnInteraction: true,
+          disableOnInteraction: false,
         }}
         loop={true}
-        // pagination={{
-        //   type: 'fraction',
-        // }}
-        // navigation={true}
         modules={[Autoplay, Navigation, Pagination, Controller]}
         className="mySwiper"
       >
@@ -101,12 +104,27 @@ export const ClassRecommend = () => {
         <PageController>
           <div className="container">
             <ControllerBox>
+              <div className="custom-pagination flex-1">
+                {index} / {swiper?.slides.length}
+              </div>
               {/* prev, next, pause 버튼 */}
-              <PrevButton onClick={() => swiper?.slidePrev()} />
-              <button onClick={toggleAutoplay}>
-                {isPlaying ? <Pause /> : <Play />}
-              </button>
-              <NextButton onClick={() => swiper?.slideNext()} />
+              <div className="flex flex-1 justify-between">
+                <PrevButton
+                  onClick={() => {
+                    swiper?.slidePrev();
+                    console.log(swiper);
+                  }}
+                />
+                <button onClick={toggleAutoplay}>
+                  {isPlaying ? <Pause /> : <Play />}
+                </button>
+                <NextButton
+                  onClick={() => {
+                    swiper?.slideNext();
+                    console.log(swiper);
+                  }}
+                />
+              </div>
             </ControllerBox>
           </div>
         </PageController>
