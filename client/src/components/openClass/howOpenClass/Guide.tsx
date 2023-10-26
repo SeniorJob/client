@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import tw from 'tailwind-styled-components';
+import { OpenButton } from '../OpenButton';
 
 const Container = tw.div`
     m-4
@@ -26,19 +27,6 @@ const TemporaryBox = styled.div`
   height: 300px;
   border: 1px solid red;
   margin: 0 20px;
-`;
-
-const OpenButton = tw.button`
-    flex
-    m-auto
-
-    bg-purple-400
-    hover:bg-purple-700
-    text-white
-    font-bold
-    py-2
-    px-4
-    rounded
 `;
 
 interface GuideProps {
