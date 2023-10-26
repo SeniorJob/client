@@ -93,6 +93,13 @@ const CustomBullets = styled.div`
   }
 `;
 
+const Divider = styled.div`
+  margin: 0 1rem;
+  width: 1px;
+  height: 36px;
+  background-color: #dee2e6;
+`;
+
 export const ClassRecommend = () => {
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
@@ -155,7 +162,7 @@ export const ClassRecommend = () => {
         <CustomSlide>Slide 5</CustomSlide>
         <CustomSlide>Slide 6</CustomSlide>
         <PageController>
-          <div className="container flex items-center gap-10">
+          <div className="container flex items-center px-8">
             <ControllerBox>
               <div className="custom-pagination flex-1">
                 {index} / {swiper?.slides.length}
@@ -179,6 +186,7 @@ export const ClassRecommend = () => {
                 />
               </div>
             </ControllerBox>
+            <Divider />
             <PaginationWrapper>
               <CustomBullets className="swiper-pagination"></CustomBullets>
             </PaginationWrapper>
