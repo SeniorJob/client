@@ -23,17 +23,27 @@ const OpenClassPage = () => {
     setShowGuide(false);
   };
 
+  const nextTab = () => {
+    setActiveTab(activeTab + 1);
+    console.log(activeTab);
+  };
+
+  const prevTab = () => {
+    setActiveTab(activeTab - 1);
+    console.log(activeTab);
+  };
+
   return (
     <Container>
       <TabContainer activeTab={activeTab} setActiveTab={setActiveTab} />
       {showGuide ? (
         <Guide activeTab={activeTab} onOpenClick={handleOpenClick} />
       ) : activeTab === 0 ? (
-        <EnterClassInfomation />
+        <EnterClassInfomation nextTab={nextTab} />
       ) : activeTab === 1 ? (
-        <ClassDetail />
+        <ClassDetail nextTab={nextTab} prevTab={prevTab} />
       ) : (
-        <Confirmation />
+        <Confirmation prevTab={prevTab} />
       )}
     </Container>
   );

@@ -4,6 +4,8 @@ import 'react-calendar/dist/Calendar.css';
 import MadeCalendar from '../../../utils/Calendar';
 import { OneLineTextBox, TextBox } from '../../../utils/TextBox';
 import LectureCountInput from '../../../utils/CountInput';
+import { OpenButton } from '../OpenButton';
+import { FC } from 'react';
 
 const Container = tw.div`
     m-4
@@ -21,7 +23,11 @@ const SelectArea = tw.div`
     mb-8
 `;
 
-const EnterClassInfomation = () => {
+interface EnterClassInfomationProps {
+  nextTab: () => void;
+}
+
+const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
   return (
     <>
       <Container>
@@ -93,6 +99,7 @@ const EnterClassInfomation = () => {
           <OneLineTextBox placeholder="ex) '-' 없이 입력해주세요" />
         </SelectArea>
       </Container>
+      <OpenButton onClick={() => nextTab()}>다음으로</OpenButton>
     </>
   );
 };
