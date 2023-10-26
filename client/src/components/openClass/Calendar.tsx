@@ -22,30 +22,47 @@ const Calendar: React.FC = () => {
   };
 
   return (
-    <div>
-      <label>모집 마감 날짜: </label>
-      <input
-        className="w-44"
-        type="date"
-        value={recruitmentDate || ''}
-        onChange={e => handleRecruitmentDate(e.target.value)}
-      />
-      <br />
-      <label>강좌 시작 날짜: </label>
-      <input
-        className="w-44"
-        type="date"
-        value={courseStartDate || ''}
-        onChange={e => handleCourseStartDate(e.target.value)}
-      />
-      <br />
-      <label>강좌 종료 날짜: </label>
-      <input
-        className="w-44"
-        type="date"
-        value={courseEndDate || ''}
-        onChange={e => handleCourseEndDate(e.target.value)}
-      />
+    <div className="flex flex-col gap-2">
+      <div className="flex gap-4">
+        <div>
+          <label>모집 마감 날짜: </label>
+          <input
+            className="w-44"
+            type="date"
+            value={recruitmentDate || ''}
+            onChange={e => handleRecruitmentDate(e.target.value)}
+          />
+        </div>
+        <div className="text-stone-500">
+          모집마감날짜는 강좌에 신청인원을 모집하는 날짜입니다.
+        </div>
+      </div>
+      <div className="flex gap-4">
+        <div>
+          <label>강좌 시작 날짜: </label>
+          <input
+            className="w-44"
+            type="date"
+            value={courseStartDate || ''}
+            onChange={e => handleCourseStartDate(e.target.value)}
+          />
+        </div>
+        <div className="text-stone-500">
+          모집마감 후 강좌가 시작되는 날짜입니다.
+        </div>
+      </div>
+      <div className="flex gap-4">
+        <div>
+          <label>강좌 종료 날짜: </label>
+          <input
+            className="w-44"
+            type="date"
+            value={courseEndDate || ''}
+            onChange={e => handleCourseEndDate(e.target.value)}
+          />
+        </div>
+        <div className="text-stone-500">강좌가 종료되는 날짜입니다.</div>
+      </div>
     </div>
   );
 };

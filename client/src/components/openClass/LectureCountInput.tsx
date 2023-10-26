@@ -11,7 +11,7 @@ const LectureCountInput: React.FC = () => {
   };
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 mt-2">
       <label>강의 회차: </label>
       <input
         type="number"
