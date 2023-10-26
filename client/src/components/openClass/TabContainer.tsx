@@ -25,10 +25,15 @@ const Tabs = tw.div`
 `;
 
 interface TabContainerProps {
+  activeTab: number;
   setActiveTab: (index: number) => void;
 }
 
-const Tab = tw.div`
+interface TabProps {
+  active: boolean;
+}
+
+const Tab = tw.div<TabProps>`
     border-solid
     border-1
     rounded-xl
@@ -41,21 +46,32 @@ const Tab = tw.div`
 
     shadow-md
 
+   ${p => (p.active ? 'bg-signature font-bold text-black' : '')}
    hover:bg-signature
    hover:font-bold
    hover:text-black
 `;
 
-const TabContainer: FC<TabContainerProps> = ({ setActiveTab }) => {
+const TabContainer: FC<TabContainerProps> = ({ setActiveTab, activeTab }) => {
+  const handleTabClick = (index: number) => {
+    setActiveTab(index);
+  };
+
   return (
     <>
       <Container>
         <Title>{'OOO'}님의 강좌개설</Title>
 
         <Tabs>
-          <Tab onClick={() => setActiveTab(0)}>기본정보입력</Tab>
-          <Tab onClick={() => setActiveTab(1)}>강좌상세내용</Tab>
-          <Tab onClick={() => setActiveTab(2)}>개설정보확인</Tab>
+          <Tab active={activeTab === 0} onClick={() => handleTabClick(0)}>
+            기본정보입력
+          </Tab>
+          <Tab active={activeTab === 1} onClick={() => handleTabClick(1)}>
+            강좌상세내용
+          </Tab>
+          <Tab active={activeTab === 2} onClick={() => handleTabClick(2)}>
+            개설정보확인
+          </Tab>
         </Tabs>
       </Container>
     </>
