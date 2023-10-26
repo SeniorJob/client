@@ -23,7 +23,7 @@ const SignLayout = tw.div`
 `;
 const SignDivBox = tw.div`
   mt-24
-  w-[350px]
+  w-[320px]
 `;
 const SignTopText = styled.h1`
   font-size: 24px;
