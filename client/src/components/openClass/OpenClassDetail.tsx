@@ -3,7 +3,7 @@ import ImageUploader from '../../utils/ImageUploader';
 import 'react-calendar/dist/Calendar.css';
 import MadeCalendar from './Calendar';
 import { OneLineTextBox, TextBox } from '../../utils/TextBox';
-import LectureCountInput from './LectureCountInput';
+import LectureCountInput from './CountInput';
 
 const Container = tw.div`
     m-4
@@ -63,7 +63,10 @@ const OpenClassDetail = () => {
         <SelectArea>
           <SubTitle>강좌 날짜 선택</SubTitle>
           <MadeCalendar />
-          <LectureCountInput />
+          <LectureCountInput
+            labelTitle="강의 회차: "
+            labelText="한 주에 실시되는 강좌의 횟수를 알려주세요!"
+          />
         </SelectArea>
         <SelectArea>
           <SubTitle>최대 참가자 수</SubTitle>
