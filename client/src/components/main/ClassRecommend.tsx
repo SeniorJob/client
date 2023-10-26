@@ -63,14 +63,18 @@ const PaginationWrapper = styled.div`
   width: 100%;
 `;
 
-const CustomBullets = styled.div`
+const CustomBullets = styled.div<{ curIndex: number }>`
   position: absolute;
   bottom: 0 !important;
-  left: 0 !important;
+  left: 0;
   top: 0 !important;
   display: flex;
   z-index: 71;
   height: 36px;
+  transform: translateX(
+    ${props => (props.curIndex >= 5 ? '-12%' : '0')}
+  ); /* 조건에 따른 transform 스타일 적용 */
+  transition: transform 0.3s ease; /* 움직임을 부드럽게 만들기 위한 트랜지션 */
 
   .swiper-pagination-bullet {
     flex: 0 0 auto;
@@ -103,12 +107,12 @@ const Divider = styled.div`
 export const ClassRecommend = () => {
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
-  const [index, setIndex] = useState<number>(1);
+  const [curIndex, setCurIndex] = useState<number>(1);
 
   useEffect(() => {
     if (swiper) {
       swiper.on('slideChange', () => {
-        setIndex(swiper.realIndex + 1);
+        setCurIndex(swiper.realIndex + 1);
       });
     }
   }, [swiper]);
@@ -139,6 +143,8 @@ export const ClassRecommend = () => {
         }}
         pagination={{
           el: '.swiper-pagination',
+          // dynamicBullets: true,
+          // dynamicMainBullets: 6,
           clickable: true,
           renderBullet: function (index, className) {
             return (
@@ -161,11 +167,14 @@ export const ClassRecommend = () => {
         <CustomSlide>Slide 4</CustomSlide>
         <CustomSlide>Slide 5</CustomSlide>
         <CustomSlide>Slide 6</CustomSlide>
+        <CustomSlide>Slide 7</CustomSlide>
+        <CustomSlide>Slide 8</CustomSlide>
+        <CustomSlide>Slide 9</CustomSlide>
         <PageController>
           <div className="container flex items-center px-8">
             <ControllerBox>
               <div className="custom-pagination flex-1">
-                {index} / {swiper?.slides.length}
+                {curIndex} / {swiper?.slides.length}
               </div>
               {/* prev, next, pause 버튼 */}
               <div className="flex flex-1 justify-between">
@@ -188,7 +197,10 @@ export const ClassRecommend = () => {
             </ControllerBox>
             <Divider />
             <PaginationWrapper>
-              <CustomBullets className="swiper-pagination"></CustomBullets>
+              <CustomBullets
+                className="swiper-pagination"
+                curIndex={curIndex}
+              ></CustomBullets>
             </PaginationWrapper>
           </div>
         </PageController>
