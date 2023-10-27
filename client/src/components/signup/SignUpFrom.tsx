@@ -12,6 +12,10 @@ const SingUpFrom = () => {
   const [pw, setPw] = useState<string>('');
   const [repw, setRepw] = useState<string>('');
   const [birthday, setBirthday] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState('');
+
+  const jobOptions = ['자영업자', '공무원', '프리랜서', '직장인', '전문직'];
+
   const SignUpSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
@@ -19,6 +23,10 @@ const SingUpFrom = () => {
   // 강좌 시작 날짜 선택을 처리하는 함수
   const handleBirthdayDate = (birthday: string) => {
     setBirthday(birthday);
+  };
+
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(event.target.value);
   };
 
   return (
@@ -73,7 +81,17 @@ const SingUpFrom = () => {
         </InputWrapper>
         <InputWrapper>
           <InputLabel>직업</InputLabel>
-          <Input type="text" placeholder="예) 학생, 회사원, 자영업자 등" />
+          <JobSelectBox
+            value={selectedOption || ''}
+            onChange={handleSelectChange}
+          >
+            <option value={''}>선택하세요</option>
+            {jobOptions.map((option, index) => (
+              <option key={index} value={option}>
+                {option}
+              </option>
+            ))}
+          </JobSelectBox>
         </InputWrapper>
         <InputWrapper>
           <InputLabel>관심 카테고리</InputLabel>
@@ -118,4 +136,12 @@ const SignUpBtn = tw.button`
   bg-[#1DC078]
   cursor-pointer
   text-[#fff]
+`;
+
+const JobSelectBox = tw.select`
+
+  w-[320px]
+  h-[50px] 
+  p-[10px] 
+  border
 `;
