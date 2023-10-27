@@ -20,7 +20,7 @@ const SignPostCode = () => {
     console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
   };
 
-  return <DaumPostcodeEmbed onComplete={handleComplete} {...props} />;
+  return <DaumPostcodeEmbed onComplete={handleComplete} />;
 };
 
 export default SignPostCode;

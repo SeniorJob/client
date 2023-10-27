@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import 'react-calendar/dist/Calendar.css'; // css import
-import PostCode from './SignPostCode';
 
 import axios from 'axios';
 
@@ -15,7 +14,6 @@ const SingUpFrom = () => {
   const [birthday, setBirthday] = useState<string | null>(null);
   const [selectedJobOption, setSelectedJobOption] = useState('');
   const [selectedInterestOption, setSelectedInterestOption] = useState('');
-  const [showPostCode, setShowPostCode] = useState(false);
 
   const jobOptions = ['자영업자', '공무원', '프리랜서', '직장인', '전문직'];
   const interestCategoryOption = [
@@ -50,11 +48,6 @@ const SingUpFrom = () => {
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setSelectedInterestOption(event.target.value);
-  };
-
-  const handlePostCodeClick = () => {
-    // 우편번호 찾기 버튼을 클릭했을 때 호출되는 함수
-    setShowPostCode(!showPostCode); // 팝업 표시 여부를 true로 변경
   };
 
   return (
@@ -136,15 +129,14 @@ const SingUpFrom = () => {
           </InterCatagorySelectBox>
         </InputWrapper>
         <InputWrapper>
-          <InputLabel>주소</InputLabel>
-          <button onClick={handlePostCodeClick}>우편번호 찾기</button>
+          <div>
+            <InputLabel>주소</InputLabel>
+            <button>우편번호 찾기</button>
+          </div>
           <div>
             <input className="w-[320px] h-[50px] p-[10px] border" />
           </div>
         </InputWrapper>
-        <SignUpBtn onClick={SignUpSubmit}>가입하기</SignUpBtn>
-        {showPostCode && <PostCode onClose={handlePostCodeClick} />}
-        {/* 조건부 렌더링 */}
         <SignUpBtn onClick={SignUpSubmit}>가입하기</SignUpBtn>
       </SignUpInputForm>
     </SignUpFromLayout>

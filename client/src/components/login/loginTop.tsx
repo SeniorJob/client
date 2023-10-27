@@ -2,6 +2,7 @@ import tw from 'tailwind-styled-components';
 import IdIcon from '../../assets/images/IdIcon.svg';
 import PwIcon from '../../assets/images/PwIcon.svg';
 import styled from 'styled-components';
+import Logo from '../../assets/images/logo.png';
 import { useState } from 'react';
 import axios from 'axios';
 
@@ -33,7 +34,7 @@ const LoginTop = () => {
     <LoginDownDivBox>
       <LoginLeftDivBox>
         <LoginLeftText>
-          <strong>SiniorJob</strong>
+          <img src={Logo} className="w-[280px] pr-[5px]" />
         </LoginLeftText>
       </LoginLeftDivBox>
       <LoginRightDivBox>
@@ -125,7 +126,7 @@ const LoginMainBtn = styled.button`
   line-height: 1.5;
   border: 1px solid #dcf8fad5;
   border-radius: 8px;
-  background-color: #e75410d1;
+  background-color: #1dc078;
   color: #fff;
   :hover {
     cursor: pointer;
@@ -142,8 +143,8 @@ const InputWrapper = styled.div`
   display: flex;
   width: 100%;
   height: 50px;
-  margin: 5px 0 10px 0;
-  border: 1px solid black;
+  margin: 5px 0 16px 0;
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
   img {
     width: 30px;
