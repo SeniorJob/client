@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // css import
 
 import axios from 'axios';
@@ -12,8 +11,14 @@ const SingUpFrom = () => {
   const [phon, setPhon] = useState<string>('');
   const [pw, setPw] = useState<string>('');
   const [repw, setRepw] = useState<string>('');
+  const [birthday, setBirthday] = useState<string | null>(null);
   const SignUpSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
+  };
+
+  // 강좌 시작 날짜 선택을 처리하는 함수
+  const handleBirthdayDate = (birthday: string) => {
+    setBirthday(birthday);
   };
 
   return (
@@ -57,6 +62,14 @@ const SingUpFrom = () => {
         </InputWrapper>
         <InputWrapper>
           <InputLabel>생년월일</InputLabel>
+          <div>
+            <input
+              className="w-[320px] h-[50px] p-[10px] border"
+              type="date"
+              value={birthday || ''}
+              onChange={e => handleBirthdayDate(e.target.value)}
+            />
+          </div>
         </InputWrapper>
         <InputWrapper>
           <InputLabel>직업</InputLabel>
