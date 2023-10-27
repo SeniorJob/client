@@ -17,12 +17,12 @@ const SearchBarInput = styled.input`
   border-radius: 1rem;
   &:focus-within {
     outline: none;
-    box-shadow: 0 0 5px 2px #1dc078;
+    box-shadow: 0 0 3px 1px #1dc078;
     transition: 0.3s all ease;
   }
 `;
 
-const Icon = styled.div`
+const SearchButton = styled.button`
   position: absolute;
   left: calc(11px + 1rem);
   color: black;
@@ -31,9 +31,9 @@ const Icon = styled.div`
 export const SearchBar = () => {
   return (
     <StyledSearchBar>
-      <Icon>
-        <Magnifier width="25" height="25" />
-      </Icon>
+      <SearchButton>
+        <Magnifier width="24" height="24" />
+      </SearchButton>
       <SearchBarInput type="text" placeholder="검색어를 입력하세요" />
     </StyledSearchBar>
   );

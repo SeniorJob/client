@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Pause from '../../assets/images/pause.svg?react';
 import Play from '../../assets/images/play.svg?react';
@@ -20,10 +20,6 @@ const CustomSlide = styled(SwiperSlide)`
 
 const CustomSwiper = styled(Swiper)`
   --swiper-theme-color: var(--primaryColor);
-  .swiper-pagination {
-    position: relative;
-    top: 0;
-  }
 `;
 
 const PageController = styled.div`
@@ -35,6 +31,7 @@ const PageController = styled.div`
 
 const ControllerBox = styled.div`
   display: flex;
+  flex-shrink: 0;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -58,9 +55,83 @@ const NextButton = styled.button`
   }
 `;
 
+const PaginationWrapper = styled.div`
+  position: relative;
+  display: block;
+  overflow: hidden;
+  height: 36px;
+  width: 100%;
+  .left-gradient {
+    position: absolute;
+    width: 15px;
+    height: 100%;
+    left: 0;
+    background-image: linear-gradient(90deg, #fff, hsla(0, 0%, 100%, 0));
+    z-index: 71;
+  }
+  .right-gradient {
+    position: absolute;
+    width: 15px;
+    height: 100%;
+    right: 0;
+    background-image: linear-gradient(90deg, hsla(0, 0%, 100%, 0), #fff);
+    z-index: 71;
+  }
+`;
+
+const CustomBullets = styled.div<{ curIndex: number }>`
+  position: absolute;
+  bottom: 0 !important;
+  left: 0;
+  top: 0 !important;
+  display: flex;
+  z-index: 71;
+  height: 36px;
+  transform: ${props => (props.curIndex >= 6 ? `translateX(-200px)` : '0')};
+  transition: transform 0.3s ease; /* 움직임을 부드럽게 만들기 위한 트랜지션 */
+
+  .swiper-pagination-bullet {
+    flex: 0 0 auto;
+    min-width: 120px;
+    padding: 0 1rem;
+    height: 36px;
+    margin: 0 0.25rem !important;
+    line-height: 36px;
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #495057;
+    border-radius: 20px;
+    box-shadow: inset 0 0 0 1px #ced4da;
+    background-color: #fff;
+    cursor: pointer;
+    opacity: unset;
+  }
+  .swiper-pagination-bullet-active {
+    color: #00c471;
+    box-shadow: inset 0 0 0 2px #00c471;
+  }
+`;
+
+const Divider = styled.div`
+  margin: 0 1rem;
+  width: 1px;
+  height: 36px;
+  background-color: #dee2e6;
+`;
+
 export const ClassRecommend = () => {
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [curIndex, setCurIndex] = useState<number>(1);
+
+  useEffect(() => {
+    if (swiper) {
+      swiper.on('slideChange', () => {
+        setCurIndex(swiper.realIndex + 1);
+      });
+    }
+  }, [swiper]);
 
   // 일시정지 버튼
   const toggleAutoplay = () => {
@@ -68,46 +139,85 @@ export const ClassRecommend = () => {
       if (swiper.autoplay.running) {
         swiper.autoplay.stop();
         setIsPlaying(false);
+        console.log(swiper.activeIndex);
       } else {
         swiper.autoplay.start();
         setIsPlaying(true);
+        console.log(swiper.activeIndex);
       }
     }
     console.log(swiper?.autoplay);
   };
 
   return (
-    <section>
+    <section className="banner">
       <CustomSwiper
         onSwiper={setSwiper}
         autoplay={{
           delay: 3500,
-          disableOnInteraction: true,
+          disableOnInteraction: false,
+        }}
+        pagination={{
+          el: '.swiper-pagination',
+          clickable: true,
+          renderBullet: function (index, className) {
+            return (
+              '<div class="' +
+              className +
+              '"><span>' +
+              '여기에 데이터' +
+              '</span></div>'
+            );
+          },
         }}
         loop={true}
-        // pagination={{
-        //   type: 'fraction',
-        // }}
-        // navigation={true}
         modules={[Autoplay, Navigation, Pagination, Controller]}
         className="mySwiper"
       >
+        {/* 나중에 여기에 강의 데이터 mapping 하면 됨 */}
         <CustomSlide>Slide 1</CustomSlide>
         <CustomSlide>Slide 2</CustomSlide>
         <CustomSlide>Slide 3</CustomSlide>
         <CustomSlide>Slide 4</CustomSlide>
         <CustomSlide>Slide 5</CustomSlide>
         <CustomSlide>Slide 6</CustomSlide>
+        <CustomSlide>Slide 7</CustomSlide>
+        <CustomSlide>Slide 8</CustomSlide>
+        <CustomSlide>Slide 9</CustomSlide>
         <PageController>
-          <div className="container">
+          <div className="container flex items-center px-8">
             <ControllerBox>
+              <div className="custom-pagination flex-1">
+                {curIndex} / {swiper?.slides.length}
+              </div>
               {/* prev, next, pause 버튼 */}
-              <PrevButton onClick={() => swiper?.slidePrev()} />
-              <button onClick={toggleAutoplay}>
-                {isPlaying ? <Pause /> : <Play />}
-              </button>
-              <NextButton onClick={() => swiper?.slideNext()} />
+              <div className="flex flex-1 justify-between">
+                <PrevButton
+                  onClick={() => {
+                    swiper?.slidePrev();
+                    console.log(swiper);
+                  }}
+                />
+                <button onClick={toggleAutoplay}>
+                  {isPlaying ? <Pause /> : <Play />}
+                </button>
+                <NextButton
+                  onClick={() => {
+                    swiper?.slideNext();
+                    console.log(swiper);
+                  }}
+                />
+              </div>
             </ControllerBox>
+            <Divider />
+            <PaginationWrapper>
+              <CustomBullets
+                className="swiper-pagination"
+                curIndex={curIndex}
+              />
+              {curIndex >= 6 ? <div className="left-gradient" /> : null}
+              {curIndex <= 7 ? <div className="right-gradient" /> : null}
+            </PaginationWrapper>
           </div>
         </PageController>
       </CustomSwiper>
