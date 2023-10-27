@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import 'react-calendar/dist/Calendar.css'; // css import
+import PostCode from './SignPostCode';
 
 import axios from 'axios';
 
@@ -12,7 +13,9 @@ const SingUpFrom = () => {
   const [pw, setPw] = useState<string>('');
   const [repw, setRepw] = useState<string>('');
   const [birthday, setBirthday] = useState<string | null>(null);
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedJobOption, setSelectedJobOption] = useState('');
+  const [selectedInterestOption, setSelectedInterestOption] = useState('');
+  const [showPostCode, setShowPostCode] = useState(false);
 
   const jobOptions = ['자영업자', '공무원', '프리랜서', '직장인', '전문직'];
   const interestCategoryOption = [
@@ -40,13 +43,18 @@ const SingUpFrom = () => {
   const handleJobOptionsSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
-    setSelectedOption(event.target.value);
+    setSelectedJobOption(event.target.value);
   };
 
   const handleInterestCategorySelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
-    setSelectedOption(event.target.value);
+    setSelectedInterestOption(event.target.value);
+  };
+
+  const handlePostCodeClick = () => {
+    // 우편번호 찾기 버튼을 클릭했을 때 호출되는 함수
+    setShowPostCode(!showPostCode); // 팝업 표시 여부를 true로 변경
   };
 
   return (
@@ -102,7 +110,7 @@ const SingUpFrom = () => {
         <InputWrapper>
           <InputLabel>직업</InputLabel>
           <JobSelectBox
-            value={selectedOption || ''}
+            value={selectedJobOption || ''}
             onChange={handleJobOptionsSelectChange}
           >
             <option value={''}>선택하세요</option>
@@ -116,7 +124,7 @@ const SingUpFrom = () => {
         <InputWrapper>
           <InputLabel>관심 카테고리</InputLabel>
           <InterCatagorySelectBox
-            value={selectedOption || ''}
+            value={selectedInterestOption || ''}
             onChange={handleInterestCategorySelectChange}
           >
             <option value={''}>선택하세요</option>
@@ -127,6 +135,16 @@ const SingUpFrom = () => {
             ))}
           </InterCatagorySelectBox>
         </InputWrapper>
+        <InputWrapper>
+          <InputLabel>주소</InputLabel>
+          <button onClick={handlePostCodeClick}>우편번호 찾기</button>
+          <div>
+            <input className="w-[320px] h-[50px] p-[10px] border" />
+          </div>
+        </InputWrapper>
+        <SignUpBtn onClick={SignUpSubmit}>가입하기</SignUpBtn>
+        {showPostCode && <PostCode onClose={handlePostCodeClick} />}
+        {/* 조건부 렌더링 */}
         <SignUpBtn onClick={SignUpSubmit}>가입하기</SignUpBtn>
       </SignUpInputForm>
     </SignUpFromLayout>
