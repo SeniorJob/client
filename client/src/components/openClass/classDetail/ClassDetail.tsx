@@ -1,6 +1,6 @@
 import tw from 'tailwind-styled-components';
 import { OpenButton } from '../OpenButton';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 const Container = tw.div`
     m-4
@@ -10,32 +10,57 @@ const Container = tw.div`
 `;
 
 const SubTitle = tw.div`
-    text-lg
+    text-2xl
     font-bold
-`;
-
-const SelectArea = tw.div`
-    mb-8
+    pb-4
+    border-b-4
+    border-dotted
+    border-gray-300
 `;
 
 interface ClassDetailProps {
   nextTab: () => void;
-  prevTab: () => void;
 }
 
-const ClassDetail: FC<ClassDetailProps> = ({ nextTab, prevTab }) => {
+// 주차별 학습내용 컴포넌트 관련 코드
+interface WeekClassProps {
+  week: number;
+  classTitle: string;
+}
+
+const WeekClassTitle = tw.div`
+  flex
+  bg-stone-100
+  my-4
+  p-2
+  text-xl
+  font-bold
+`;
+
+const WeekClass: FC<WeekClassProps> = ({ week, classTitle }) => {
+  return (
+    <div>
+      <WeekClassTitle>
+        {week}주차 {classTitle}
+      </WeekClassTitle>
+    </div>
+  );
+};
+
+const ClassDetail: FC<ClassDetailProps> = ({ nextTab }) => {
+  const [week, setWeek] = useState(1);
+  const [classTitle, setClassTitle] = useState('(주차 제목이 들어갈 곳)');
+
+  // const addWeek = () => {
+  //   setWeeks([...week, weeks.length + 1]);
+  // };
+
   return (
     <>
       <Container>
         <SubTitle>주차 정보 및 주차별 학습 내용 입력</SubTitle>
-        <div className="flex justify-center gap-4">
-          <OpenButton className="m-0" onClick={() => prevTab()}>
-            이전으로
-          </OpenButton>
-          <OpenButton className="m-0" onClick={() => nextTab()}>
-            다음으로
-          </OpenButton>
-        </div>
+        <WeekClass week={week} classTitle={classTitle} />
+        <OpenButton onClick={() => nextTab()}>다음으로</OpenButton>
       </Container>
     </>
   );
