@@ -20,6 +20,8 @@ const SignLayout = tw.div`
   flex
   items-center
   justify-center
+
+  text-[#191919]
 `;
 const SignDivBox = tw.div`
   mt-24

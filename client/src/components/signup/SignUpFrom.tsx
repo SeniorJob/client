@@ -15,6 +15,18 @@ const SingUpFrom = () => {
   const [selectedOption, setSelectedOption] = useState('');
 
   const jobOptions = ['자영업자', '공무원', '프리랜서', '직장인', '전문직'];
+  const interestCategoryOption = [
+    '외식',
+    '서비스',
+    '사무직',
+    '생산',
+    '운전',
+    '디자인',
+    'IT',
+    '기술',
+    '교육',
+    '의료',
+  ];
 
   const SignUpSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -25,7 +37,15 @@ const SingUpFrom = () => {
     setBirthday(birthday);
   };
 
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleJobOptionsSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setSelectedOption(event.target.value);
+  };
+
+  const handleInterestCategorySelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     setSelectedOption(event.target.value);
   };
 
@@ -83,7 +103,7 @@ const SingUpFrom = () => {
           <InputLabel>직업</InputLabel>
           <JobSelectBox
             value={selectedOption || ''}
-            onChange={handleSelectChange}
+            onChange={handleJobOptionsSelectChange}
           >
             <option value={''}>선택하세요</option>
             {jobOptions.map((option, index) => (
@@ -95,6 +115,17 @@ const SingUpFrom = () => {
         </InputWrapper>
         <InputWrapper>
           <InputLabel>관심 카테고리</InputLabel>
+          <InterCatagorySelectBox
+            value={selectedOption || ''}
+            onChange={handleInterestCategorySelectChange}
+          >
+            <option value={''}>선택하세요</option>
+            {interestCategoryOption.map((option, index) => (
+              <option key={index} value={option}>
+                {option}
+              </option>
+            ))}
+          </InterCatagorySelectBox>
         </InputWrapper>
         <SignUpBtn onClick={SignUpSubmit}>가입하기</SignUpBtn>
       </SignUpInputForm>
@@ -106,7 +137,9 @@ export default SingUpFrom;
 
 const SignUpFromLayout = styled.div``;
 
-const SignUpInputForm = styled.form``;
+const SignUpInputForm = styled.form`
+  margin-top: 60px;
+`;
 
 const InputWrapper = tw.div`
     mb-[16px]
@@ -140,6 +173,13 @@ const SignUpBtn = tw.button`
 
 const JobSelectBox = tw.select`
 
+  w-[320px]
+  h-[50px] 
+  p-[10px] 
+  border
+`;
+
+const InterCatagorySelectBox = tw.select`
   w-[320px]
   h-[50px] 
   p-[10px] 
