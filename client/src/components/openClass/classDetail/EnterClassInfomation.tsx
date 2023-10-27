@@ -1,6 +1,5 @@
 import tw from 'tailwind-styled-components';
 import ImageUploader from '../../../utils/ImageUploader';
-import 'react-calendar/dist/Calendar.css';
 import MadeCalendar from '../../../utils/Calendar';
 import { OneLineTextBox, TextBox } from '../../../utils/TextBox';
 import LectureCountInput from '../../../utils/CountInput';
