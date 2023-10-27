@@ -1,39 +1,71 @@
 import { useState } from 'react';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css'; // css import
+
+import axios from 'axios';
 
 import tw from 'tailwind-styled-components';
 import styled from 'styled-components';
 
 const SingUpFrom = () => {
-  const [id, setId] = useState('');
+  const [name, setName] = useState<string>('');
+  const [phon, setPhon] = useState<string>('');
+  const [pw, setPw] = useState<string>('');
+  const [repw, setRepw] = useState<string>('');
+  const SignUpSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
 
   return (
     <SignUpFromLayout>
       <SignUpInputForm>
         <InputWrapper>
           <InputLabel>이름</InputLabel>
-          <Input type="text" placeholder="예) 홍길동" />
+          <Input
+            type="text"
+            placeholder="예) 홍길동"
+            value={name}
+            onChange={e => setName(e.target.value)}
+          />
         </InputWrapper>
         <InputWrapper>
           <InputLabel>전화번호</InputLabel>
-          <Input type="text" placeholder="예) 01012345678" />
+          <Input
+            type="text"
+            placeholder="예) 01012345678"
+            value={phon}
+            onChange={e => setPhon(e.target.value)}
+          />
         </InputWrapper>
         <InputWrapper>
           <InputLabel>비밀번호</InputLabel>
-          <Input type="password" placeholder="******" />
+          <Input
+            type="password"
+            placeholder="******"
+            value={pw}
+            onChange={e => setPw(e.target.value)}
+          />
         </InputWrapper>
         <InputWrapper>
           <InputLabel>비밀번호 확인</InputLabel>
-          <Input type="password" placeholder="******" />
-        </InputWrapper>
-        <InputWrapper>
-          <InputLabel>직업</InputLabel>
-          <Input type="password" placeholder="******" />
+          <Input
+            type="password"
+            placeholder="******"
+            value={repw}
+            onChange={e => setRepw(e.target.value)}
+          />
         </InputWrapper>
         <InputWrapper>
           <InputLabel>생년월일</InputLabel>
-          <Input type="password" placeholder="" />
         </InputWrapper>
-        <SignUpBtn>가입하기</SignUpBtn>
+        <InputWrapper>
+          <InputLabel>직업</InputLabel>
+          <Input type="text" placeholder="예) 학생, 회사원, 자영업자 등" />
+        </InputWrapper>
+        <InputWrapper>
+          <InputLabel>관심 카테고리</InputLabel>
+        </InputWrapper>
+        <SignUpBtn onClick={SignUpSubmit}>가입하기</SignUpBtn>
       </SignUpInputForm>
     </SignUpFromLayout>
   );

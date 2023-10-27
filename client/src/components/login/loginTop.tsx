@@ -2,8 +2,33 @@ import tw from 'tailwind-styled-components';
 import IdIcon from '../../assets/images/IdIcon.svg';
 import PwIcon from '../../assets/images/PwIcon.svg';
 import styled from 'styled-components';
+import { useState } from 'react';
+import axios from 'axios';
 
 const LoginTop = () => {
+  const [id, setId] = useState<string>('');
+  const [pw, setPw] = useState<string>('');
+
+  const LoginSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    const loginData = {
+      phoneNumber: id,
+      password: pw,
+    };
+    axios
+      .post(
+        'http://ec2-52-78-219-176.ap-northeast-2.compute.amazonaws.com:8080/api/users/login',
+        loginData,
+      )
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   return (
     <LoginDownDivBox>
       <LoginLeftDivBox>
@@ -15,20 +40,34 @@ const LoginTop = () => {
         <LoginInPutForm>
           <InputWrapper>
             <img src={IdIcon} alt="아이디 아이콘"></img>
-            <Input type="text" placeholder="아이디를 입력해주세요" />
+            <Input
+              type="text"
+              placeholder="아이디를 입력해주세요"
+              value={id}
+              onChange={e => setId(e.target.value)}
+            />
           </InputWrapper>
           <InputWrapper>
             <img src={PwIcon} alt="아이디 아이콘"></img>
-            <Input type="password" placeholder="비밀번호를 입력해주세요" />
+            <Input
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+              value={pw}
+              onChange={e => setPw(e.target.value)}
+            />
           </InputWrapper>
+          <LoginMainBtn onSubmit={LoginSubmit}>로그인</LoginMainBtn>
         </LoginInPutForm>
-        <LoginMainBtn>로그인</LoginMainBtn>
+        <p>{id}</p>
+        <p>{pw}</p>
         <LoginDivBox>
           <LoginDivBox>
             <AccountHelpBox>
               <LoginBtnBox>아이디 찾기 </LoginBtnBox>
               <LoginBtnBox>비밀번호 찾기 </LoginBtnBox>
-              <SignBtnBox>회원가입</SignBtnBox>
+              <SignBtnBox>
+                <a href="signup">회원가입</a>
+              </SignBtnBox>
             </AccountHelpBox>
           </LoginDivBox>
         </LoginDivBox>
@@ -78,9 +117,10 @@ const SignBtnBox = styled.button`
   margin-top: 10px;
 `;
 
-const LoginMainBtn = styled.div`
+const LoginMainBtn = styled.button`
   text-align: center;
   padding: 10px;
+  width: 280px;
   height: 50px;
   line-height: 1.5;
   border: 1px solid #dcf8fad5;
@@ -96,7 +136,7 @@ const LoginMainBtn = styled.div`
   }
 `;
 
-const LoginInPutForm = styled.div``;
+const LoginInPutForm = styled.form``;
 
 const InputWrapper = styled.div`
   display: flex;
