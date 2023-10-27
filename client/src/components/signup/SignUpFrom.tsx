@@ -6,8 +6,8 @@ const SingUpFrom = () => {
     <SignUpFromLayout>
       <SignUpInputForm>
         <InputWrapper>
-          <InputLabel>이메일</InputLabel>
-          <Input type="text" placeholder="exemple@sinior.com" />
+          <InputLabel>전화번호</InputLabel>
+          <Input type="text" placeholder="01012345678" />
         </InputWrapper>
         <InputWrapper>
           <InputLabel>비밀번호</InputLabel>
@@ -17,8 +17,8 @@ const SingUpFrom = () => {
           <InputLabel>비밀번호 확인</InputLabel>
           <Input type="password" placeholder="******" />
         </InputWrapper>
+        <SignUpBtn>가입하기</SignUpBtn>
       </SignUpInputForm>
-      <SignUpBtn>가입하기</SignUpBtn>
     </SignUpFromLayout>
   );
 };
@@ -27,10 +27,10 @@ export default SingUpFrom;
 
 const SignUpFromLayout = styled.div``;
 
-const SignUpInputForm = styled.div``;
+const SignUpInputForm = styled.form``;
 
 const InputWrapper = tw.div`
-    mb-6
+    mb-[16px]
 `;
 const InputLabel = styled.label`
   display: block;
@@ -45,15 +45,16 @@ const Input = tw.input`
   mt-[4px]
 `;
 
-const SignUpBtn = tw.div`
+const SignUpBtn = tw.button`
   w-[320px]
   h-[52px]
   rounded
   text-center
   border
   p-[12px]
-  
-  cursor-pointer
+  mt-[16px]
+  mb-[12px]
   bg-[#1DC078]
+  cursor-pointer
   text-[#fff]
 `;
