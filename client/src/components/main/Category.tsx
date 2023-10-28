@@ -39,7 +39,7 @@ export const Category = () => {
           className="mySwiper"
         >
           {categoryData.map(item => (
-            <SwiperSlide>
+            <SwiperSlide key={item.id}>
               <CardButton>
                 <Card>
                   <img src={item.img} alt={item.title} />
