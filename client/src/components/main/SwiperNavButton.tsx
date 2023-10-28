@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { useSwiper } from 'swiper/react';
+import { useSwiper, SwiperClass } from 'swiper/react';
 import Pause from '../../assets/images/pause.svg?react';
 import Play from '../../assets/images/play.svg?react';
 
@@ -14,6 +14,49 @@ const Button = styled.button<PrevButtonProps>`
       props.direction === 'prev' ? "content: '〈' " : "content: '〉'"};
   }
 `;
+
+const CircleButton = styled(Button)`
+  z-index: 71;
+  position: absolute;
+  padding: 0;
+  transition: all 0.2s ease-in;
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  font-size: 1.125rem;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  opacity: 1;
+  background: hsla(0, 0%, 100%, 0.85);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+  color: #333;
+  &::before {
+    ${props =>
+      props.direction === 'prev' ? "content: '〈' " : "content: '〉'"};
+  }
+  &:hover {
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+  }
+  &:disabled {
+    display: none;
+  }
+`;
+
+// prev, next 함수
+const goPrev = (swiper: SwiperClass) => {
+  swiper?.slidePrev();
+};
+const goNext = (swiper: SwiperClass) => {
+  swiper?.slideNext();
+};
 
 // 상단 배너 Navigation 버튼
 export const BannerNav = () => {
@@ -37,28 +80,21 @@ export const BannerNav = () => {
   };
   return (
     <div className="flex flex-1 justify-between">
-      <Button
-        direction="prev"
-        onClick={() => {
-          swiper?.slidePrev();
-          console.log(swiper);
-        }}
-      />
+      <Button direction="prev" onClick={() => goPrev(swiper)} />
       <button onClick={toggleAutoplay}>
         {isPlaying ? <Pause /> : <Play />}
       </button>
-      <Button
-        direction="next"
-        onClick={() => {
-          swiper?.slideNext();
-          console.log(swiper);
-        }}
-      />
+      <Button direction="next" onClick={() => goNext(swiper)} />
     </div>
   );
 };
 
 // 카테고리 navigation 버튼
 export const CategoryNav = () => {
-  return <div>카테고리 내비게이션 버튼</div>;
+  return (
+    <div>
+      <CircleButton direction="prev" className="swiper-prev left-0" />
+      <CircleButton direction="next" className="swiper-next right-0" />
+    </div>
+  );
 };
