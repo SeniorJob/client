@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { Card } from '../category/CategoryCard';
+import { categoryData } from '../category/categoryData';
 // Swiper 관련 모듈 Import
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
@@ -14,11 +16,17 @@ const Section = styled.section`
 `;
 
 const CategoryTag = styled(SwiperSlide)`
-  background-color: lightgreen;
-  width: fit-content;
+  /* background-color: lightgreen; */
+  width: fit-content !important;
   border-radius: 1rem;
-  /* width: 60px !important; */
-  height: 60px;
+`;
+
+const CardButton = styled.button`
+  &:hover {
+    .title {
+      color: var(--primaryColor);
+    }
+  }
 `;
 
 export const Category = () => {
@@ -27,21 +35,24 @@ export const Category = () => {
       <div className="relative">
         <Swiper
           grabCursor={true}
-          slidesPerView={8}
-          spaceBetween={30}
+          slidesPerView={10}
+          spaceBetween={45}
           freeMode={true}
           modules={[FreeMode]}
           className="mySwiper"
         >
-          <CategoryTag>1</CategoryTag>
-          <CategoryTag>2</CategoryTag>
-          <CategoryTag>3</CategoryTag>
-          <CategoryTag>4</CategoryTag>
-          <CategoryTag>5</CategoryTag>
-          <CategoryTag>6</CategoryTag>
-          <CategoryTag>7</CategoryTag>
-          <CategoryTag>8</CategoryTag>
-          <CategoryTag>9</CategoryTag>
+          {categoryData.map(item => (
+            <CategoryTag>
+              <CardButton>
+                <Card>
+                  <img src={item.img} alt={item.title} />
+                </Card>
+                <div className="title">
+                  <span>{item.title}</span>
+                </div>
+              </CardButton>
+            </CategoryTag>
+          ))}
         </Swiper>
       </div>
     </Section>
