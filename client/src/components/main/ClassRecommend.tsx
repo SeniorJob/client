@@ -110,7 +110,6 @@ const Divider = styled.div`
 
 export const ClassRecommend = () => {
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [curIndex, setCurIndex] = useState<number>(1);
 
   useEffect(() => {
@@ -120,22 +119,6 @@ export const ClassRecommend = () => {
       });
     }
   }, [swiper]);
-
-  // 일시정지 버튼
-  const toggleAutoplay = () => {
-    if (swiper) {
-      if (swiper.autoplay.running) {
-        swiper.autoplay.stop();
-        setIsPlaying(false);
-        console.log(swiper.activeIndex);
-      } else {
-        swiper.autoplay.start();
-        setIsPlaying(true);
-        console.log(swiper.activeIndex);
-      }
-    }
-    console.log(swiper?.autoplay);
-  };
 
   return (
     <section className="banner">
@@ -179,10 +162,7 @@ export const ClassRecommend = () => {
                 {curIndex} / {swiper?.slides.length}
               </div>
               {/* prev, next, pause 버튼 */}
-              <BannerNav
-                isPlaying={isPlaying}
-                toggleAutoplay={toggleAutoplay}
-              />
+              <BannerNav />
             </ControllerBox>
             <Divider />
             <PaginationWrapper>

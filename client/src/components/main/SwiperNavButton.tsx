@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { useSwiper } from 'swiper/react';
 import Pause from '../../assets/images/pause.svg?react';
 import Play from '../../assets/images/play.svg?react';
@@ -14,17 +15,24 @@ const NextButton = styled.button`
   }
 `;
 
-// BannerNav 타입 선언
-type BannerNavProps = {
-  toggleAutoplay: () => void;
-  isPlaying: boolean;
-};
-
-export const BannerNav: React.FC<BannerNavProps> = ({
-  toggleAutoplay,
-  isPlaying,
-}) => {
+export const BannerNav = () => {
   const swiper = useSwiper();
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+
+  const toggleAutoplay = () => {
+    if (swiper) {
+      if (swiper.autoplay.running) {
+        swiper.autoplay.stop();
+        setIsPlaying(false);
+        console.log(swiper.activeIndex);
+      } else {
+        swiper.autoplay.start();
+        setIsPlaying(true);
+        console.log(swiper.activeIndex);
+      }
+    }
+    console.log(swiper?.autoplay);
+  };
   return (
     <div className="flex flex-1 justify-between">
       <PrevButton
