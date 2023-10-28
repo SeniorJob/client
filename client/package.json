@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/styled": "^11.11.0",
     "@types/styled-components": "^5.1.29",
+    "axios": "^1.6.0",
     "eslint-config-prettier": "^9.0.0",
     "moment": "^2.29.4",
     "prettier": "^3.0.3",
