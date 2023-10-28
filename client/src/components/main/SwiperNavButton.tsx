@@ -18,23 +18,18 @@ const Button = styled.button<PrevButtonProps>`
 const CircleButton = styled(Button)`
   z-index: 71;
   position: absolute;
-  padding: 0;
+  top: 0;
+  bottom: 0;
   transition: all 0.2s ease-in;
-  min-width: 44px;
-  min-height: 44px;
   width: 44px;
   height: 44px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 50%;
-  font-size: 1.125rem;
-  top: 0;
-  bottom: 0;
+  font-size: 1.2rem;
   margin: auto 0;
-  opacity: 1;
   background: hsla(0, 0%, 100%, 0.85);
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
   color: #333;
@@ -43,7 +38,7 @@ const CircleButton = styled(Button)`
       props.direction === 'prev' ? "content: '〈' " : "content: '〉'"};
   }
   &:hover {
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.4);
   }
   &:disabled {
     display: none;
