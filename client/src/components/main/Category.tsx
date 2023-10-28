@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Card } from '../category/CategoryCard';
 import { categoryData } from '../category/categoryData';
-import { CategoryNav } from './SwiperNavButton';
+import { NavButton } from './SwiperNavButton';
 // Swiper 관련 모듈 Import
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -32,8 +32,8 @@ export const Category = () => {
           slidesPerView={10}
           spaceBetween={45}
           navigation={{
-            prevEl: '.swiper-prev',
-            nextEl: '.swiper-next',
+            prevEl: '.swiper-category-prev',
+            nextEl: '.swiper-category-next',
           }}
           modules={[Navigation]}
           className="mySwiper"
@@ -52,7 +52,7 @@ export const Category = () => {
           ))}
         </Swiper>
       </div>
-      <CategoryNav />
+      <NavButton navName="swiper-category" />
     </Section>
   );
 };

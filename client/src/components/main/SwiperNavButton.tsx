@@ -85,11 +85,15 @@ export const BannerNav = () => {
 };
 
 // 카테고리 navigation 버튼
-export const CategoryNav = () => {
+type NavButtonProps = {
+  navName: string;
+};
+
+export const NavButton = ({ navName }: NavButtonProps) => {
   return (
     <div>
-      <CircleButton direction="prev" className="swiper-prev left-0" />
-      <CircleButton direction="next" className="swiper-next right-0" />
+      <CircleButton direction="prev" className={`${navName}-prev left-0`} />
+      <CircleButton direction="next" className={`${navName}-next right-0`} />
     </div>
   );
 };
