@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Pause from '../../assets/images/pause.svg?react';
-import Play from '../../assets/images/play.svg?react';
+import { BannerNav } from './SwiperNavButton';
 // Swiper 관련 모듈 Import
 import { Swiper, SwiperSlide, SwiperClass } from 'swiper/react';
 import { Autoplay, Navigation, Pagination, Controller } from 'swiper/modules';
@@ -42,17 +41,6 @@ const ControllerBox = styled.div`
   color: #fff;
   border-radius: 20px;
   background-color: rgba(0, 0, 0, 0.5);
-`;
-
-const PrevButton = styled.button`
-  &::before {
-    content: '〈';
-  }
-`;
-const NextButton = styled.button`
-  &::before {
-    content: '〉';
-  }
 `;
 
 const PaginationWrapper = styled.div`
@@ -191,23 +179,10 @@ export const ClassRecommend = () => {
                 {curIndex} / {swiper?.slides.length}
               </div>
               {/* prev, next, pause 버튼 */}
-              <div className="flex flex-1 justify-between">
-                <PrevButton
-                  onClick={() => {
-                    swiper?.slidePrev();
-                    console.log(swiper);
-                  }}
-                />
-                <button onClick={toggleAutoplay}>
-                  {isPlaying ? <Pause /> : <Play />}
-                </button>
-                <NextButton
-                  onClick={() => {
-                    swiper?.slideNext();
-                    console.log(swiper);
-                  }}
-                />
-              </div>
+              <BannerNav
+                isPlaying={isPlaying}
+                toggleAutoplay={toggleAutoplay}
+              />
             </ControllerBox>
             <Divider />
             <PaginationWrapper>
