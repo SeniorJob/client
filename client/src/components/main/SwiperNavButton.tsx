@@ -4,14 +4,14 @@ import { useSwiper } from 'swiper/react';
 import Pause from '../../assets/images/pause.svg?react';
 import Play from '../../assets/images/play.svg?react';
 
-const PrevButton = styled.button`
+interface PrevButtonProps {
+  direction: 'prev' | 'next'; // 타입을 'prev' 또는 'next'로 지정
+}
+
+const Button = styled.button<PrevButtonProps>`
   &::before {
-    content: '〈';
-  }
-`;
-const NextButton = styled.button`
-  &::before {
-    content: '〉';
+    ${props =>
+      props.direction === 'prev' ? "content: '〈' " : "content: '〉'"};
   }
 `;
 
@@ -37,7 +37,8 @@ export const BannerNav = () => {
   };
   return (
     <div className="flex flex-1 justify-between">
-      <PrevButton
+      <Button
+        direction="prev"
         onClick={() => {
           swiper?.slidePrev();
           console.log(swiper);
@@ -46,7 +47,8 @@ export const BannerNav = () => {
       <button onClick={toggleAutoplay}>
         {isPlaying ? <Pause /> : <Play />}
       </button>
-      <NextButton
+      <Button
+        direction="next"
         onClick={() => {
           swiper?.slideNext();
           console.log(swiper);
@@ -56,6 +58,7 @@ export const BannerNav = () => {
   );
 };
 
+// 카테고리 navigation 버튼
 export const CategoryNav = () => {
   return <div>카테고리 내비게이션 버튼</div>;
 };
