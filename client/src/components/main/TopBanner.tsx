@@ -108,7 +108,7 @@ const Divider = styled.div`
   background-color: #dee2e6;
 `;
 
-export const ClassRecommend = () => {
+export const TopBanner = () => {
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
   const [curIndex, setCurIndex] = useState<number>(1);
 

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ClassRecommend } from '../../components/main/ClassRecommend';
+import { TopBanner } from '../../components/main/TopBanner';
 import { MainSearch } from '../../components/main/MainSearch';
 import { Category } from '../../components/main/Category';
 
@@ -10,7 +10,7 @@ const Main = styled.main`
 export const MainPage = () => {
   return (
     <Main>
-      <ClassRecommend />
+      <TopBanner />
       <MainSearch />
       <Category />
     </Main>
