@@ -67,7 +67,7 @@ const PaginationWrapper = styled.div`
   }
 `;
 
-const CustomBullets = styled.div<{ curIndex: number }>`
+const CustomBullets = styled.div<{ $curIndex: number }>`
   position: absolute;
   bottom: 0 !important;
   left: 0;
@@ -75,7 +75,7 @@ const CustomBullets = styled.div<{ curIndex: number }>`
   display: flex;
   z-index: 71;
   height: 36px;
-  transform: ${props => (props.curIndex >= 6 ? `translateX(-200px)` : '0')};
+  transform: ${props => (props.$curIndex >= 6 ? `translateX(-200px)` : '0')};
   transition: transform 0.3s ease; /* 움직임을 부드럽게 만들기 위한 트랜지션 */
 
   .swiper-pagination-bullet {
@@ -169,7 +169,7 @@ export const TopBanner = () => {
             <PaginationWrapper>
               <CustomBullets
                 className="swiper-pagination"
-                curIndex={curIndex}
+                $curIndex={curIndex}
               />
               {curIndex >= 6 ? <div className="left-gradient" /> : null}
               {curIndex <= 7 ? <div className="right-gradient" /> : null}
