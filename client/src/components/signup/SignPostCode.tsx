@@ -1,6 +1,9 @@
 import React from 'react';
 import DaumPostcodeEmbed from 'react-daum-postcode';
 
+import tw from 'tailwind-styled-components';
+import styled from 'styled-components';
+
 const SignPostCode = () => {
   const handleComplete = data => {
     let fullAddress = data.address;
@@ -20,7 +23,13 @@ const SignPostCode = () => {
     console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
   };
 
-  return <DaumPostcodeEmbed onComplete={handleComplete} />;
+  return (
+    <DaumPostcodeEmbed
+      className="fixed right-1 top-20 w-[100px] h-[100px]"
+      autoClose
+      onComplete={handleComplete}
+    />
+  );
 };
 
 export default SignPostCode;

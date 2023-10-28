@@ -2,6 +2,7 @@ import tw from 'tailwind-styled-components';
 import styled from 'styled-components';
 import SingUpFrom from './SignUpFrom';
 import SignSlider from './SignTopSlider';
+
 const SignUp = () => {
   return (
     <SignLayout>

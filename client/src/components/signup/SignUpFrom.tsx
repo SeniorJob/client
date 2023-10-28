@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import 'react-calendar/dist/Calendar.css'; // css import
+import PostCode from './SignPostCode';
 
 import axios from 'axios';
 
@@ -12,8 +13,13 @@ const SingUpFrom = () => {
   const [pw, setPw] = useState<string>('');
   const [repw, setRepw] = useState<string>('');
   const [birthday, setBirthday] = useState<string | null>(null);
-  const [selectedJobOption, setSelectedJobOption] = useState('');
-  const [selectedInterestOption, setSelectedInterestOption] = useState('');
+  const [selectedJobOption, setSelectedJobOption] = useState<string>('');
+  const [selectedInterestOption, setSelectedInterestOption] =
+    useState<string>('');
+  const [enroll_company, setEnroll_company] = useState({
+    address: '',
+  });
+  const [showPopup, setShowPopup] = useState<boolean>(false);
 
   const jobOptions = ['자영업자', '공무원', '프리랜서', '직장인', '전문직'];
   const interestCategoryOption = [
@@ -48,6 +54,10 @@ const SingUpFrom = () => {
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setSelectedInterestOption(event.target.value);
+  };
+
+  const togglePopup = () => {
+    setShowPopup(!showPopup); // 팝업 상태를 반전시킵니다.
   };
 
   return (
@@ -129,13 +139,19 @@ const SingUpFrom = () => {
           </InterCatagorySelectBox>
         </InputWrapper>
         <InputWrapper>
-          <div>
+          <div className="flex space-x-[202px]">
             <InputLabel>주소</InputLabel>
-            <button>우편번호 찾기</button>
+            <button className="border px-2" type="button" onClick={togglePopup}>
+              주소 찾기
+            </button>
+            {showPopup && <PostCode />}
           </div>
-          <div>
-            <input className="w-[320px] h-[50px] p-[10px] border" />
-          </div>
+          <Input
+            type="text"
+            required={true}
+            name="address"
+            value={setEnroll_company.address}
+          />
         </InputWrapper>
         <SignUpBtn onClick={SignUpSubmit}>가입하기</SignUpBtn>
       </SignUpInputForm>
@@ -182,7 +198,6 @@ const SignUpBtn = tw.button`
 `;
 
 const JobSelectBox = tw.select`
-
   w-[320px]
   h-[50px] 
   p-[10px] 
