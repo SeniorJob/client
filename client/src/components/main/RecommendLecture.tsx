@@ -10,6 +10,22 @@ const LectureCard = styled.div`
   height: 100%;
 `;
 
+const CardContents = styled.div`
+  padding: 0.4rem 0;
+  h2 {
+    font-weight: 700;
+    line-height: 1.5em;
+    height: 3rem;
+    font-size: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: pre-wrap;
+  }
+`;
+
 const Card = styled.div`
   width: 100%;
   height: 150px;
@@ -56,12 +72,17 @@ export const RecommendLecture = () => {
           modules={[Navigation]}
         >
           {data.map(data => (
-            <SwiperSlide key={data.uid}>
+            <SwiperSlide key={data.create_id}>
               <LectureCard>
                 <Card>
                   <img src={data.image_url} alt={data.title} />
                 </Card>
-                <h2>{data.title}</h2>
+                <CardContents>
+                  <h2>{data.title}</h2>
+                  <div>{data.creator}</div>
+                  <div>{data.status}</div>
+                  <div>₩{data.price}</div>
+                </CardContents>
               </LectureCard>
             </SwiperSlide>
           ))}
