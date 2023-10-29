@@ -1,13 +1,18 @@
 import { useState } from 'react';
-import 'react-calendar/dist/Calendar.css'; // css import
 import PostCode from './SignPostCode';
-
 import axios from 'axios';
+import {
+  SignUpFromLayout,
+  SignUpInputForm,
+  InputWrapper,
+  InputLabel,
+  Input,
+  JobSelectBox,
+  InterCatagorySelectBox,
+  SignUpBtn,
+} from './SignUpFrom';
 
-import tw from 'tailwind-styled-components';
-import styled from 'styled-components';
-
-const SingUpFrom: React.FC = () => {
+export const SingUpFrom: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [phon, setPhon] = useState<string>('');
   const [pw, setPw] = useState<string>('');
@@ -148,7 +153,7 @@ const SingUpFrom: React.FC = () => {
         <InputWrapper>
           <InputLabel>주소</InputLabel>
           <div>
-            <PostCode setAddress={setAddress} />
+            <PostCode address={setAddress} />
             <Input type="text" value={address}></Input>
           </div>
         </InputWrapper>
@@ -157,55 +162,3 @@ const SingUpFrom: React.FC = () => {
     </SignUpFromLayout>
   );
 };
-
-export default SingUpFrom;
-
-const SignUpFromLayout = styled.div``;
-
-const SignUpInputForm = styled.form`
-  margin-top: 60px;
-`;
-
-const InputWrapper = tw.div`
-    mb-[16px]
-`;
-const InputLabel = styled.label`
-  display: block;
-  font-size: 15px;
-`;
-const Input = tw.input`
-  w-[320px]
-  border
-  rounded
-  px-[12px]
-  py-[13px]
-  mt-[4px]
-`;
-
-const SignUpBtn = tw.button`
-  w-[320px]
-  h-[52px]
-  rounded
-  text-center
-  border
-  p-[12px]
-  mt-[16px]
-  mb-[12px]
-  bg-[#1DC078]
-  cursor-pointer
-  text-[#fff]
-`;
-
-const JobSelectBox = tw.select`
-  w-[320px]
-  h-[50px] 
-  p-[10px] 
-  border
-`;
-
-const InterCatagorySelectBox = tw.select`
-  w-[320px]
-  h-[50px] 
-  p-[10px] 
-  border
-`;

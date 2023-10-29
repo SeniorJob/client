@@ -1,10 +1,19 @@
 import React from 'react';
-import DaumPostcodeEmbed from 'react-daum-postcode';
+import { useDaumPostcodePopup } from 'react-daum-postcode';
 
 import tw from 'tailwind-styled-components';
 import styled from 'styled-components';
 
-const SignPostCode = ({ address }) => {
+interface SignPostCodeProps {
+  setAddress: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const SignPostCode: React.FC<SignPostCodeProps> = ({ setAddress }) => {
+  const scriptUrl =
+    'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+
+  const open = useDaumPostcodePopup(scriptUrl);
+
   const handleComplete = data => {
     let fullAddress = data.address;
     let extraAddress = '';
@@ -19,16 +28,22 @@ const SignPostCode = ({ address }) => {
       }
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
-    address(fullAddress);
     console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+    setAddress(fullAddress);
+  };
+
+  const handleClick = () => {
+    open({
+      onComplete: handleComplete,
+    });
   };
 
   return (
-    <DaumPostcodeEmbed
-      className="fixed right-1 top-20 w-[100px] h-[100px]"
-      autoClose
-      onComplete={handleComplete}
-    />
+    <div>
+      <button type="button" onClick={handleClick}>
+        우편번호 찾기
+      </button>
+    </div>
   );
 };
 

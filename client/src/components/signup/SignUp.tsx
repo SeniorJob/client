@@ -1,6 +1,6 @@
 import tw from 'tailwind-styled-components';
 import styled from 'styled-components';
-import SingUpFrom from './SignUpFrom';
+import SingUpFrom from './SingUpFrom';
 import SignSlider from './SignTopSlider';
 
 const SignUp = () => {
