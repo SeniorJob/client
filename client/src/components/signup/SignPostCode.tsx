@@ -4,7 +4,7 @@ import DaumPostcodeEmbed from 'react-daum-postcode';
 import tw from 'tailwind-styled-components';
 import styled from 'styled-components';
 
-const SignPostCode = () => {
+const SignPostCode = ({ address }) => {
   const handleComplete = data => {
     let fullAddress = data.address;
     let extraAddress = '';
@@ -19,7 +19,7 @@ const SignPostCode = () => {
       }
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
-
+    address(fullAddress);
     console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
   };
 

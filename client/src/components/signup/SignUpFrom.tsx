@@ -16,11 +16,8 @@ const SingUpFrom = () => {
   const [selectedJobOption, setSelectedJobOption] = useState<string>('');
   const [selectedInterestOption, setSelectedInterestOption] =
     useState<string>('');
-  const [enroll_company, setEnroll_company] = useState({
-    address: '',
-  });
   const [showPopup, setShowPopup] = useState<boolean>(false);
-
+  const [address, setAddress] = useState<string>('');
   const jobOptions = ['자영업자', '공무원', '프리랜서', '직장인', '전문직'];
   const interestCategoryOption = [
     '외식',
@@ -37,6 +34,21 @@ const SingUpFrom = () => {
 
   const SignUpSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
+
+    const userData = {
+      name,
+      phon,
+      pw,
+      repw,
+      birthday,
+      selectedJobOption,
+      selectedInterestOption,
+    };
+
+    axios.post(
+      'http://ec2-52-78-219-176.ap-northeast-2.compute.amazonaws.com:8080/api/users/join',
+      userData,
+    );
   };
 
   // 강좌 시작 날짜 선택을 처리하는 함수
@@ -144,14 +156,9 @@ const SingUpFrom = () => {
             <button className="border px-2" type="button" onClick={togglePopup}>
               주소 찾기
             </button>
-            {showPopup && <PostCode />}
+            {showPopup && <PostCode addrss={setAddress} value={address} />}
           </div>
-          <Input
-            type="text"
-            required={true}
-            name="address"
-            value={setEnroll_company.address}
-          />
+          <Input type="text" required={true} name="address" />
         </InputWrapper>
         <SignUpBtn onClick={SignUpSubmit}>가입하기</SignUpBtn>
       </SignUpInputForm>
