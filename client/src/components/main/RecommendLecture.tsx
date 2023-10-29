@@ -56,7 +56,7 @@ export const RecommendLecture = () => {
           modules={[Navigation]}
         >
           {data.map(data => (
-            <SwiperSlide>
+            <SwiperSlide key={data.uid}>
               <LectureCard>
                 <Card>
                   <img src={data.image_url} alt={data.title} />
