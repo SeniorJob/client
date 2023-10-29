@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Card = styled.div`
+const Card = styled.div`
   width: 70px;
   height: 70px;
   padding: 0.5rem;
@@ -20,3 +20,27 @@ export const Card = styled.div`
     border-radius: 25%;
   }
 `;
+const CardButton = styled.button`
+  &:hover {
+    .title {
+      color: var(--primaryColor);
+    }
+  }
+`;
+type CategoryProps = {
+  img: string;
+  title: string;
+};
+
+export const CategoryCard = ({ img, title }: CategoryProps) => {
+  return (
+    <CardButton>
+      <Card>
+        <img src={img} alt={title} />
+      </Card>
+      <div className="title">
+        <span>{title}</span>
+      </div>
+    </CardButton>
+  );
+};
