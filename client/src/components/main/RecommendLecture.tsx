@@ -44,7 +44,7 @@ export const RecommendLecture = () => {
 
   return (
     <section className="py-6">
-      <div className="container">
+      <div className="container px-4">
         <h1>추천 강좌 리스트</h1>
         <Swiper
           slidesPerView={5}
@@ -65,8 +65,8 @@ export const RecommendLecture = () => {
               </LectureCard>
             </SwiperSlide>
           ))}
-          <NavButton navName="swiper-lecture" />
         </Swiper>
+        <NavButton navName="swiper-lecture" />
       </div>
     </section>
   );
