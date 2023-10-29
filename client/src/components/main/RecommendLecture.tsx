@@ -4,6 +4,7 @@ import { Navigation } from 'swiper/modules';
 import { NavButton } from './SwiperNavButton';
 import styled from 'styled-components';
 import { getLecture } from '../../api/lecture';
+import { Link } from 'react-router-dom';
 
 const LectureCard = styled.div`
   width: 100%;
@@ -24,11 +25,21 @@ const CardContents = styled.div`
     -webkit-box-orient: vertical;
     white-space: pre-wrap;
   }
+  .lecture-creator {
+    font-size: 0.9rem;
+    color: #7d7d7d;
+  }
+  .lecture-price {
+    color: var(--primaryColor);
+    font-weight: 600;
+  }
 `;
 
 const Card = styled.div`
   width: 100%;
   height: 150px;
+  border-radius: 0.7rem;
+  overflow: hidden;
   background-color: lightgreen;
   img {
     width: 100%;
@@ -74,15 +85,19 @@ export const RecommendLecture = () => {
           {data.map(data => (
             <SwiperSlide key={data.create_id}>
               <LectureCard>
-                <Card>
-                  <img src={data.image_url} alt={data.title} />
-                </Card>
-                <CardContents>
-                  <h2>{data.title}</h2>
-                  <div>{data.creator}</div>
-                  <div>{data.status}</div>
-                  <div>₩{data.price}</div>
-                </CardContents>
+                <Link to={`/lectures/${data.create_id}`}>
+                  <Card>
+                    <img src={data.image_url} alt={data.title} />
+                  </Card>
+                  <CardContents>
+                    <h2 className="lecture-title">{data.title}</h2>
+                    <div className="lecture-creator">{data.creator}</div>
+                    <div className="lecture-tags">{data.status}</div>
+                    <div className="lecture-price">
+                      ₩{data.price?.toLocaleString()}
+                    </div>
+                  </CardContents>
+                </Link>
               </LectureCard>
             </SwiperSlide>
           ))}
