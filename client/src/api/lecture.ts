@@ -12,18 +12,19 @@ export const getData = async (endpoint: string) => {
   }
 };
 
-export const getPopularLecture = async () => {
+export const getPopularLecture = async (params?: string) => {
   try {
-    const res = await getData('lectures/popular');
-    console.log(res.content);
+    const res = await getData(`lectures/popular?${params}`);
+    console.log(res);
+    return res;
   } catch (err) {
     console.log(err);
   }
 };
 
-export const getLecture = async () => {
+export const getLecture = async (params?: string) => {
   try {
-    const res = await getData('lectures/filter');
+    const res = await getData(`lectures/filter?${params}`);
     console.log(res.content);
     return res.content;
   } catch (err) {
