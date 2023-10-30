@@ -3,62 +3,55 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { NavButton } from './SwiperNavButton';
 import styled from 'styled-components';
-import { getLecture } from '../../api/lecture';
+import { LectureData } from '../lecture/LectureCard';
+import { getPopularLecture } from '../../api/lecture';
 import { Link } from 'react-router-dom';
 
-const LectureCard = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
-const CardContents = styled.div`
-  padding: 0.4rem 0;
-  h2 {
-    font-weight: 700;
-    line-height: 1.5em;
-    height: 3rem;
-    font-size: 1rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    white-space: pre-wrap;
-  }
-  .lecture-creator {
-    font-size: 0.9rem;
-    color: #7d7d7d;
-  }
-  .lecture-price {
-    color: var(--primaryColor);
-    font-weight: 600;
-  }
-`;
-
-const Card = styled.div`
-  width: 100%;
+const Nodata = styled.div`
+  display: flex;
+  justify-content: center;
+  background-color: #f6f6f6;
+  align-items: center;
   height: 150px;
-  border-radius: 0.7rem;
-  overflow: hidden;
-  background-color: lightgreen;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  span {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+`;
+
+const LectureHeader = styled.div`
+  display: flex;
+  margin-bottom: 1rem;
+  h1 {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    font-weight: 600;
+    &::after {
+      content: '〉';
+      font-size: 1rem;
+      padding-left: 0.7rem;
+    }
+  }
+  p {
+    color: #7d7d7d;
+    margin-top: 0.4rem;
+    font-size: 0.95rem;
   }
 `;
 
 type LectureObject = {
-  [key: string]: string | undefined;
+  [key: string]: string | number | undefined;
 };
 
 export const RecommendLecture = () => {
-  const [data, setData] = useState<LectureObject[]>([]);
+  const [data, setData] = useState<LectureObject[]>();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const lectureData = await getLecture();
+        const lectureData = await getPopularLecture('limit=10');
         setData(lectureData);
         console.log(lectureData);
       } catch (error) {
@@ -72,7 +65,14 @@ export const RecommendLecture = () => {
   return (
     <section className="py-6">
       <div className="container px-4">
-        <h1>추천 강좌 리스트</h1>
+        <LectureHeader>
+          <div>
+            <Link to={'/'}>
+              <h1>지금 HOT한 강좌들이에요 🔥</h1>
+            </Link>
+            <p>인기많은 강좌를 수강해 보세요!</p>
+          </div>
+        </LectureHeader>
         <Swiper
           slidesPerView={5}
           spaceBetween={10}
@@ -82,25 +82,17 @@ export const RecommendLecture = () => {
           }}
           modules={[Navigation]}
         >
-          {data.map(data => (
-            <SwiperSlide key={data.create_id}>
-              <LectureCard>
-                <Link to={`/lectures/${data.create_id}`}>
-                  <Card>
-                    <img src={data.image_url} alt={data.title} />
-                  </Card>
-                  <CardContents>
-                    <h2 className="lecture-title">{data.title}</h2>
-                    <div className="lecture-creator">{data.creator}</div>
-                    <div className="lecture-tags">{data.status}</div>
-                    <div className="lecture-price">
-                      ₩{data.price?.toLocaleString()}
-                    </div>
-                  </CardContents>
-                </Link>
-              </LectureCard>
-            </SwiperSlide>
-          ))}
+          {data ? (
+            data.map(data => (
+              <SwiperSlide key={data.create_id}>
+                <LectureData data={data} />
+              </SwiperSlide>
+            ))
+          ) : (
+            <Nodata>
+              <span>강좌 데이터가 없습니다.</span>
+            </Nodata>
+          )}
         </Swiper>
         <NavButton navName="swiper-lecture" />
       </div>
