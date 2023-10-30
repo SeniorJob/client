@@ -27,19 +27,22 @@ const CardButton = styled.button`
     }
   }
 `;
+
 type CategoryProps = {
-  img: string;
-  title: string;
+  data: {
+    img: string;
+    title: string;
+  };
 };
 
-export const CategoryCard = ({ img, title }: CategoryProps) => {
+export const CategoryCard = ({ data }: CategoryProps) => {
   return (
     <CardButton>
       <Card>
-        <img src={img} alt={title} />
+        <img src={data.img} alt={data.title} />
       </Card>
       <div className="title">
-        <span>{title}</span>
+        <span>{data.title}</span>
       </div>
     </CardButton>
   );
