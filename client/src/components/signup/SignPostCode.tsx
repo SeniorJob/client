@@ -39,8 +39,13 @@ const SignPostCode: React.FC<SignPostCodeProps> = ({ setAddress }) => {
   };
 
   return (
-    <div>
-      <button type="button" onClick={handleClick}>
+    <div className="flex space-x-[176px] ">
+      <span className="pt-3">주소</span>
+      <button
+        className="border rounded p-1"
+        type="button"
+        onClick={handleClick}
+      >
         우편번호 찾기
       </button>
     </div>

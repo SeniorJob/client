@@ -17,6 +17,9 @@ const SingUpFrom: React.FC = () => {
   const [selectedInterestOption, setSelectedInterestOption] =
     useState<string>('');
   const [address, setAddress] = useState<string>('');
+  const [detailedAddress, setDetailedAddress] = useState<string>('');
+  const [selectedFile, setSelectedFile] = useState(null);
+
   const jobOptions = ['자영업자', '공무원', '프리랜서', '직장인', '전문직'];
   const interestCategoryOption = [
     '외식',
@@ -35,15 +38,18 @@ const SingUpFrom: React.FC = () => {
     event.preventDefault();
 
     const userData = {
-      name,
-      phon,
-      pw,
-      repw,
-      birthday,
-      selectedJobOption,
-      selectedInterestOption,
+      name: name,
+      phoneNumber: phon,
+      encryptionCode: pw,
+      confirmPassword: repw,
+      dateOfBirth: birthday,
+      job: selectedJobOption,
+      category: selectedInterestOption,
+      region: address + detailedAddress,
+      imgKey: selectedFile,
     };
 
+    console.log('회원가입 정보', userData);
     axios.post(
       'http://ec2-52-78-219-176.ap-northeast-2.compute.amazonaws.com:8080/api/users/join',
       userData,
@@ -65,6 +71,15 @@ const SingUpFrom: React.FC = () => {
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setSelectedInterestOption(event.target.value);
+  };
+
+  const handleDetailedAddress = (detailedAddress: string) => {
+    setDetailedAddress(detailedAddress);
+  };
+
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
   };
 
   return (
@@ -146,11 +161,28 @@ const SingUpFrom: React.FC = () => {
           </InterCatagorySelectBox>
         </InputWrapper>
         <InputWrapper>
-          <InputLabel>주소</InputLabel>
-          <div>
-            <PostCode setAddress={setAddress} />
-            <Input type="text" value={address}></Input>
-          </div>
+          <PostCode setAddress={setAddress} />
+          <Input type="text" value={address}></Input>
+          <InputLabel>상세 주소</InputLabel>
+          <Input
+            type="text"
+            value={detailedAddress || ''}
+            onChange={e => handleDetailedAddress(e.target.value)}
+          ></Input>
+        </InputWrapper>
+        <InputWrapper>
+          <InputLabel>프로필 이미지</InputLabel>
+          <Input type="file" accept="image/*" onChange={handleFileSelect} />
+          {selectedFile && (
+            <div>
+              <img
+                className="mt-[10px]"
+                src={URL.createObjectURL(selectedFile)}
+                alt="프로필 이미지 미리보기"
+                width="320"
+              />
+            </div>
+          )}
         </InputWrapper>
         <SignUpBtn onClick={SignUpSubmit}>가입하기</SignUpBtn>
       </SignUpInputForm>
