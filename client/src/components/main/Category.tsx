@@ -30,9 +30,9 @@ export const Category = () => {
           modules={[Navigation]}
           className="mySwiper"
         >
-          {categoryData.map(item => (
-            <SwiperSlide key={item.id}>
-              <CategoryCard title={item.title} img={item.img} />
+          {categoryData.map(data => (
+            <SwiperSlide key={data.id}>
+              <CategoryCard data={data} />
             </SwiperSlide>
           ))}
         </Swiper>
