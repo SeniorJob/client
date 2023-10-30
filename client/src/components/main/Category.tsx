@@ -11,7 +11,7 @@ import 'swiper/css/navigation';
 const Section = styled.section`
   position: relative;
   max-width: 1200px;
-  padding: 1rem;
+  padding: 1.5rem 1rem;
   margin: 0 auto;
 `;
 
