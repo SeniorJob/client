@@ -15,7 +15,7 @@ const CardContents = styled.div`
   h2 {
     font-weight: 700;
     line-height: 1.5em;
-    height: 3rem;
+    /* height: 3rem; */
     font-size: 1rem;
     overflow: hidden;
     text-overflow: ellipsis;
