@@ -5,16 +5,16 @@ import tw from 'tailwind-styled-components';
 import styled from 'styled-components';
 
 interface SignPostCodeProps {
-  setAddress: React.Dispatch<React.SetStateAction<string>>;
+  setForm: React.Dispatch<React.SetStateAction<any>>; // 객체를 받아들일 수 있는 형식으로 변경
 }
 
-const SignPostCode: React.FC<SignPostCodeProps> = ({ setAddress }) => {
+const SignPostCode: React.FC<SignPostCodeProps> = ({ setForm }) => {
   const scriptUrl =
     'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 
   const open = useDaumPostcodePopup(scriptUrl);
 
-  const handleComplete = data => {
+  const handleComplete = (data: any) => {
     let fullAddress = data.address;
     let extraAddress = '';
 
@@ -29,7 +29,10 @@ const SignPostCode: React.FC<SignPostCodeProps> = ({ setAddress }) => {
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
     console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
-    setAddress(fullAddress);
+    setForm(prevForm => ({
+      ...prevForm,
+      address: fullAddress,
+    }));
   };
 
   const handleClick = () => {

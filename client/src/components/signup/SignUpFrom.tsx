@@ -8,17 +8,18 @@ import tw from 'tailwind-styled-components';
 import styled from 'styled-components';
 
 const SingUpFrom: React.FC = () => {
-  const [name, setName] = useState<string>('');
-  const [phon, setPhon] = useState<string>('');
-  const [pw, setPw] = useState<string>('');
-  const [repw, setRepw] = useState<string>('');
-  const [birthday, setBirthday] = useState<string | null>(null);
-  const [selectedJobOption, setSelectedJobOption] = useState<string>('');
-  const [selectedInterestOption, setSelectedInterestOption] =
-    useState<string>('');
-  const [address, setAddress] = useState<string>('');
-  const [detailedAddress, setDetailedAddress] = useState<string>('');
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [form, setForm] = useState({
+    name: '',
+    phone: '',
+    pw: '',
+    pwcf: '',
+    birthday: '',
+    job: '',
+    interest: '',
+    address: '',
+    DtAddress: '',
+    img: null,
+  });
 
   const jobOptions = ['자영업자', '공무원', '프리랜서', '직장인', '전문직'];
   const interestCategoryOption = [
@@ -34,19 +35,24 @@ const SingUpFrom: React.FC = () => {
     '의료',
   ];
 
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files[0];
+    setForm({ ...form, img: selectedFile });
+  };
+
   const SignUpSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
     const userData = {
-      name: name,
-      phoneNumber: phon,
-      encryptionCode: pw,
-      confirmPassword: repw,
-      dateOfBirth: birthday,
-      job: selectedJobOption,
-      category: selectedInterestOption,
-      region: address + detailedAddress,
-      imgKey: selectedFile,
+      name: form.name,
+      phoneNumber: form.phone,
+      encryptionCode: form.pw,
+      confirmPassword: form.pwcf,
+      job: form.job,
+      dateOfBirth: form.birthday,
+      category: form.DtAddress,
+      region: form.address + form.DtAddress,
+      img: form.img,
     };
 
     console.log('회원가입 정보', userData);
@@ -54,32 +60,6 @@ const SingUpFrom: React.FC = () => {
       'http://ec2-52-78-219-176.ap-northeast-2.compute.amazonaws.com:8080/api/users/join',
       userData,
     );
-  };
-
-  // 강좌 시작 날짜 선택을 처리하는 함수
-  const handleBirthdayDate = (birthday: string) => {
-    setBirthday(birthday);
-  };
-
-  const handleJobOptionsSelectChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    setSelectedJobOption(event.target.value);
-  };
-
-  const handleInterestCategorySelectChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    setSelectedInterestOption(event.target.value);
-  };
-
-  const handleDetailedAddress = (detailedAddress: string) => {
-    setDetailedAddress(detailedAddress);
-  };
-
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
   };
 
   return (
@@ -90,8 +70,8 @@ const SingUpFrom: React.FC = () => {
           <Input
             type="text"
             placeholder="예) 홍길동"
-            value={name}
-            onChange={e => setName(e.target.value)}
+            value={form.name}
+            onChange={e => setForm({ ...form, name: e.target.value })}
           />
         </InputWrapper>
         <InputWrapper>
@@ -99,8 +79,8 @@ const SingUpFrom: React.FC = () => {
           <Input
             type="text"
             placeholder="예) 01012345678"
-            value={phon}
-            onChange={e => setPhon(e.target.value)}
+            value={form.phone}
+            onChange={e => setForm({ ...form, phone: e.target.value })}
           />
         </InputWrapper>
         <InputWrapper>
@@ -108,8 +88,8 @@ const SingUpFrom: React.FC = () => {
           <Input
             type="password"
             placeholder="******"
-            value={pw}
-            onChange={e => setPw(e.target.value)}
+            value={form.pw}
+            onChange={e => setForm({ ...form, pw: e.target.value })}
           />
         </InputWrapper>
         <InputWrapper>
@@ -117,8 +97,8 @@ const SingUpFrom: React.FC = () => {
           <Input
             type="password"
             placeholder="******"
-            value={repw}
-            onChange={e => setRepw(e.target.value)}
+            value={form.pwcf}
+            onChange={e => setForm({ ...form, pwcf: e.target.value })}
           />
         </InputWrapper>
         <InputWrapper>
@@ -127,16 +107,16 @@ const SingUpFrom: React.FC = () => {
             <input
               className="w-[320px] h-[50px] p-[10px] border"
               type="date"
-              value={birthday || ''}
-              onChange={e => handleBirthdayDate(e.target.value)}
+              value={form.birthday || ''}
+              onChange={e => setForm({ ...form, birthday: e.target.value })}
             />
           </div>
         </InputWrapper>
         <InputWrapper>
           <InputLabel>직업</InputLabel>
           <JobSelectBox
-            value={selectedJobOption || ''}
-            onChange={handleJobOptionsSelectChange}
+            value={form.job || ''}
+            onChange={e => setForm({ ...form, job: e.target.value })}
           >
             <option value={''}>선택하세요</option>
             {jobOptions.map((option, index) => (
@@ -149,8 +129,8 @@ const SingUpFrom: React.FC = () => {
         <InputWrapper>
           <InputLabel>관심 카테고리</InputLabel>
           <InterCatagorySelectBox
-            value={selectedInterestOption || ''}
-            onChange={handleInterestCategorySelectChange}
+            value={form.interest || ''}
+            onChange={e => setForm({ ...form, interest: e.target.value })}
           >
             <option value={''}>선택하세요</option>
             {interestCategoryOption.map((option, index) => (
@@ -161,23 +141,27 @@ const SingUpFrom: React.FC = () => {
           </InterCatagorySelectBox>
         </InputWrapper>
         <InputWrapper>
-          <PostCode setAddress={setAddress} />
-          <Input type="text" value={address}></Input>
+          <PostCode setForm={setForm} />
+          <Input
+            type="text"
+            value={form.address}
+            onChange={e => setForm({ ...form, address: e.target.value })}
+          ></Input>
           <InputLabel>상세 주소</InputLabel>
           <Input
             type="text"
-            value={detailedAddress || ''}
-            onChange={e => handleDetailedAddress(e.target.value)}
+            value={form.DtAddress || ''}
+            onChange={e => setForm({ ...form, DtAddress: e.target.value })}
           ></Input>
         </InputWrapper>
         <InputWrapper>
           <InputLabel>프로필 이미지</InputLabel>
           <Input type="file" accept="image/*" onChange={handleFileSelect} />
-          {selectedFile && (
+          {form.img && (
             <div>
               <img
                 className="mt-[10px]"
-                src={URL.createObjectURL(selectedFile)}
+                src={URL.createObjectURL(form.img)}
                 alt="프로필 이미지 미리보기"
                 width="320"
               />
