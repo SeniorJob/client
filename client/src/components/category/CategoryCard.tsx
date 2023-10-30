@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Card = styled.div`
@@ -38,12 +39,14 @@ type CategoryProps = {
 export const CategoryCard = ({ data }: CategoryProps) => {
   return (
     <CardButton>
-      <Card>
-        <img src={data.img} alt={data.title} />
-      </Card>
-      <div className="title">
-        <span>{data.title}</span>
-      </div>
+      <Link to={`/lectures/filter?category=${data.title}`}>
+        <Card>
+          <img src={data.img} alt={data.title} />
+        </Card>
+        <div className="title">
+          <span>{data.title}</span>
+        </div>
+      </Link>
     </CardButton>
   );
 };
