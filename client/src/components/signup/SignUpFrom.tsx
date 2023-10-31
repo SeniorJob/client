@@ -36,8 +36,12 @@ const SingUpFrom: React.FC = () => {
   ];
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files[0];
-    setForm({ ...form, img: selectedFile });
+    e.preventDefault();
+
+    if (e.target.files) {
+      const uploadFile = e.target.files[0];
+      console.log(uploadFile);
+    }
   };
 
   const SignUpSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
@@ -53,15 +57,29 @@ const SingUpFrom: React.FC = () => {
         dateOfBirth: form.birthday,
         category: form.interest,
         region: form.address + form.DtAddress,
+        file: form.img,
       },
-      file: form.img,
     };
 
-    console.log('회원가입 정보', userData.userDto, userData.file);
-    axios.post(
-      'http://ec2-3-34-248-169.ap-northeast-2.compute.amazonaws.com:8080/api/users/join',
-      userData,
-    );
+    console.log('회원가입 정보', userData.userDto);
+    axios
+      .post(
+        'http://ec2-3-34-248-169.ap-northeast-2.compute.amazonaws.com:8080/api/users/join',
+        userData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data', // 컨텐츠 타입을 multipart/form-data로 설정합니다.
+          },
+        },
+      )
+      .then(response => {
+        // 요청이 성공하면 서버 응답을 처리합니다.
+        console.log('서버 응답:', response.data);
+      })
+      .catch(error => {
+        // 요청이 실패하면 에러를 처리합니다.
+        console.error('에러 발생:', error);
+      });
   };
 
   return (
