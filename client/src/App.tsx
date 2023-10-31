@@ -5,7 +5,7 @@ import { MainPage } from './pages/mainpage/MainPage';
 import Login from './components/login/login';
 import OpenClassPage from './components/openClass/OpenClassPage';
 import SignUp from './components/signup/SignUp';
-import { LectureSearch } from './pages/lectureSearch/LectureSearch';
+import { LectureList } from './pages/lectureList/LectureList';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/openclass" element={<OpenClassPage />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/lectures" element={<LectureSearch />} />
+          <Route path="/lectures" element={<LectureList />} />
         </Routes>
       </div>
     </BrowserRouter>
