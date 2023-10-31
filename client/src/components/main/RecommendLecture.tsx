@@ -30,7 +30,7 @@ const LectureHeader = styled.div`
     font-weight: 600;
     &::after {
       content: '〉';
-      font-size: 1rem;
+      font-size: 1.2rem;
       padding-left: 0.7rem;
     }
   }
