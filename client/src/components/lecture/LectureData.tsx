@@ -1,13 +1,17 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { LectureDataProps } from '../../types/LectureTypes';
 
 const LectureCard = styled.div`
+  position: relative;
   width: 100%;
   height: 100%;
 `;
 
 const LectureWrapper = styled.div`
+  position: relative;
   border-radius: 0.7rem;
+  width: 100%;
 `;
 
 const CardContents = styled.div`
@@ -74,20 +78,6 @@ const LectureHoverCard = styled.div`
     margin-bottom: 0.25rem;
   }
 `;
-
-type LectureDataProps = {
-  data: LectureProps;
-};
-
-type LectureProps = {
-  create_id?: number;
-  image_url?: string;
-  title?: string;
-  creator?: string;
-  status?: string;
-  price?: number;
-  category?: string;
-};
 
 export const LectureData = ({ data }: LectureDataProps) => {
   return (

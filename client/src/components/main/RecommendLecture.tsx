@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { LectureData } from '../lecture/LectureData';
 import { getLecture } from '../../api/lecture';
 import { Link } from 'react-router-dom';
+import { recommendProps, LectureObject } from '../../types/LectureTypes';
 
 const Nodata = styled.div`
   display: flex;
@@ -40,18 +41,6 @@ const LectureHeader = styled.div`
     font-size: 0.95rem;
   }
 `;
-
-type LectureObject = {
-  [key: string]: string | number | undefined;
-};
-type recommendProps = {
-  recommendType: {
-    name?: string;
-    title: string;
-    subTitle?: string;
-    params: string;
-  };
-};
 
 export const RecommendLecture = ({ recommendType }: recommendProps) => {
   const [data, setData] = useState<LectureObject[]>();
