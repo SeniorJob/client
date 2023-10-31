@@ -4,7 +4,7 @@ import { Navigation } from 'swiper/modules';
 import { NavButton } from './SwiperNavButton';
 import styled from 'styled-components';
 import { LectureData } from '../lecture/LectureCard';
-import { getPopularLecture } from '../../api/lecture';
+import { getLecture } from '../../api/lecture';
 import { Link } from 'react-router-dom';
 
 const Nodata = styled.div`
@@ -44,14 +44,21 @@ const LectureHeader = styled.div`
 type LectureObject = {
   [key: string]: string | number | undefined;
 };
+type recommendProps = {
+  recommendType: {
+    title: string;
+    subTitle?: string;
+    params: string;
+  };
+};
 
-export const RecommendLecture = () => {
+export const RecommendLecture = ({ recommendType }: recommendProps) => {
   const [data, setData] = useState<LectureObject[]>();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const lectureData = await getPopularLecture('limit=10');
+        const lectureData = await getLecture(recommendType.params);
         setData(lectureData);
         console.log(lectureData);
       } catch (error) {
@@ -68,9 +75,9 @@ export const RecommendLecture = () => {
         <LectureHeader>
           <div>
             <Link to={'/'}>
-              <h1>지금 HOT한 강좌들이에요 🔥</h1>
+              <h1>{recommendType.title}</h1>
             </Link>
-            <p>인기많은 강좌를 수강해 보세요!</p>
+            <p>{recommendType.subTitle}</p>
           </div>
         </LectureHeader>
         <Swiper
