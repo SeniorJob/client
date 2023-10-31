@@ -46,6 +46,7 @@ type LectureObject = {
 };
 type recommendProps = {
   recommendType: {
+    name?: string;
     title: string;
     subTitle?: string;
     params: string;
@@ -84,8 +85,8 @@ export const RecommendLecture = ({ recommendType }: recommendProps) => {
           slidesPerView={5}
           spaceBetween={10}
           navigation={{
-            prevEl: '.swiper-lecture-prev',
-            nextEl: '.swiper-lecture-next',
+            prevEl: `.swiper-${recommendType.name}-lecture-prev`,
+            nextEl: `.swiper-${recommendType.name}-lecture-next`,
           }}
           modules={[Navigation]}
         >
@@ -101,7 +102,7 @@ export const RecommendLecture = ({ recommendType }: recommendProps) => {
             </Nodata>
           )}
         </Swiper>
-        <NavButton navName="swiper-lecture" />
+        <NavButton navName={`swiper-${recommendType.name}-lecture`} />
       </div>
     </section>
   );
