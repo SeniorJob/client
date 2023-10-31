@@ -6,7 +6,7 @@ import Login from './components/login/login';
 import OpenClassPage from './components/openClass/OpenClassPage';
 import SignUp from './components/signup/SignUp';
 import { LectureList } from './pages/lectureList/LectureList';
-import { ScrollToTop } from './utils/scrollToTop';
+import { ScrollToTop } from './utils/ScrollToTop';
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/openclass" element={<OpenClassPage />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/lectures" element={<LectureList />} />
+          <Route path="/lectures/filter?" element={<LectureList />} />
         </Routes>
       </div>
     </BrowserRouter>
