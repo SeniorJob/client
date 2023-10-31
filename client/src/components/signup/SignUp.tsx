@@ -2,6 +2,7 @@ import tw from 'tailwind-styled-components';
 import styled from 'styled-components';
 import SingUpFrom from './SignUpFrom';
 import SignSlider from './SignTopSlider';
+
 const SignUp = () => {
   return (
     <SignLayout>
@@ -20,6 +21,8 @@ const SignLayout = tw.div`
   flex
   items-center
   justify-center
+
+  text-[#191919]
 `;
 const SignDivBox = tw.div`
   mt-24
