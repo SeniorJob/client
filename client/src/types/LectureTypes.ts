@@ -12,6 +12,7 @@ export type LectureProps = {
   price?: number;
   category?: string;
   current_participants?: number;
+  learning_target?: string;
 };
 
 export type LectureObject = {
