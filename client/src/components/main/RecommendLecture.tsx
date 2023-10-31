@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { NavButton } from './SwiperNavButton';
 import styled from 'styled-components';
-import { LectureData } from '../lecture/LectureCard';
+import { LectureData } from '../lecture/LectureData';
 import { getLecture } from '../../api/lecture';
 import { Link } from 'react-router-dom';
 
