@@ -2,6 +2,17 @@ export type LectureDataProps = {
   data: LectureProps;
 };
 
+export type LectureParamProps = {
+  page?: number;
+  size?: number;
+  title?: string;
+  filter?: string;
+  descending?: boolean;
+  region?: string;
+  status?: string;
+  category?: string;
+};
+
 export type LectureProps = {
   create_id?: number;
   image_url?: string;
@@ -21,8 +32,9 @@ export type LectureObject = {
 export type recommendProps = {
   recommendType: {
     name?: string;
-    title: string;
+    title?: string;
     subTitle?: string;
-    params: string;
+    endPoint?: string;
+    params?: LectureParamProps;
   };
 };
