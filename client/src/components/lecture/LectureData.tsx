@@ -46,14 +46,14 @@ const CardContents = styled.div`
     .status {
       color: #a8b0ba;
       &.available {
-        color: #82acc0;
+        color: var(--primaryColor);
       }
       &.inProgress {
-        color: #dcc56a;
+        color: #f99c74;
       }
     }
     .participants {
-      color: #c7828d;
+      color: #9f9f9f;
     }
   }
 `;
