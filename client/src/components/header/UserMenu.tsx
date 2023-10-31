@@ -10,10 +10,10 @@ export const UserMenu = () => {
   return (
     <MenuList>
       <StyledUserMenu>
-        <a href="#">로그인</a>
+        <a href="login">로그인</a>
       </StyledUserMenu>
       <StyledUserMenu>
-        <a href="#">회원가입</a>
+        <a href="signup">회원가입</a>
       </StyledUserMenu>
     </MenuList>
   );

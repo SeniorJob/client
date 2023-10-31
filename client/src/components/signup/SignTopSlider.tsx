@@ -13,9 +13,9 @@ const SignTopSlider = () => {
         modules={[Autoplay]}
         autoplay={{ delay: 1000, disableOnInteraction: false }}
       >
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
+        <SwiperSlide>고령화 시대 지금부터 시작입니다.</SwiperSlide>
+        <SwiperSlide>새로운 직업 새로운 기술</SwiperSlide>
+        <SwiperSlide>SiniorJob에서 시작하세요</SwiperSlide>
       </Swiper>
     </SwiperLayout>
   );
@@ -25,4 +25,5 @@ export default SignTopSlider;
 
 const SwiperLayout = tw.div`
   mb-[24px]
+  text-center
 `;
