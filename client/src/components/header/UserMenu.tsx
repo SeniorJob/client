@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { StyledUserMenu } from '../../assets/styles/MenuStyle';
+import { Link } from 'react-router-dom';
 
 const MenuList = styled.div`
   display: flex;
@@ -10,10 +11,10 @@ export const UserMenu = () => {
   return (
     <MenuList>
       <StyledUserMenu>
-        <a href="login">로그인</a>
+        <Link to={'/login'}>로그인</Link>
       </StyledUserMenu>
       <StyledUserMenu>
-        <a href="signup">회원가입</a>
+        <Link to={'/signup'}>회원가입</Link>
       </StyledUserMenu>
     </MenuList>
   );

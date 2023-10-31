@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { ClassRecommend } from '../../components/main/ClassRecommend';
+import { TopBanner } from '../../components/main/TopBanner';
 import { MainSearch } from '../../components/main/MainSearch';
 import { Category } from '../../components/main/Category';
+import { RecommendLecture } from '../../components/main/RecommendLecture';
 
 const Main = styled.main`
   min-height: 800px;
@@ -10,9 +11,10 @@ const Main = styled.main`
 export const MainPage = () => {
   return (
     <Main>
-      <ClassRecommend />
+      <TopBanner />
       <MainSearch />
       <Category />
+      <RecommendLecture />
     </Main>
   );
 };
