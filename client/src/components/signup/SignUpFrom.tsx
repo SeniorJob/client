@@ -44,20 +44,22 @@ const SingUpFrom: React.FC = () => {
     event.preventDefault();
 
     const userData = {
-      name: form.name,
-      phoneNumber: form.phone,
-      encryptionCode: form.pw,
-      confirmPassword: form.pwcf,
-      job: form.job,
-      dateOfBirth: form.birthday,
-      category: form.DtAddress,
-      region: form.address + form.DtAddress,
-      img: form.img,
+      userDto: {
+        name: form.name,
+        phoneNumber: form.phone,
+        encryptionCode: form.pw,
+        confirmPassword: form.pwcf,
+        job: form.job,
+        dateOfBirth: form.birthday,
+        category: form.interest,
+        region: form.address + form.DtAddress,
+      },
+      file: form.img,
     };
 
-    console.log('회원가입 정보', userData);
+    console.log('회원가입 정보', userData.userDto, userData.file);
     axios.post(
-      'http://ec2-52-78-219-176.ap-northeast-2.compute.amazonaws.com:8080/api/users/join',
+      'http://ec2-3-34-248-169.ap-northeast-2.compute.amazonaws.com:8080/api/users/join',
       userData,
     );
   };
