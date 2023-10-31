@@ -6,12 +6,14 @@ import Login from './components/login/login';
 import OpenClassPage from './components/openClass/OpenClassPage';
 import SignUp from './components/signup/SignUp';
 import { LectureList } from './pages/lectureList/LectureList';
+import { ScrollToTop } from './utils/scrollToTop';
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
         <Header />
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<Login />} />
