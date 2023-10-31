@@ -1,4 +1,9 @@
 import styled from 'styled-components';
+import { SearchBar } from '../../components/header/SearchBar';
+import { useState, useEffect } from 'react';
+import { LectureObject } from '../../types/LectureTypes';
+import { getLecture } from '../../api/lecture';
+import { LectureData } from '../../components/lecture/LectureData';
 
 const LectureFilter = styled.div`
   width: 200px;
@@ -7,10 +12,43 @@ const LectureFilter = styled.div`
 
 const LectureContents = styled.div`
   width: 100%;
-  background-color: #ccc;
+`;
+
+const LectureHeader = styled.header`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+`;
+
+const LectureContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const LectureItem = styled.div`
+  width: 25%;
+  padding: 0.7rem 0.4rem;
 `;
 
 export const LectureList = () => {
+  const [data, setData] = useState<LectureObject[]>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const lectureData = await getLecture(
+          'filter?filter=latest&descending=true',
+        );
+        setData(lectureData);
+        console.log(lectureData);
+      } catch (error) {
+        console.error('에러 발생:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <main id="main">
       <section className="lecture-list">
@@ -19,7 +57,21 @@ export const LectureList = () => {
             <aside>
               <LectureFilter>필터</LectureFilter>
             </aside>
-            <LectureContents></LectureContents>
+            <LectureContents>
+              <LectureHeader>
+                <h1 className="text-xl font-bold">강좌 탐색</h1>
+                <SearchBar />
+              </LectureHeader>
+              <div>
+                <LectureContainer>
+                  {data?.map(data => (
+                    <LectureItem>
+                      <LectureData data={data} />
+                    </LectureItem>
+                  ))}
+                </LectureContainer>
+              </div>
+            </LectureContents>
           </div>
         </div>
       </section>
