@@ -22,11 +22,23 @@ export const getPopularLecture = async (params?: string) => {
   }
 };
 
-export const getLecture = async (params?: string) => {
+export const getNewLecture = async (params?: string) => {
   try {
-    const res = await getData(`lectures/filter?${params}`);
+    const res = await getData(
+      `lectures/filter?filter=latest&descending=true${params}`,
+    );
     console.log(res.content);
     return res.content;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getLecture = async (params?: string) => {
+  try {
+    const res = await getData(`lectures/${params}`);
+    console.log(res);
+    return res.content ? res.content : res;
   } catch (err) {
     console.log(err);
   }
