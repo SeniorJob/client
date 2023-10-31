@@ -67,7 +67,7 @@ export const RecommendLecture = ({ recommendType }: recommendProps) => {
     };
 
     fetchData();
-  }, []);
+  }, [recommendType.params]);
 
   return (
     <section className="py-6">
