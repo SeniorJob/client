@@ -44,10 +44,16 @@ const CardContents = styled.div`
     align-items: center;
     gap: 0.4rem;
     .status {
-      color: red;
+      color: #a8b0ba;
+      &.available {
+        color: #82acc0;
+      }
+      &.inProgress {
+        color: #dcc56a;
+      }
     }
     .participants {
-      color: green;
+      color: #c7828d;
     }
   }
 `;
@@ -116,7 +122,17 @@ export const LectureData = ({ data }: LectureDataProps) => {
             <div className="lecture-creator">{data.creator}</div>
             <div className="lecture-price">₩{data.price?.toLocaleString()}</div>
             <div className="lecture-tags">
-              <Tag className="lecture-tags status">{data.status}</Tag>
+              <Tag
+                className={`lecture-tags status ${
+                  data.status === '신청가능상태'
+                    ? 'available'
+                    : data.status === '진행상태'
+                    ? 'inProgress'
+                    : ''
+                }`}
+              >
+                {data.status}
+              </Tag>
               {data.current_participants && data.current_participants > 0 ? (
                 <Tag className="lecture-tags participants">
                   +{data.current_participants}명
