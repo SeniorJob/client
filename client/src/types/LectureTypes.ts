@@ -7,9 +7,11 @@ export type LectureProps = {
   image_url?: string;
   title?: string;
   creator?: string;
+  content?: string;
   status?: string;
   price?: number;
   category?: string;
+  current_participants?: number;
 };
 
 export type LectureObject = {
