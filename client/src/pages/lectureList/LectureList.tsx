@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { LectureObject } from '../../types/LectureTypes';
 import { getLecture } from '../../api/lecture';
 import { LectureData } from '../../components/lecture/LectureData';
+import { useLocation } from 'react-router-dom';
 
 const LectureFilter = styled.div`
   width: 200px;
@@ -32,22 +33,26 @@ const LectureItem = styled.div`
 
 export const LectureList = () => {
   const [data, setData] = useState<LectureObject[]>();
+  const location = useLocation();
+  const searchParams = location.search;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const lectureData = await getLecture(
-          'filter?filter=latest&descending=true',
-        );
+        const lectureData = await getLecture(`filter${searchParams}`, {
+          filter: 'latest',
+          descending: true,
+        });
         setData(lectureData);
         console.log(lectureData);
+        console.log(searchParams);
       } catch (error) {
         console.error('에러 발생:', error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [searchParams]);
 
   return (
     <main id="main">
@@ -65,7 +70,7 @@ export const LectureList = () => {
               <div>
                 <LectureContainer>
                   {data?.map(data => (
-                    <LectureItem>
+                    <LectureItem key={data.create_id}>
                       <LectureData data={data} />
                     </LectureItem>
                   ))}

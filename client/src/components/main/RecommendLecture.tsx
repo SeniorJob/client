@@ -48,7 +48,10 @@ export const RecommendLecture = ({ recommendType }: recommendProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const lectureData = await getLecture(recommendType.params);
+        const lectureData = await getLecture(
+          recommendType.endPoint,
+          recommendType.params,
+        );
         setData(lectureData);
         console.log(lectureData);
       } catch (error) {
@@ -57,7 +60,7 @@ export const RecommendLecture = ({ recommendType }: recommendProps) => {
     };
 
     fetchData();
-  }, [recommendType.params]);
+  }, [recommendType.endPoint, recommendType.params]);
 
   return (
     <section className="py-6">
