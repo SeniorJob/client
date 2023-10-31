@@ -7,7 +7,7 @@ const Contents = styled.div`
   align-items: center;
 `;
 
-const SearchWrapper = styled.div`
+const SearchWrapper = styled.form`
   max-width: 580px;
   width: 100%;
   position: relative;
