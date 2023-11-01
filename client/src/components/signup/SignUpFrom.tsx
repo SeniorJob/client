@@ -18,7 +18,6 @@ const SingUpFrom: React.FC = () => {
     interest: '',
     address: '',
     DtAddress: '',
-    img: { ImgDefault },
   });
 
   const jobOptions = ['자영업자', '공무원', '프리랜서', '직장인', '전문직'];
