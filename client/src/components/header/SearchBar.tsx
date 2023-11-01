@@ -46,6 +46,7 @@ export const SearchBar = () => {
       onSubmit={e => {
         e.preventDefault();
         SearchSubmitHandler(navigate, inputValue);
+        setInputValue('');
       }}
     >
       <SearchButton>
