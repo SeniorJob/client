@@ -3,15 +3,23 @@ import IdIcon from '../../assets/images/IdIcon.svg';
 import PwIcon from '../../assets/images/PwIcon.svg';
 import styled from 'styled-components';
 import Logo from '../../assets/images/logo.png';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const LoginTop = () => {
+const LoginTop: React.FC = () => {
   const [id, setId] = useState<string>('');
   const [pw, setPw] = useState<string>('');
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const LoginSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
+  const LoginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    // 간단한 유효성 검사 예시: 아이디와 비밀번호가 비어있지 않아야 함
+    if (!id || !pw) {
+      setError('사용자 정보를 정확히 기입해 주세요.');
+      return;
+    }
 
     const loginData = {
       phoneNumber: id,
@@ -19,16 +27,42 @@ const LoginTop = () => {
     };
     axios
       .post(
-        'http://ec2-52-78-219-176.ap-northeast-2.compute.amazonaws.com:8080/api/users/login',
+        'http://ec2-3-34-248-169.ap-northeast-2.compute.amazonaws.com:8080/api/users/login',
         loginData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
       )
       .then(response => {
-        console.log(response.data);
+        // HTTP 응답 헤더에서 Set-Cookie를 추출합니다.
+        const setCookieHeader = response.headers['Set-Cookie'];
+        console.log(setCookieHeader);
+        if (setCookieHeader) {
+          // 배열의 쿠키 문자열을 하나의 문자열로 결합합니다.
+          const cookieString = setCookieHeader.join('; ');
+          setSessionId(cookieString);
+
+          console.log('로그인 성공');
+          console.log(sessionId);
+        } else {
+          // 'set-cookie' 헤더가 없는 경우 처리
+          setSessionId(null);
+          console.log('로그인 성공 (세션 쿠키 없음)');
+        }
       })
       .catch(error => {
         console.log(error);
+        setError('로그인 실패: ' + error.message);
       });
   };
+
+  useEffect(() => {
+    if (error) {
+      alert(error); // 에러 메시지를 알림창으로 출력
+    }
+  }, [error]);
 
   return (
     <LoginDownDivBox>
@@ -38,7 +72,7 @@ const LoginTop = () => {
         </LoginLeftText>
       </LoginLeftDivBox>
       <LoginRightDivBox>
-        <LoginInPutForm>
+        <LoginInPutForm onSubmit={LoginSubmit}>
           <InputWrapper>
             <img src={IdIcon} alt="아이디 아이콘"></img>
             <Input
@@ -57,10 +91,9 @@ const LoginTop = () => {
               onChange={e => setPw(e.target.value)}
             />
           </InputWrapper>
-          <LoginMainBtn onSubmit={LoginSubmit}>로그인</LoginMainBtn>
+          {error && <div className="text-red-500">{error}</div>}
+          <LoginMainBtn type="submit">로그인</LoginMainBtn>
         </LoginInPutForm>
-        <p>{id}</p>
-        <p>{pw}</p>
         <LoginDivBox>
           <LoginDivBox>
             <AccountHelpBox>

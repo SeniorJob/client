@@ -1,9 +1,6 @@
 import React from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 
-import tw from 'tailwind-styled-components';
-import styled from 'styled-components';
-
 interface SignPostCodeProps {
   setForm: React.Dispatch<React.SetStateAction<any>>; // 객체를 받아들일 수 있는 형식으로 변경
 }
