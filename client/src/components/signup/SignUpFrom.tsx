@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import 'react-calendar/dist/Calendar.css'; // css import
 import PostCode from './SignPostCode';
-
+import ImgDefault from '../../assets/images/imageDefault.png';
 import axios from 'axios';
 
 import tw from 'tailwind-styled-components';
@@ -18,7 +18,7 @@ const SingUpFrom: React.FC = () => {
     interest: '',
     address: '',
     DtAddress: '',
-    img: null,
+    img: { ImgDefault },
   });
 
   const jobOptions = ['자영업자', '공무원', '프리랜서', '직장인', '전문직'];
@@ -35,42 +35,34 @@ const SingUpFrom: React.FC = () => {
     '의료',
   ];
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  // const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
 
-    if (e.target.files) {
-      const uploadFile = e.target.files[0];
-      console.log(uploadFile);
-    }
-  };
+  //   if (e.target.files) {
+  //     const uploadFile = e.target.files[0];
+  //     console.log(uploadFile);
+  //   }
+  // };
 
   const SignUpSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    const userData = {
-      userDto: {
-        name: form.name,
-        phoneNumber: form.phone,
-        encryptionCode: form.pw,
-        confirmPassword: form.pwcf,
-        job: form.job,
-        dateOfBirth: form.birthday,
-        category: form.interest,
-        region: form.address + form.DtAddress,
-        file: form.img,
-      },
+    const userDto = {
+      name: form.name,
+      phoneNumber: form.phone,
+      encryptionCode: form.pw,
+      confirmPassword: form.pwcf,
+      job: form.job,
+      dateOfBirth: form.birthday,
+      category: form.interest,
+      region: form.address + form.DtAddress,
+      // file: form.img,
     };
-
-    console.log('회원가입 정보', userData.userDto);
+    console.log(userDto);
     axios
       .post(
         'http://ec2-3-34-248-169.ap-northeast-2.compute.amazonaws.com:8080/api/users/join',
-        userData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data', // 컨텐츠 타입을 multipart/form-data로 설정합니다.
-          },
-        },
+        userDto,
       )
       .then(response => {
         // 요청이 성공하면 서버 응답을 처리합니다.
@@ -174,7 +166,7 @@ const SingUpFrom: React.FC = () => {
             onChange={e => setForm({ ...form, DtAddress: e.target.value })}
           ></Input>
         </InputWrapper>
-        <InputWrapper>
+        {/* <InputWrapper>
           <InputLabel>프로필 이미지</InputLabel>
           <Input type="file" accept="image/*" onChange={handleFileSelect} />
           {form.img && (
@@ -187,7 +179,7 @@ const SingUpFrom: React.FC = () => {
               />
             </div>
           )}
-        </InputWrapper>
+        </InputWrapper> */}
         <SignUpBtn onClick={SignUpSubmit}>가입하기</SignUpBtn>
       </SignUpInputForm>
     </SignUpFromLayout>
