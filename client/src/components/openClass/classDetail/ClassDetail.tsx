@@ -1,6 +1,7 @@
 import tw from 'tailwind-styled-components';
 import { OpenButton } from '../OpenButton';
 import { FC, useState } from 'react';
+import styled from 'styled-components';
 
 const Container = tw.div`
   m-4
@@ -15,7 +16,6 @@ const SubTitle = tw.div`
   pb-4
   border-b-4
   border-dotted
-  border-gray-300
 `;
 
 interface ClassDetailProps {
@@ -34,14 +34,10 @@ const WeekClassTitle = tw.div`
   justify-between
 `;
 
-const WeekClassContent = tw.div`
-  px-6
-  py-2
-  bg-white
-  text-lg
-  border-b-2
-  border-solid
-  border-gray-300
+const WeekClassContent = styled.div`
+  padding: 10px;
+  background-color: white;
+  font-size: 1.2rem;
 `;
 
 const ActionButton = tw.div`
@@ -60,10 +56,19 @@ const AddButton = tw.div`
 
 interface WeekClassProps {
   week: number;
-  classTitle: string;
+  classTitle: string | null;
 }
 
 const WeekClass: FC<WeekClassProps> = ({ week, classTitle }) => {
+  const [contents, setContents] = useState<string[]>([]);
+
+  const addContent = () => {
+    const newContent = prompt('새로운 컨텐츠를 입력하세요');
+    if (newContent !== null) {
+      setContents([...contents, newContent]);
+    }
+  };
+
   return (
     <div>
       <WeekClassTitle>
@@ -75,20 +80,21 @@ const WeekClass: FC<WeekClassProps> = ({ week, classTitle }) => {
           <ActionButton>삭제</ActionButton>
         </div>
       </WeekClassTitle>
-      <WeekClassContent>유튜브란 무엇인가</WeekClassContent>
-      <WeekClassContent>구독이란?</WeekClassContent>
-      <AddButton>상세내용 추가하기</AddButton>
+      {contents.map((content, index) => (
+        <WeekClassContent key={index}>{content}</WeekClassContent>
+      ))}
+      <AddButton onClick={addContent}>상세내용 추가하기</AddButton>
     </div>
   );
 };
 
 const ClassDetail: FC<ClassDetailProps> = ({ nextTab }) => {
   const [week, setWeek] = useState(1);
-  const [classTitle, setClassTitle] = useState('(주차 제목이 들어갈 곳)');
+  const [classTitle, setClassTitle] = useState('');
 
-  // const addWeek = () => {
-  //   setWeeks([...week, weeks.length + 1]);
-  // };
+  const addWeek = () => {
+    setWeek([...week, week.length + 1]);
+  };
 
   return (
     <>
