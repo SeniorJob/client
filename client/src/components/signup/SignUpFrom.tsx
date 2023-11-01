@@ -47,22 +47,31 @@ const SingUpFrom: React.FC = () => {
   const SignUpSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    const userDto = {
-      name: form.name,
-      phoneNumber: form.phone,
-      encryptionCode: form.pw,
-      confirmPassword: form.pwcf,
-      job: form.job,
-      dateOfBirth: form.birthday,
-      category: form.interest,
-      region: form.address + form.DtAddress,
-      // file: form.img,
-    };
-    console.log(userDto);
+    const formData = new FormData();
+    formData.append(
+      'userDto',
+      JSON.stringify({
+        name: form.name,
+        phoneNumber: form.phone,
+        encryptionCode: form.pw,
+        confirmPassword: form.pwcf,
+        job: form.job,
+        dateOfBirth: form.birthday,
+        category: form.interest,
+        region: form.address + form.DtAddress,
+      }),
+    );
+
+    console.log(formData);
     axios
       .post(
         'http://ec2-3-34-248-169.ap-northeast-2.compute.amazonaws.com:8080/api/users/join',
-        userDto,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data', // 컨텐츠 타입을 multipart/form-data로 설정합니다.
+          },
+        },
       )
       .then(response => {
         // 요청이 성공하면 서버 응답을 처리합니다.
