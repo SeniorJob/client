@@ -6,6 +6,7 @@ import { getLecture } from '../../api/lecture';
 import { LectureData } from '../../components/lecture/LectureData';
 import { useLocation } from 'react-router-dom';
 import { Nodata } from './NoData';
+import { LoadingSpinner } from '../../components/lecture/LoadingSpinner';
 
 const LectureFilter = styled.div`
   width: 200px;
@@ -24,6 +25,8 @@ const LectureHeader = styled.header`
 `;
 
 const LectureContainer = styled.div`
+  min-height: 700px;
+  position: relative;
   display: flex;
   flex-wrap: wrap;
 `;
@@ -35,11 +38,13 @@ const LectureItem = styled.div`
 
 export const LectureList = () => {
   const [data, setData] = useState<LectureObject[]>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const location = useLocation();
   const searchParams = location.search;
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const lectureData = await getLecture(`filter${searchParams}`, {
           filter: 'latest',
@@ -50,6 +55,10 @@ export const LectureList = () => {
         console.log(searchParams);
       } catch (error) {
         console.error('에러 발생:', error);
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false); // 1초 후에 로딩 상태를 해제
+        }, 500);
       }
     };
 
@@ -71,7 +80,9 @@ export const LectureList = () => {
               </LectureHeader>
               <div>
                 <LectureContainer>
-                  {data && data.length > 0 ? (
+                  {isLoading ? (
+                    <LoadingSpinner />
+                  ) : data && data.length > 0 ? (
                     data?.map(data => (
                       <LectureItem key={data.create_id}>
                         <LectureData data={data} />
