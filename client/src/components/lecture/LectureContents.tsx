@@ -71,7 +71,7 @@ export const LectureContents = () => {
       } finally {
         setTimeout(() => {
           setIsLoading(false); // .5초 후에 로딩 상태를 해제
-        }, 500);
+        }, 200);
       }
     };
 
