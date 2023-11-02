@@ -35,7 +35,7 @@ const SearchButton = styled.button`
 
 export const SearchBar = ({ option }: { option?: string }) => {
   const navigate = useNavigate();
-  const { category, inputValue, setInputValue } = useSearchStore();
+  const { status, category, inputValue, setInputValue } = useSearchStore();
   const [value, setValue] = useState<string>('');
 
   return (
@@ -46,6 +46,7 @@ export const SearchBar = ({ option }: { option?: string }) => {
           navigate,
           option === 'header' ? value : inputValue,
           category,
+          status,
         );
         option === 'header' ? setValue('') : null;
         option === 'header' ? setInputValue(value) : null;
