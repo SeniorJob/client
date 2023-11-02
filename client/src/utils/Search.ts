@@ -16,7 +16,7 @@ export const SearchSubmitHandler = (
 
   const searchParams = new URLSearchParams(paramsObj);
   navigate({
-    pathname: '/lectures',
+    pathname: '/lectures/filter',
     search: `${searchParams.toString()}`,
   });
 };
