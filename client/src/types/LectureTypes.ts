@@ -11,6 +11,7 @@ export type LectureParamProps = {
   region?: string;
   status?: string;
   category?: string;
+  limit?: number;
 };
 
 export type LectureProps = {
