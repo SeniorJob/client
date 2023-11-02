@@ -3,6 +3,7 @@ import { OpenButton } from '../OpenButton';
 import { FC, useState } from 'react';
 import styled from 'styled-components';
 
+// 주차 form 컴포넌트 관련 코드
 const Container = tw.div`
   m-4
   p-4
@@ -16,6 +17,12 @@ const SubTitle = tw.div`
   pb-4
   border-b-4
   border-dotted
+`;
+
+const AddWeekButton = tw.div`
+  text-4xl
+  bg-white
+  p-2
 `;
 
 interface ClassDetailProps {
@@ -45,7 +52,7 @@ const ActionButton = tw.div`
   font-normal
 `;
 
-const AddButton = tw.div`
+const AddContentButton = tw.div`
   flex
   p-2
   text-lg
@@ -83,7 +90,9 @@ const WeekClass: FC<WeekClassProps> = ({ week, classTitle }) => {
       {contents.map((content, index) => (
         <WeekClassContent key={index}>{content}</WeekClassContent>
       ))}
-      <AddButton onClick={addContent}>상세내용 추가하기</AddButton>
+      <AddContentButton onClick={addContent}>
+        상세내용 추가하기
+      </AddContentButton>
     </div>
   );
 };
@@ -101,6 +110,7 @@ const ClassDetail: FC<ClassDetailProps> = ({ nextTab }) => {
       <Container>
         <SubTitle>주차 정보 및 주차별 학습 내용 입력</SubTitle>
         <WeekClass week={week} classTitle={classTitle} />
+        <AddWeekButton>주차 추가하기</AddWeekButton>
         <OpenButton onClick={() => nextTab()}>다음으로</OpenButton>
       </Container>
     </>
