@@ -42,11 +42,19 @@ const CategoryInput = styled.input`
 `;
 
 const Category = styled.div`
+  position: relative;
+  display: flex;
   font-size: 1rem;
   line-height: 1.1rem;
   padding: 1.1rem;
   width: 100%;
   border-bottom: 1px solid #ccc;
+  &::after {
+    position: absolute;
+    right: 1.1rem;
+    font-weight: 600;
+    content: '〉';
+  }
 `;
 
 export const LectureFilter = () => {
@@ -57,6 +65,7 @@ export const LectureFilter = () => {
   const curCategory = searchParams.get('category');
 
   const viewAll = () => {
+    setCategory('');
     searchParams.delete('category');
     navigate({
       pathname: '/lectures/filter',
