@@ -5,6 +5,7 @@ import { LectureObject } from '../../types/LectureTypes';
 import { getLecture } from '../../api/lecture';
 import { LectureData } from '../../components/lecture/LectureData';
 import { useLocation } from 'react-router-dom';
+import { Nodata } from './NoData';
 
 const LectureFilter = styled.div`
   width: 200px;
@@ -70,11 +71,15 @@ export const LectureList = () => {
               </LectureHeader>
               <div>
                 <LectureContainer>
-                  {data?.map(data => (
-                    <LectureItem key={data.create_id}>
-                      <LectureData data={data} />
-                    </LectureItem>
-                  ))}
+                  {data && data.length > 0 ? (
+                    data?.map(data => (
+                      <LectureItem key={data.create_id}>
+                        <LectureData data={data} />
+                      </LectureItem>
+                    ))
+                  ) : (
+                    <Nodata />
+                  )}
                 </LectureContainer>
               </div>
             </LectureContents>
