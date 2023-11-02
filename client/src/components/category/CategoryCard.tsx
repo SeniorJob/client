@@ -43,7 +43,7 @@ export const CategoryCard = ({ data }: CategoryProps) => {
     const searchParams = new URLSearchParams(location.search);
     searchParams.set('category', data.title);
     navigate({
-      pathname: '/lectures',
+      pathname: '/lectures/filter',
       search: `${searchParams.toString()}`,
     });
   };

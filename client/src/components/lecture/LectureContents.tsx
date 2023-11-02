@@ -43,7 +43,7 @@ export const LectureContents = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const lectureData = await getLecture(`filter${searchParams}`, {
+        const lectureData = await getLecture(`lectures/filter${searchParams}`, {
           filter: 'latest',
           descending: true,
         });
