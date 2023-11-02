@@ -105,9 +105,8 @@ export const LectureFilter = () => {
               </Category>
             </CategoryLabel>
             {categoryData.map(data => (
-              <CategoryLabel>
+              <CategoryLabel key={data.id}>
                 <Category
-                  key={data.id}
                   className={`${curCategory === data.title ? 'checked' : ''}`}
                 >
                   <CategoryInput
