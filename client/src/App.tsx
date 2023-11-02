@@ -18,7 +18,7 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/openclass" element={<OpenClassPage />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/lectures/filter" element={<LectureList />} />
+          <Route path="/lectures/filter?" element={<LectureList />} />
         </Routes>
       </div>
     </BrowserRouter>
