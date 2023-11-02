@@ -35,6 +35,9 @@ const CategoryLabel = styled.label`
       margin-right: 0.2rem;
     }
   }
+  &:hover {
+    background-color: #f1f1f1;
+  }
 `;
 
 const CategoryInput = styled.input`
