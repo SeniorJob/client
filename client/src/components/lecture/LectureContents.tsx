@@ -8,6 +8,7 @@ import { Nodata } from '../../pages/lectureList/NoData';
 import { getLecture } from '../../api/lecture';
 import { useLocation } from 'react-router-dom';
 import { useSearchStore } from '../../store/store';
+import { LectureFilter } from './LectureFilter';
 
 const Contents = styled.div`
   min-height: 700px;
@@ -86,6 +87,7 @@ export const LectureContents = () => {
         </HeaderTitle>
         <SearchBar />
       </LectureHeader>
+      <LectureFilter />
       <div>
         <LectureContainer>
           {isLoading ? (
