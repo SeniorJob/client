@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import Magnifier from '../../assets/images/magnifier.svg?react';
-import { SearchSubmitHandler } from '../../utils/Search';
+import { SearchHandleChange, SearchSubmitHandler } from '../../utils/Search';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useSearchStore } from '../../store/store';
 
 const StyledSearchBar = styled.form`
   position: relative;
@@ -32,21 +33,18 @@ const SearchButton = styled.button`
   color: black;
 `;
 
-export const SearchBar = () => {
+export const SearchBar = ({ option }: { option?: string }) => {
   const navigate = useNavigate();
-  const [inputValue, setInputValue] = useState<string>('');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-    console.log(`현재 검색어 : ${inputValue}`);
-  };
+  const { inputValue, setInputValue } = useSearchStore();
+  const [value, setValue] = useState<string>(inputValue);
 
   return (
     <StyledSearchBar
       onSubmit={e => {
         e.preventDefault();
-        SearchSubmitHandler(navigate, inputValue);
-        setInputValue('');
+        SearchSubmitHandler(navigate, option === 'header' ? value : inputValue);
+        option === 'header' ? setValue('') : null;
+        option === 'header' ? setInputValue(value) : null;
       }}
     >
       <SearchButton>
@@ -55,8 +53,12 @@ export const SearchBar = () => {
       <SearchBarInput
         type="text"
         placeholder=""
-        value={inputValue}
-        onChange={handleChange}
+        value={option === 'header' ? value : inputValue}
+        onChange={e => {
+          option === 'header'
+            ? SearchHandleChange(e, setValue)
+            : SearchHandleChange(e, setInputValue);
+        }}
       />
     </StyledSearchBar>
   );
