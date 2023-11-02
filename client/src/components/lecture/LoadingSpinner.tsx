@@ -18,7 +18,7 @@ export const LoadingSpinner = () => {
         ariaLabel="blocks-loading"
         wrapperStyle={{}}
         wrapperClass="blocks-wrapper"
-        colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+        colors={['#1dc078', '#1dc077a9', '#287d57', '#32a571', '#6ecfa3']}
       />
     </Spinner>
   );
