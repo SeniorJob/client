@@ -12,6 +12,7 @@ const LectureFilter = styled.div`
 `;
 
 const LectureContents = styled.div`
+  min-height: 700px;
   width: 100%;
 `;
 
@@ -57,7 +58,7 @@ export const LectureList = () => {
   return (
     <main id="main">
       <section className="lecture-list">
-        <div className="container p-8">
+        <div className="container p-8 relative">
           <div className="flex gap-5 w-full">
             <aside>
               <LectureFilter>필터</LectureFilter>
