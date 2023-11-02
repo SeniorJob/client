@@ -6,8 +6,15 @@ import {
   recommendNewest,
   recommendPopular,
 } from '../../components/main/recommendType';
+import { useEffect } from 'react';
+import { useSearchStore } from '../../store/store';
 
 export const MainPage = () => {
+  const { setInputValue } = useSearchStore();
+  useEffect(() => {
+    setInputValue('');
+  }, [setInputValue]);
+
   return (
     <main id="main">
       <TopBanner />
