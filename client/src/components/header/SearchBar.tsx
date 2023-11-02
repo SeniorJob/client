@@ -35,14 +35,18 @@ const SearchButton = styled.button`
 
 export const SearchBar = ({ option }: { option?: string }) => {
   const navigate = useNavigate();
-  const { inputValue, setInputValue } = useSearchStore();
-  const [value, setValue] = useState<string>(inputValue);
+  const { category, inputValue, setInputValue } = useSearchStore();
+  const [value, setValue] = useState<string>('');
 
   return (
     <StyledSearchBar
       onSubmit={e => {
         e.preventDefault();
-        SearchSubmitHandler(navigate, option === 'header' ? value : inputValue);
+        SearchSubmitHandler(
+          navigate,
+          option === 'header' ? value : inputValue,
+          category,
+        );
         option === 'header' ? setValue('') : null;
         option === 'header' ? setInputValue(value) : null;
       }}

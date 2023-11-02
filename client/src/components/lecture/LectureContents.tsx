@@ -7,6 +7,7 @@ import { LectureObject } from '../../types/LectureTypes';
 import { Nodata } from '../../pages/lectureList/NoData';
 import { getLecture } from '../../api/lecture';
 import { useLocation } from 'react-router-dom';
+import { useSearchStore } from '../../store/store';
 
 const Contents = styled.div`
   min-height: 700px;
@@ -34,6 +35,7 @@ const LectureItem = styled.div`
 export const LectureContents = () => {
   const [data, setData] = useState<LectureObject[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { category } = useSearchStore();
   const location = useLocation();
   const searchParams = location.search;
 
@@ -58,7 +60,7 @@ export const LectureContents = () => {
     };
 
     fetchData();
-  }, [searchParams]);
+  }, [searchParams, category]);
 
   return (
     <Contents>
