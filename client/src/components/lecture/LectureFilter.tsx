@@ -16,13 +16,19 @@ export const LectureFilter = () => {
   const curCategory = searchParams.get('category');
 
   const handleCategoryFilter = (category: string) => {
-    setCategory(category);
-    searchParams.set('category', category);
+    if (curCategory === category) {
+      // If the clicked category is the same as the current one, clear it.
+      setCategory('');
+      searchParams.delete('category');
+    } else {
+      // Set the new category.
+      setCategory(category);
+      searchParams.set('category', category);
+    }
     navigate({
-      pathname: '/lectures',
+      pathname: '/lectures/filter',
       search: searchParams.toString(),
     });
-    console.log(category);
   };
 
   return (
