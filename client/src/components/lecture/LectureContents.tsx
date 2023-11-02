@@ -81,7 +81,7 @@ export const LectureContents = () => {
     <Contents>
       <LectureHeader>
         <HeaderTitle className="text-xl flex gap-3">
-          <span>강좌 탐색</span>
+          <span>전체 강의</span>
           {category && <span className="category">{category}</span>}
         </HeaderTitle>
         <SearchBar />
