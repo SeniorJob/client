@@ -1,12 +1,23 @@
 import { NavigateFunction } from 'react-router-dom';
 
+type ParamProps = {
+  title?: string;
+  category?: string;
+};
+
 export const SearchSubmitHandler = (
   navigate: NavigateFunction,
-  query: string,
+  query?: string,
+  category?: string,
 ) => {
+  const paramsObj: ParamProps = {};
+  if (query) paramsObj.title = query;
+  if (category) paramsObj.category = category;
+
+  const searchParams = new URLSearchParams(paramsObj);
   navigate({
     pathname: '/lectures',
-    search: `?title=${query}`,
+    search: `${searchParams.toString()}`,
   });
 };
 
