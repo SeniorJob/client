@@ -34,7 +34,7 @@ export const Nodata = () => {
       <CautionSVG width={64} />
       <div className="mb-2 text-center">
         <p className="mainTitle">찾으려는 강좌가 없습니다.</p>
-        <p className="subTitle">이런 강좌는 어떠신가요?</p>
+        <p className="subTitle">이런 주제들로 찾아보는 건 어떠신가요?</p>
       </div>
       <div className="flex gap-1">
         {randomCategories.map(data => (
