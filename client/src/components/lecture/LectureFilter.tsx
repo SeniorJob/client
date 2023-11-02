@@ -28,6 +28,8 @@ const CategoryLabel = styled.label`
   gap: 0.4rem;
   .checked {
     color: var(--primaryColor);
+    font-weight: 500;
+    background-color: #eee;
     &::before {
       content: '✓';
       margin-right: 0.2rem;
@@ -41,7 +43,6 @@ const CategoryInput = styled.input`
 
 const Category = styled.div`
   font-size: 1rem;
-  font-weight: 500;
   line-height: 1.1rem;
   padding: 1.1rem;
   width: 100%;
