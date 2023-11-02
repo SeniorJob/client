@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 import CautionSVG from '../../assets/images/caution.svg?react';
 import { categoryData } from '../../components/category/categoryData';
 import { Tag } from '../../assets/styles/CommonStyles';
@@ -19,14 +20,23 @@ const NodataContent = styled.div`
     font-size: 0.9rem;
   }
 `;
+type Category = {
+  id: number;
+  title: string;
+};
 
 export const Nodata = () => {
-  // 랜덤으로 5개의 카테고리 데이터 선택
-  const getRandomCategories = () => {
-    const shuffledCategories = categoryData.sort(() => 0.5 - Math.random());
-    return shuffledCategories.slice(0, 5);
-  };
-  const randomCategories = getRandomCategories();
+  const [randomCategories, setRandomCategories] = useState<Category[]>([]);
+  const newData = [...categoryData];
+
+  useEffect(() => {
+    const getRandomCategories = () => {
+      const shuffledCategories = [...newData].sort(() => 0.5 - Math.random());
+      return shuffledCategories.slice(0, 5);
+    };
+
+    setRandomCategories(getRandomCategories());
+  }, []); // 최초 렌더링 시에 한 번만 실행
 
   return (
     <NodataContent>
@@ -37,7 +47,7 @@ export const Nodata = () => {
       </div>
       <div className="flex gap-1">
         {randomCategories.map(data => (
-          <Link to={`/lectures/filter?category=${data.title}`}>
+          <Link to={`/lectures/filter?category=${data.title}`} key={data.id}>
             <Tag>{data.title}</Tag>
           </Link>
         ))}
