@@ -18,6 +18,13 @@ const LectureHeader = styled.header`
   display: flex;
   justify-content: space-between;
   margin-bottom: 1.5rem;
+  .category {
+    &::before {
+      content: '/';
+      font-weight: 400;
+      margin-right: 12px;
+    }
+  }
 `;
 
 const LectureContainer = styled.div`
@@ -30,6 +37,14 @@ const LectureContainer = styled.div`
 const LectureItem = styled.div`
   width: 25%;
   padding: 0.7rem 0.4rem;
+`;
+
+const HeaderTitle = styled.h1`
+  span {
+    &:last-child {
+      font-weight: 600;
+    }
+  }
 `;
 
 export const LectureContents = () => {
@@ -54,7 +69,7 @@ export const LectureContents = () => {
         console.error('에러 발생:', error);
       } finally {
         setTimeout(() => {
-          setIsLoading(false); // 1초 후에 로딩 상태를 해제
+          setIsLoading(false); // .5초 후에 로딩 상태를 해제
         }, 500);
       }
     };
@@ -65,7 +80,10 @@ export const LectureContents = () => {
   return (
     <Contents>
       <LectureHeader>
-        <h1 className="text-xl font-bold">강좌 탐색</h1>
+        <HeaderTitle className="text-xl flex gap-3">
+          <span>강좌 탐색</span>
+          {category && <span className="category">{category}</span>}
+        </HeaderTitle>
         <SearchBar />
       </LectureHeader>
       <div>
