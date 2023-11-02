@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { CategoryProps } from '../../types/CategoryTypes';
 
 const Card = styled.div`
   width: 70px;
@@ -28,13 +29,6 @@ const CardButton = styled.button`
     }
   }
 `;
-
-type CategoryProps = {
-  data: {
-    img: string;
-    title: string;
-  };
-};
 
 export const CategoryCard = ({ data }: CategoryProps) => {
   return (
