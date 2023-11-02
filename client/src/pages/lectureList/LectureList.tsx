@@ -1,7 +1,16 @@
 import { LectureFilter } from '../../components/lecture/LectureFilter';
 import { LectureContents } from '../../components/lecture/LectureContents';
+import { useEffect } from 'react';
+import { useSearchStore } from '../../store/store';
 
 export const LectureList = () => {
+  // 카테고리 초기화
+  const { setCategory } = useSearchStore();
+
+  useEffect(() => {
+    setCategory('');
+  }, [setCategory]);
+
   return (
     <main id="main">
       <section className="lecture-list">
