@@ -60,7 +60,7 @@ const Category = styled.div`
   }
 `;
 
-export const LectureFilter = () => {
+export const LectureNav = () => {
   const { setCategory } = useSearchStore();
   const location = useLocation();
   const navigate = useNavigate();
