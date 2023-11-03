@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Magnifier from '../../assets/images/magnifier.svg?react';
-import { SearchHandleChange, SearchSubmitHandler } from '../../utils/Search';
+import { searchHandleChange, searchSubmitHandler } from '../../utils/Search';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useSearchStore } from '../../store/store';
@@ -42,7 +42,7 @@ export const SearchBar = ({ option }: { option?: string }) => {
     <StyledSearchBar
       onSubmit={e => {
         e.preventDefault();
-        SearchSubmitHandler(
+        searchSubmitHandler(
           navigate,
           option === 'header' ? value : inputValue,
           category,
@@ -61,8 +61,8 @@ export const SearchBar = ({ option }: { option?: string }) => {
         value={option === 'header' ? value : inputValue}
         onChange={e => {
           option === 'header'
-            ? SearchHandleChange(e, setValue)
-            : SearchHandleChange(e, setInputValue);
+            ? searchHandleChange(e, setValue)
+            : searchHandleChange(e, setInputValue);
         }}
       />
     </StyledSearchBar>

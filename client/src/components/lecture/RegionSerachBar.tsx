@@ -33,7 +33,11 @@ const RegionSearchButton = styled.button`
 export const RegionSearchBar = () => {
   return (
     <div className="flex items-center">
-      <RegionSearchForm>
+      <RegionSearchForm
+        onSubmit={e => {
+          e.preventDefault();
+        }}
+      >
         <RegionSearchInput placeholder="지역명 검색 예) 서울, 종로구" />
         <RegionSearchButton>
           <Magnifier width={20} height={20} />
