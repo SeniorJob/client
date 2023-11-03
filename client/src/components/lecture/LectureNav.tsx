@@ -70,10 +70,13 @@ export const LectureNav = () => {
   const viewAll = () => {
     setCategory('');
     searchParams.delete('category');
-    navigate({
-      pathname: '/lectures/filter',
-      search: searchParams.toString(),
-    });
+    navigate(
+      {
+        pathname: '/lectures/filter',
+        search: searchParams.toString(),
+      },
+      { replace: true },
+    );
     console.log(curCategory);
   };
 
@@ -85,10 +88,13 @@ export const LectureNav = () => {
       setCategory(category);
       searchParams.set('category', category);
     }
-    navigate({
-      pathname: '/lectures/filter',
-      search: searchParams.toString(),
-    });
+    navigate(
+      {
+        pathname: '/lectures/filter',
+        search: searchParams.toString(),
+      },
+      { replace: true },
+    );
   };
 
   return (

@@ -9,6 +9,7 @@ import {
   FilterLabel,
   FilterTag,
 } from '../../assets/styles/filterStyle';
+import { SortFilter } from './SortFilter';
 
 const StatusFilter = styled.div`
   display: flex;
@@ -32,31 +33,37 @@ export const LectureFilter = () => {
       setStatus(status);
       searchParams.set('status', status);
     }
-    navigate({
-      pathname: '/lectures/filter',
-      search: searchParams.toString(),
-    });
+    navigate(
+      {
+        pathname: '/lectures/filter',
+        search: searchParams.toString(),
+      },
+      { replace: true },
+    );
   };
 
   return (
     <div className="flex flex-col gap-2">
       <RegionSearchBar />
-      <StatusFilter>
-        <FilterSVG width={24} height={24} />
-        {statusData.map(status => (
-          <FilterLabel key={status.id}>
-            <FilterTag className={curStatus === status.name ? 'checked' : ''}>
-              <FilterInput
-                type="checkbox"
-                value={status.name}
-                checked={curStatus === status.name}
-                onChange={() => handleStatusFilter(status.name)}
-              />
-              {status.name}
-            </FilterTag>
-          </FilterLabel>
-        ))}
-      </StatusFilter>
+      <div className="flex gap-2 justify-between items-center">
+        <StatusFilter>
+          <FilterSVG width={24} height={24} />
+          {statusData.map(status => (
+            <FilterLabel key={status.id}>
+              <FilterTag className={curStatus === status.name ? 'checked' : ''}>
+                <FilterInput
+                  type="checkbox"
+                  value={status.name}
+                  checked={curStatus === status.name}
+                  onChange={() => handleStatusFilter(status.name)}
+                />
+                {status.name}
+              </FilterTag>
+            </FilterLabel>
+          ))}
+        </StatusFilter>
+        <SortFilter />
+      </div>
     </div>
   );
 };
