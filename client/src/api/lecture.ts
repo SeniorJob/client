@@ -46,7 +46,7 @@ export const getLecture = async (
   params?: LectureParamProps,
 ) => {
   try {
-    const res = await getData(`lectures/${endpoint}`, params);
+    const res = await getData(`${endpoint}`, params);
     console.log(res);
     return res.content ? res.content : res;
   } catch (err) {

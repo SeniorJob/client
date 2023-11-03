@@ -59,7 +59,7 @@ export const Header = () => {
               <img src={images.logo} alt="Page Main Logo" />
             </Link>
           </Logo>
-          <SearchBar />
+          <SearchBar option="header" />
           <NavBar>
             <NavMenu />
             <UserMenu />

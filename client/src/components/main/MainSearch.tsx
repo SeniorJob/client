@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import Magnifier from '../../assets/images/magnifier.svg?react';
+import { SearchHandleChange, SearchSubmitHandler } from '../../utils/Search';
+import { useNavigate } from 'react-router-dom';
+import { useSearchStore } from '../../store/store';
 
 const Contents = styled.div`
   display: flex;
@@ -7,7 +10,7 @@ const Contents = styled.div`
   align-items: center;
 `;
 
-const SearchWrapper = styled.form`
+const SearchForm = styled.form`
   max-width: 580px;
   width: 100%;
   position: relative;
@@ -49,6 +52,9 @@ const SearchButton = styled.button`
 `;
 
 export const MainSearch = () => {
+  const navigate = useNavigate();
+  const { inputValue, setInputValue } = useSearchStore();
+
   return (
     <section className="search pt-8 pb-6">
       <div className="container">
@@ -56,15 +62,22 @@ export const MainSearch = () => {
           <h1 className="text-2xl font-medium mb-5">
             당신의 강좌를 찾고 있나요?
           </h1>
-          <SearchWrapper>
+          <SearchForm
+            onSubmit={e => {
+              e.preventDefault();
+              SearchSubmitHandler(navigate, inputValue);
+            }}
+          >
             <MainSearchBar
               type="text"
               placeholder="배우고 싶은 지식을 입력해보세요."
+              // value={inputValue}
+              onChange={e => SearchHandleChange(e, setInputValue)}
             />
             <SearchButton>
               <Magnifier width={28} height={28} />
             </SearchButton>
-          </SearchWrapper>
+          </SearchForm>
         </Contents>
       </div>
     </section>
