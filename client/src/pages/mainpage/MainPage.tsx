@@ -1,18 +1,20 @@
-import styled from 'styled-components';
-import { ClassRecommend } from '../../components/main/ClassRecommend';
+import { TopBanner } from '../../components/main/TopBanner';
 import { MainSearch } from '../../components/main/MainSearch';
 import { Category } from '../../components/main/Category';
-
-const Main = styled.main`
-  min-height: 800px;
-`;
+import { RecommendLecture } from '../../components/main/RecommendLecture';
+import {
+  recommendNewest,
+  recommendPopular,
+} from '../../components/main/recommendType';
 
 export const MainPage = () => {
   return (
-    <Main>
-      <ClassRecommend />
+    <main id="main">
+      <TopBanner />
       <MainSearch />
       <Category />
-    </Main>
+      <RecommendLecture recommendType={recommendPopular} />
+      <RecommendLecture recommendType={recommendNewest} />
+    </main>
   );
 };

@@ -3,6 +3,7 @@ import LoginComponent from '../login/login';
 import { useState } from 'react';
 
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const MenuList = styled.div`
   display: flex;
@@ -30,7 +31,7 @@ export const UserMenu = () => {
         </ModalBackdrop>
       ) : null}
       <StyledUserMenu>
-        <a href="signup">회원가입</a>
+        <Link to={'/signup'}>회원가입</Link>
       </StyledUserMenu>
     </MenuList>
   );

@@ -21,7 +21,7 @@ export const NavMenu = () => {
       <ul>
         <li>
           <StyledMenu>
-            <Link to="#">강좌탐색</Link>
+            <Link to="/lectures">강좌탐색</Link>
           </StyledMenu>
         </li>
         <li>

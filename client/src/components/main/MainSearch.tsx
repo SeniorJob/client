@@ -7,7 +7,7 @@ const Contents = styled.div`
   align-items: center;
 `;
 
-const SearchWrapper = styled.div`
+const SearchWrapper = styled.form`
   max-width: 580px;
   width: 100%;
   position: relative;
@@ -23,7 +23,7 @@ const MainSearchBar = styled.input`
   width: 100%;
   max-width: 100%;
   background-color: rgba(33, 142, 91, 0.1);
-  border: 1px solid #0978464c;
+  border: 2px solid #0978464c;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   padding: 14px 20px;
   border-radius: 28px;
@@ -31,8 +31,8 @@ const MainSearchBar = styled.input`
   transition: all 0.2s ease;
   &:focus {
     outline: unset;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    border: 1px solid #dedede;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    border: 2px solid #dedede;
     background-color: #fff;
   }
 `;

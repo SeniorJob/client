@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import Magnifier from '../../assets/images/magnifier.svg?react';
+import { SearchSubmitHandler } from '../../utils/Search';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const StyledSearchBar = styled.form`
   position: relative;
@@ -13,6 +16,7 @@ const SearchBarInput = styled.input`
   width: 100%;
   height: 35px;
   padding: 7.8px 9.1px 7.8px 40px;
+  border: 1px solid #ccc;
   background-color: #f6f6f6;
   border-radius: 1rem;
   &:focus-within {
@@ -29,12 +33,30 @@ const SearchButton = styled.button`
 `;
 
 export const SearchBar = () => {
+  const navigate = useNavigate();
+  const [inputValue, setInputValue] = useState<string>('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    console.log(`현재 검색어 : ${inputValue}`);
+  };
+
   return (
-    <StyledSearchBar>
+    <StyledSearchBar
+      onSubmit={e => {
+        e.preventDefault();
+        SearchSubmitHandler(navigate, inputValue);
+      }}
+    >
       <SearchButton>
         <Magnifier width="24" height="24" />
       </SearchButton>
-      <SearchBarInput type="text" placeholder="검색어를 입력하세요" />
+      <SearchBarInput
+        type="text"
+        placeholder=""
+        value={inputValue}
+        onChange={handleChange}
+      />
     </StyledSearchBar>
   );
 };
