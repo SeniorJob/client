@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { statusData } from './statusData';
+import { statusData } from './filterData';
 import FilterSVG from '../../assets/images/filter.svg?react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSearchStore } from '../../store/store';
