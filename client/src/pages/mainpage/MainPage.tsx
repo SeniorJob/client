@@ -11,6 +11,7 @@ import { useSearchStore } from '../../store/store';
 
 export const MainPage = () => {
   const { setInputValue, setCategory } = useSearchStore();
+
   useEffect(() => {
     setCategory('');
     setInputValue('');

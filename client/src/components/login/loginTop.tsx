@@ -5,14 +5,21 @@ import styled from 'styled-components';
 import Logo from '../../assets/images/logo.png';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useUserStore } from '../../store/user';
 
 const LoginTop: React.FC = () => {
   const [id, setId] = useState<string>('');
   const [pw, setPw] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
 
+  const setIsLoggedIn = useUserStore().setIsLoggedIn;
+
   const LoginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const loginData = {
+      phoneNumber: id,
+      password: pw,
+    };
 
     // 간단한 유효성 검사 예시: 아이디와 비밀번호가 비어있지 않아야 함
     if (!id || !pw) {
@@ -20,26 +27,17 @@ const LoginTop: React.FC = () => {
       return;
     }
 
-    const loginData = {
-      phoneNumber: id,
-      password: pw,
-    };
     axios
-      .post(
-        'http://ec2-3-34-248-169.ap-northeast-2.compute.amazonaws.com:8080/api/users/login',
-        loginData,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          withCredentials: true, // axios에서 쿠키를 보내고 받도록 활성화
+      .post(`${import.meta.env.VITE_API_URL}api/users/login`, loginData, {
+        headers: {
+          'Content-Type': 'application/json',
         },
-      )
+      })
       .then(response => {
-        // 로그인 성공 시 세션 ID가 서버에서 설정된 상태일 것입니다.
+        // 로그인 성공 시 isLoggedIn을 true로 바꿈. (true -> 로그인 중)
+        setIsLoggedIn();
         console.log(response); // 서버 응답 데이터 확인
         // 메인페이지로 연결.
-        // 헤더가 바뀌어야 됨. 뭐를 기준으로 헤더가 바뀌느냐.
       })
       .catch(error => {
         console.log(error.message, error);
