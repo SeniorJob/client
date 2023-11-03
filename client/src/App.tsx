@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { Header } from './components/header/Header';
 import { MainPage } from './pages/mainpage/MainPage';
+
 import OpenClassPage from './components/openClass/OpenClassPage';
 import SignUp from './components/signup/SignUp';
 import { LectureList } from './pages/lectureList/LectureList';
