@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import Magnifier from '../../assets/images/magnifier.svg?react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSearchStore } from '../../store/store';
 
 const RegionSearchForm = styled.form`
   position: relative;
@@ -31,14 +33,35 @@ const RegionSearchButton = styled.button`
 `;
 
 export const RegionSearchBar = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const searchParams = new URLSearchParams(location.search);
+  const { region, setRegion } = useSearchStore();
+  const handleRegionFilter = (region: string) => {
+    region ? searchParams.set('region', region) : searchParams.delete('region');
+    navigate({
+      pathname: '/lectures/filter',
+      search: searchParams.toString(),
+    });
+    setRegion(region);
+  };
+
   return (
     <div className="flex items-center">
       <RegionSearchForm
         onSubmit={e => {
           e.preventDefault();
+          handleRegionFilter(region);
         }}
       >
-        <RegionSearchInput placeholder="지역명 검색 예) 서울, 종로구" />
+        <RegionSearchInput
+          type="text"
+          placeholder="지역명 검색 예) 서울, 종로구"
+          value={region}
+          onChange={e => {
+            setRegion(e.target.value);
+          }}
+        />
         <RegionSearchButton>
           <Magnifier width={20} height={20} />
         </RegionSearchButton>
