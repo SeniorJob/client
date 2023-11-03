@@ -42,6 +42,7 @@ export const SearchBar = ({ option }: { option?: string }) => {
   return (
     <StyledSearchBar
       onSubmit={e => {
+        e.stopPropagation();
         e.preventDefault();
         searchSubmitHandler(
           navigate,
@@ -54,7 +55,19 @@ export const SearchBar = ({ option }: { option?: string }) => {
         option === 'header' ? setInputValue(value) : null;
       }}
     >
-      <SearchButton>
+      <SearchButton
+        onClick={e => {
+          e.stopPropagation();
+          e.preventDefault();
+          searchSubmitHandler(
+            navigate,
+            option === 'header' ? value : inputValue,
+            category,
+            status,
+            region,
+          );
+        }}
+      >
         <Magnifier width="24" height="24" />
       </SearchButton>
       <SearchBarInput
