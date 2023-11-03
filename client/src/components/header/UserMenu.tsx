@@ -19,9 +19,14 @@ export const UserMenu = () => {
 
   return (
     <MenuList>
-      <StyledUserMenu>
-        <button onClick={handleModal}>로그인</button>
-      </StyledUserMenu>
+      <button
+        onClick={e => {
+          e.preventDefault();
+          handleModal();
+        }}
+      >
+        <StyledUserMenu>로그인</StyledUserMenu>
+      </button>
       {isModal ? (
         <ModalBackdrop onClick={handleModal}>
           <ModalView onClick={e => e.stopPropagation()}>
@@ -30,9 +35,9 @@ export const UserMenu = () => {
           </ModalView>
         </ModalBackdrop>
       ) : null}
-      <StyledUserMenu>
-        <Link to={'/signup'}>회원가입</Link>
-      </StyledUserMenu>
+      <Link to={'/signup'}>
+        <StyledUserMenu>회원가입</StyledUserMenu>
+      </Link>
     </MenuList>
   );
 };

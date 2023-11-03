@@ -49,7 +49,7 @@ export const RecommendLecture = ({ recommendType }: recommendProps) => {
     const fetchData = async () => {
       try {
         const lectureData = await getLecture(
-          recommendType.endPoint,
+          `lectures/${recommendType.endPoint}`,
           recommendType.params,
         );
         setData(lectureData);
