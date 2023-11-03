@@ -37,7 +37,7 @@ const LoginTop: React.FC = () => {
       )
       .then(response => {
         // 로그인 성공 시 세션 ID가 서버에서 설정된 상태일 것입니다.
-        console.log(response.data); // 서버 응답 데이터 확인
+        console.log(response); // 서버 응답 데이터 확인
         // 메인페이지로 연결.
         // 헤더가 바뀌어야 됨. 뭐를 기준으로 헤더가 바뀌느냐.
       })

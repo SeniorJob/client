@@ -23,8 +23,8 @@ export const UserMenu = () => {
         <button onClick={handleModal}>로그인</button>
       </StyledUserMenu>
       {isModal ? (
-        <ModalBackdrop>
-          <ModalView>
+        <ModalBackdrop onClick={handleModal}>
+          <ModalView onClick={e => e.stopPropagation()}>
             <ModalExitBtn onClick={handleModal}>x</ModalExitBtn>
             <LoginComponent />
           </ModalView>
@@ -54,6 +54,7 @@ const ModalBackdrop = styled.div`
 
 const ModalView = styled.div`
   // Modal창 CSS를 구현합니다.
+  z-index: 3;
   display: flex;
   align-items: center;
   border-radius: 20px;
