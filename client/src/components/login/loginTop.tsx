@@ -14,7 +14,7 @@ const LoginTop: React.FC = () => {
   const LoginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // 간단한 유효성 검사 예시: 아이디와 비밀번호가 비어있지 않아야 함
+    // 간단한 유효성 검사 : 아이디와 비밀번호가 비어있지 않아야 함
     if (!id || !pw) {
       setError('사용자 정보를 정확히 기입해 주세요.');
       return;

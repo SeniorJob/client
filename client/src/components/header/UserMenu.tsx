@@ -25,7 +25,6 @@ export const UserMenu = () => {
       {isModal ? (
         <ModalBackdrop onClick={handleModal}>
           <ModalView onClick={e => e.stopPropagation()}>
-            <ModalExitBtn onClick={handleModal}>x</ModalExitBtn>
             <LoginComponent />
           </ModalView>
         </ModalBackdrop>
@@ -59,13 +58,4 @@ const ModalView = styled.div`
   align-items: center;
   border-radius: 20px;
   background-color: #ffffff;
-`;
-
-const ModalExitBtn = styled.button`
-  z-index: 1;
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  width: 30px;
-  border: solid 1px black;
 `;
