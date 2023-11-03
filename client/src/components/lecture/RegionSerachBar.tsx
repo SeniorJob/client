@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Magnifier from '../../assets/images/magnifier.svg?react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSearchStore } from '../../store/store';
+import DeleteSVG from '../../assets/images/delete.svg?react';
 
 const RegionSearchForm = styled.form`
   position: relative;
@@ -14,7 +15,8 @@ const RegionSearchForm = styled.form`
 `;
 
 const RegionSearchInput = styled.input`
-  width: 200px;
+  width: 220px;
+  padding-right: 45px;
   &:focus-within {
     outline: none;
   }
@@ -32,11 +34,22 @@ const RegionSearchButton = styled.button`
   width: 30px;
 `;
 
+const QueryResetButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 35px;
+  height: 100%;
+`;
+
 export const RegionSearchBar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
   const { region, setRegion } = useSearchStore();
+
   const handleRegionFilter = (region: string) => {
     region ? searchParams.set('region', region) : searchParams.delete('region');
     navigate({
@@ -46,10 +59,15 @@ export const RegionSearchBar = () => {
     setRegion(region);
   };
 
+  const resetRegion = () => {
+    setRegion('');
+  };
+
   return (
     <div className="flex items-center">
       <RegionSearchForm
         onSubmit={e => {
+          e.stopPropagation();
           e.preventDefault();
           handleRegionFilter(region);
         }}
@@ -62,9 +80,24 @@ export const RegionSearchBar = () => {
             setRegion(e.target.value);
           }}
         />
-        <RegionSearchButton>
+        <RegionSearchButton
+          onClick={e => {
+            e.stopPropagation();
+            e.preventDefault();
+            handleRegionFilter(region);
+          }}
+        >
           <Magnifier width={20} height={20} />
         </RegionSearchButton>
+        <QueryResetButton
+          onClick={e => {
+            e.stopPropagation();
+            e.preventDefault();
+            resetRegion();
+          }}
+        >
+          <DeleteSVG width={16} height={16} />
+        </QueryResetButton>
       </RegionSearchForm>
     </div>
   );
