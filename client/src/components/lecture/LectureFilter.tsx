@@ -4,7 +4,7 @@ import { statusData } from './statusData';
 import FilterSVG from '../../assets/images/filter.svg?react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSearchStore } from '../../store/store';
-import { RegionSearchBar } from './RegionSerachBar';
+import { RegionSearchBar } from './RegionSearchBar';
 
 const StatusFilter = styled.div`
   display: flex;

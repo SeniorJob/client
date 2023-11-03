@@ -61,6 +61,7 @@ export const RegionSearchBar = () => {
 
   const resetRegion = () => {
     setRegion('');
+    searchParams.delete('region');
   };
 
   return (
