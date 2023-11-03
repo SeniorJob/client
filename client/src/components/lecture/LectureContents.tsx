@@ -54,6 +54,8 @@ export const LectureContents = () => {
   const { category } = useSearchStore();
   const location = useLocation();
   const searchParams = location.search;
+  const searchParam = new URLSearchParams(location.search);
+  const curCategory = searchParam.get('category');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,8 +66,6 @@ export const LectureContents = () => {
           descending: true,
         });
         setData(lectureData);
-        console.log(lectureData);
-        console.log(searchParams);
       } catch (error) {
         console.error('에러 발생:', error);
       } finally {
@@ -83,7 +83,7 @@ export const LectureContents = () => {
       <LectureHeader>
         <HeaderTitle className="text-xl flex gap-3">
           <span>전체 강의</span>
-          {category && <span className="category">{category}</span>}
+          {curCategory && <span className="category">{curCategory}</span>}
         </HeaderTitle>
         <SearchBar />
       </LectureHeader>
