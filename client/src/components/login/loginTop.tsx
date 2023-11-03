@@ -9,7 +9,6 @@ import axios from 'axios';
 const LoginTop: React.FC = () => {
   const [id, setId] = useState<string>('');
   const [pw, setPw] = useState<string>('');
-  const [sessionId, setSessionId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const LoginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -33,28 +32,18 @@ const LoginTop: React.FC = () => {
           headers: {
             'Content-Type': 'application/json',
           },
+          withCredentials: true, // axios에서 쿠키를 보내고 받도록 활성화
         },
       )
       .then(response => {
-        // HTTP 응답 헤더에서 Set-Cookie를 추출합니다.
-        const setCookieHeader = response.headers['Set-Cookie'];
-        console.log(setCookieHeader);
-        if (setCookieHeader) {
-          // 배열의 쿠키 문자열을 하나의 문자열로 결합합니다.
-          const cookieString = setCookieHeader.join('; ');
-          setSessionId(cookieString);
-
-          console.log('로그인 성공');
-          console.log(sessionId);
-        } else {
-          // 'set-cookie' 헤더가 없는 경우 처리
-          setSessionId(null);
-          console.log('로그인 성공 (세션 쿠키 없음)');
-        }
+        // 로그인 성공 시 세션 ID가 서버에서 설정된 상태일 것입니다.
+        console.log(response); // 서버 응답 데이터 확인
+        // 메인페이지로 연결.
+        // 헤더가 바뀌어야 됨. 뭐를 기준으로 헤더가 바뀌느냐.
       })
       .catch(error => {
-        console.log(error);
-        setError('로그인 실패: ' + error.message);
+        console.log(error.message, error);
+        setError('로그인 실패:' + error.message);
       });
   };
 
