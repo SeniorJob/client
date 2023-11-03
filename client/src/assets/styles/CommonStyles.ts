@@ -11,3 +11,10 @@ export const Tag = styled.span`
   line-height: 1.1rem;
   font-weight: 600;
 `;
+
+export const Divider = styled.div`
+  margin: 0 1rem;
+  width: 1px;
+  height: 36px;
+  background-color: #dee2e6;
+`;
