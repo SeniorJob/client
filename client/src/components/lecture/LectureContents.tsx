@@ -51,7 +51,7 @@ const HeaderTitle = styled.h1`
 export const LectureContents = () => {
   const [data, setData] = useState<LectureObject[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { category } = useSearchStore();
+  const { category, filterMethod, descending } = useSearchStore();
   const location = useLocation();
   const searchParams = location.search;
   const searchParam = new URLSearchParams(location.search);
@@ -61,10 +61,14 @@ export const LectureContents = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const lectureData = await getLecture(`lectures/filter${searchParams}`, {
-          filter: 'latest',
-          descending: true,
-        });
+        const params: { filter?: string; descending?: boolean } = {};
+        if (filterMethod) params.filter = filterMethod;
+        if (!descending) params.descending = descending; // descending의 기본값은 true이므로 false일때만 추가
+
+        const lectureData = await getLecture(
+          `lectures/filter${searchParams}`,
+          params,
+        );
         setData(lectureData);
       } catch (error) {
         console.error('에러 발생:', error);
@@ -76,7 +80,7 @@ export const LectureContents = () => {
     };
 
     fetchData();
-  }, [searchParams, category]);
+  }, [searchParams, category, descending, filterMethod]);
 
   return (
     <Contents>

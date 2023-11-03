@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { statusData } from './filterData';
-import FilterSVG from '../../assets/images/filter.svg?react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSearchStore } from '../../store/store';
+import FilterSVG from '../../assets/images/filter.svg?react';
 import { RegionSearchBar } from './RegionSearchBar';
 import {
   FilterInput,
@@ -10,6 +10,8 @@ import {
   FilterTag,
 } from '../../assets/styles/filterStyle';
 import { SortFilter } from './SortFilter';
+import { Divider } from '../../assets/styles/CommonStyles';
+import { PriceSortFilter } from './PriceSortFilter';
 
 const StatusFilter = styled.div`
   display: flex;
@@ -43,9 +45,9 @@ export const LectureFilter = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex justify-between">
       <RegionSearchBar />
-      <div className="flex gap-2 justify-between items-center">
+      <div className="flex justify-between items-center">
         <StatusFilter>
           <FilterSVG width={24} height={24} />
           {statusData.map(status => (
@@ -62,6 +64,9 @@ export const LectureFilter = () => {
             </FilterLabel>
           ))}
         </StatusFilter>
+        <Divider />
+        <PriceSortFilter />
+        <Divider />
         <SortFilter />
       </div>
     </div>
