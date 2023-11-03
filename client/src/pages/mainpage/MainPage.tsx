@@ -10,12 +10,13 @@ import { useEffect } from 'react';
 import { useSearchStore } from '../../store/store';
 
 export const MainPage = () => {
-  const { setInputValue, setCategory } = useSearchStore();
+  const { setInputValue, setCategory, setRegion } = useSearchStore();
 
   useEffect(() => {
     setCategory('');
     setInputValue('');
-  }, [setInputValue, setCategory]);
+    setRegion('');
+  }, [setInputValue, setCategory, setRegion]);
 
   return (
     <main id="main">
