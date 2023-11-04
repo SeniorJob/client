@@ -5,15 +5,16 @@ const PageButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.8rem;
-  width: 20px;
-  height: 20px;
+  padding: 0.2rem 0.7rem;
   border: 1px solid #ccc;
   border-radius: 0.4rem;
   &.current {
     border-color: var(--primaryColor);
     background-color: var(--primaryColor);
     color: #fff;
+  }
+  &:disabled {
+    visibility: hidden;
   }
 `;
 
@@ -42,8 +43,14 @@ export const LectureFooter = ({
   };
 
   return (
-    <div>
-      <div className="pagination flex gap-2 justify-center my-3">
+    <div className="flex justify-between items-center my-3">
+      <PageButton
+        onClick={() => paginate(Number(page) - 1)}
+        disabled={page === 1}
+      >
+        이전 페이지
+      </PageButton>
+      <div className="pagination flex gap-2 justify-center">
         {pageNumber.map((num, idx) => (
           <PageButton
             key={idx + 1}
@@ -58,6 +65,12 @@ export const LectureFooter = ({
           </PageButton>
         ))}
       </div>
+      <PageButton
+        onClick={() => paginate(Number(page) + 1)}
+        disabled={page === totalPages}
+      >
+        다음 페이지
+      </PageButton>
     </div>
   );
 };
