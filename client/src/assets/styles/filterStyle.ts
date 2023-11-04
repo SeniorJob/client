@@ -14,6 +14,9 @@ export const FilterTag = styled(Tag)`
       margin-right: 0.2rem;
     }
   }
+  &:hover {
+    background-color: #f0f0f0;
+  }
 `;
 
 export const FilterLabel = styled.label`

@@ -8,6 +8,9 @@ const PageButton = styled.button`
   padding: 0.2rem 0.7rem;
   border: 1px solid #ccc;
   border-radius: 0.4rem;
+  &:hover {
+    background-color: #f0f0f0;
+  }
   &.current {
     border-color: var(--primaryColor);
     background-color: var(--primaryColor);
