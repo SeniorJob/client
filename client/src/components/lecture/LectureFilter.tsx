@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { RegionSearchBar } from './RegionSearchBar';
-import { SortFilter } from './SortFilter';
+import { SortFilter } from './filter/SortFilter';
 import { Divider } from '../../assets/styles/CommonStyles';
-import { PriceSortFilter } from './PriceSortFilter';
-import { StatusFilter } from './StatusFilter';
+import { PriceSortFilter } from './filter/PriceSortFilter';
+import { StatusFilter } from './filter/StatusFilter';
 
 const FilterContainer = styled.div`
   display: flex;

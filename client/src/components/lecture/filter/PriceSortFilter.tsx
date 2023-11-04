@@ -2,8 +2,8 @@ import {
   FilterInput,
   FilterLabel,
   FilterTag,
-} from '../../assets/styles/filterStyle';
-import { useSearchStore } from '../../store/store';
+} from '../../../assets/styles/filterStyle';
+import { useSearchStore } from '../../../store/store';
 import { sortPriceData } from './filterData';
 import styled from 'styled-components';
 

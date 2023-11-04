@@ -1,11 +1,11 @@
 import { statusData } from './filterData';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSearchStore } from '../../store/store';
+import { useSearchStore } from '../../../store/store';
 import {
   FilterInput,
   FilterLabel,
   FilterTag,
-} from '../../assets/styles/filterStyle';
+} from '../../../assets/styles/filterStyle';
 
 export const StatusFilter = () => {
   const location = useLocation();
