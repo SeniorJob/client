@@ -1,12 +1,14 @@
-import tw from 'tailwind-styled-components';
+import styled from 'styled-components';
 
-export const TextBox = tw.textarea`
-    p-2
-    w-3/4
-    h-48
+export const TextBox = styled.textarea`
+  width: 75%;
+  height: 300px;
+  border: 1px solid black;
+  padding: 5px;
+  align-items: center;
 `;
 
-export const OneLineTextBox = tw(TextBox)`
-    resize-none
-    h-10
+export const OneLineTextBox = styled(TextBox)`
+  resize: none;
+  height: 50px;
 `;
