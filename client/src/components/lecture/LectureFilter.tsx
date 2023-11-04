@@ -14,7 +14,7 @@ const FilterContainer = styled.div`
 
 export const LectureFilter = () => {
   return (
-    <div className="flex flex-wrap gap-2 justify-between">
+    <div className="flex flex-wrap gap-2 justify-between mb-2">
       <RegionSearchBar />
       <FilterContainer>
         <StatusFilter />
