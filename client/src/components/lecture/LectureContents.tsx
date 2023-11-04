@@ -38,7 +38,7 @@ const LectureContainer = styled.div`
 `;
 
 const LectureItem = styled.div`
-  width: 25%;
+  width: 229px;
   padding: 0.3rem 0.4rem;
 `;
 
