@@ -1,4 +1,3 @@
-import tw from 'tailwind-styled-components';
 import ImageUploader from '../../../utils/ImageUploader';
 import MadeCalendar from '../../../utils/Calendar';
 import { OneLineTextBox, TextBox } from '../../../utils/TextBox';
@@ -11,9 +10,17 @@ const Container = styled.div``;
 
 const SubTitle = styled.div`
   font-size: 1.5rem;
+  font-weight: bold;
+  padding-top: 10px;
 `;
 
 const SelectArea = styled.div``;
+
+const SelectCategory = styled.select`
+  font-size: 1.3rem;
+  border: 1px solid black;
+  border-radius: 10px;
+`;
 
 interface EnterClassInfomationProps {
   nextTab: () => void;
@@ -39,13 +46,13 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
         <SelectArea>
           <SubTitle>카테고리 선택</SubTitle>
           <form>
-            <select name="category" id="category">
+            <SelectCategory name="category" id="category">
               {category.map((item, index) => (
                 <option key={index} value={item}>
                   {item}
                 </option>
               ))}
-            </select>
+            </SelectCategory>
           </form>
         </SelectArea>
         <SelectArea>

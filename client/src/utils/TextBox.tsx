@@ -6,6 +6,7 @@ export const TextBox = styled.textarea`
   border: 1px solid black;
   padding: 5px;
   align-items: center;
+  border-radius: 10px;
 `;
 
 export const OneLineTextBox = styled(TextBox)`

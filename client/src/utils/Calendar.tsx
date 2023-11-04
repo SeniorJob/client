@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styled from 'styled-components';
 
 const Calendar: React.FC = () => {
   // 선택된 날짜를 관리하는 상태
@@ -21,12 +22,16 @@ const Calendar: React.FC = () => {
     setCourseEndDate(selectedDate);
   };
 
+  const SelectDate = styled.input`
+    width: 150px;
+  `;
+
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-4">
         <div>
           <label>모집 마감 날짜: </label>
-          <input
+          <SelectDate
             className="w-44"
             type="date"
             value={recruitmentDate || ''}
@@ -40,7 +45,7 @@ const Calendar: React.FC = () => {
       <div className="flex gap-4">
         <div>
           <label>강좌 시작 날짜: </label>
-          <input
+          <SelectDate
             className="w-44"
             type="date"
             value={courseStartDate || ''}
@@ -54,7 +59,7 @@ const Calendar: React.FC = () => {
       <div className="flex gap-4">
         <div>
           <label>강좌 종료 날짜: </label>
-          <input
+          <SelectDate
             className="w-44"
             type="date"
             value={courseEndDate || ''}
