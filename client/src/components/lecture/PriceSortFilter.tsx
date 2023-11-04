@@ -10,8 +10,13 @@ import styled from 'styled-components';
 type LabelProps = {
   name?: string;
 };
-const PriceFilterLabel = styled(FilterLabel)<LabelProps>`
-  .checked {
+
+const PriceFilterTag = styled(FilterTag)<LabelProps>`
+  &::before {
+    ${props => (props.name === '가격높은순' ? `content: '↑'` : `content: '↓'`)};
+    margin-right: 0.2rem;
+  }
+  &.checked {
     &::before {
       ${props =>
         props.name === '가격높은순' ? `content: '↑'` : `content: '↓'`};
@@ -45,8 +50,9 @@ export const PriceSortFilter = () => {
   return (
     <div className="flex gap-1 items-center">
       {sortPriceData.map(data => (
-        <PriceFilterLabel key={data.id} name={data.name}>
-          <FilterTag
+        <FilterLabel key={data.id}>
+          <PriceFilterTag
+            name={data.name}
             className={
               filterMethod === data.method && descending === data.descending
                 ? 'checked'
@@ -62,8 +68,8 @@ export const PriceSortFilter = () => {
               onChange={e => handleMethod(e, data.method, data.descending)}
             />
             {data.name}
-          </FilterTag>
-        </PriceFilterLabel>
+          </PriceFilterTag>
+        </FilterLabel>
       ))}
     </div>
   );

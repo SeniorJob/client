@@ -5,6 +5,33 @@ import {
 } from '../../assets/styles/filterStyle';
 import { useSearchStore } from '../../store/store';
 import { sortData } from './filterData';
+import styled from 'styled-components';
+
+type LabelProps = {
+  name?: string;
+};
+
+const SortFilterTag = styled(FilterTag)<LabelProps>`
+  &::before {
+    ${props =>
+      props.name === '최신순'
+        ? `content: '✨'`
+        : props.name === '인기순'
+        ? `content: '🔥'`
+        : null};
+    margin-right: 0.2rem;
+  }
+  &.checked {
+    &::before {
+      ${props =>
+        props.name === '최신순'
+          ? `content: '✨'`
+          : props.name === '인기순'
+          ? `content: '🔥'`
+          : null};
+    }
+  }
+`;
 
 export const SortFilter = () => {
   const { filterMethod, setFilterMethod } = useSearchStore();
@@ -29,7 +56,10 @@ export const SortFilter = () => {
     <div className="flex gap-1 items-center">
       {sortData.map(data => (
         <FilterLabel key={data.id}>
-          <FilterTag className={filterMethod === data.method ? 'checked' : ''}>
+          <SortFilterTag
+            name={data.name}
+            className={filterMethod === data.method ? 'checked' : ''}
+          >
             <FilterInput
               type="checkbox"
               value={data.name}
@@ -37,7 +67,7 @@ export const SortFilter = () => {
               onChange={e => handleMethod(e, data.method)}
             />
             {data.name}
-          </FilterTag>
+          </SortFilterTag>
         </FilterLabel>
       ))}
     </div>
