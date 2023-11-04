@@ -3,8 +3,11 @@ import MadeCalendar from '../../../utils/Calendar';
 import { OneLineTextBox, TextBox } from '../../../utils/TextBox';
 import LectureCountInput from '../../../utils/CountInput';
 import { OpenButton } from '../OpenButton';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
+import DaumPostcode from 'react-daum-postcode';
+import { Modal } from './Modal';
+import tw from 'tailwind-styled-components';
 
 const Container = styled.div``;
 
@@ -26,6 +29,21 @@ interface EnterClassInfomationProps {
   nextTab: () => void;
 }
 
+interface AddressData {
+  address: string;
+  addressType: string;
+  bname: string;
+  buildingName: string;
+}
+
+const SearchAddressBtn = tw.button`
+  bg-signature
+  p-2
+  m-2
+
+  hover:
+`;
+
 const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
   const category = [
     '외식',
@@ -39,6 +57,28 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
     '교육',
     '의료',
   ];
+
+  const [address, setAddress] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleAddress = (data: AddressData) => {
+    let fullAddress = data.address;
+    let extraAddress = '';
+
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== '') {
+        extraAddress +=
+          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
+    }
+
+    setAddress(fullAddress);
+    setIsModalOpen(false);
+  };
 
   return (
     <>
@@ -94,7 +134,18 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
         </SelectArea>
         <SelectArea>
           <SubTitle>지역</SubTitle>
-          <OneLineTextBox placeholder="ex) 경기도 안양시 만안구 삼덕로 37번길 22" />
+          <div className="flex">
+            <OneLineTextBox
+              value={address}
+              placeholder="ex) 경기도 안양시 만안구 삼덕로 37번길 22"
+            />
+            <SearchAddressBtn onClick={() => setIsModalOpen(true)}>
+              주소 검색
+            </SearchAddressBtn>
+          </div>
+          <Modal isOpen={isModalOpen} close={() => setIsModalOpen(false)}>
+            <DaumPostcode onComplete={handleAddress} />
+          </Modal>
         </SelectArea>
         <SelectArea>
           <SubTitle>가격</SubTitle>
