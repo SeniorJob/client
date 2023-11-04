@@ -33,12 +33,13 @@ const LectureContainer = styled.div`
   min-height: 700px;
   position: relative;
   display: flex;
+  align-content: flex-start;
   flex-wrap: wrap;
 `;
 
 const LectureItem = styled.div`
   width: 25%;
-  padding: 0.7rem 0.4rem;
+  padding: 0.3rem 0.4rem;
 `;
 
 const HeaderTitle = styled.h1`
