@@ -1,9 +1,18 @@
 import { useState } from 'react';
+import styled from 'styled-components';
 
 interface CountInputProps {
   labelTitle?: React.ReactNode;
   labelText: React.ReactNode;
 }
+
+const SelectCount = styled.input`
+  border: 1px solid black;
+`;
+
+const SubTitleLabel = styled.label`
+  font-weight: bold;
+`;
 
 const CountInput: React.FC<CountInputProps> = ({ labelTitle, labelText }) => {
   // 선택된 강의 회차를 관리하는 상태
@@ -17,14 +26,14 @@ const CountInput: React.FC<CountInputProps> = ({ labelTitle, labelText }) => {
 
   return (
     <div className="flex gap-4 mt-2">
-      <label>{labelTitle}</label>
-      <input
+      <SubTitleLabel>{labelTitle}</SubTitleLabel>
+      <SelectCount
         type="number"
         value={count || ''}
         onChange={e => handleCount(e.target.value)}
         min={0}
         max={7}
-        placeholder="5"
+        placeholder="3"
       />
       <div className="text-stone-500">{labelText}</div>
     </div>

@@ -26,11 +26,15 @@ const Calendar: React.FC = () => {
     width: 150px;
   `;
 
+  const SubTitleLabel = styled.label`
+    font-weight: bold;
+  `;
+
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-4">
         <div>
-          <label>모집 마감 날짜: </label>
+          <SubTitleLabel>모집 마감 날짜: </SubTitleLabel>
           <SelectDate
             className="w-44"
             type="date"
@@ -44,7 +48,7 @@ const Calendar: React.FC = () => {
       </div>
       <div className="flex gap-4">
         <div>
-          <label>강좌 시작 날짜: </label>
+          <SubTitleLabel>강좌 시작 날짜: </SubTitleLabel>
           <SelectDate
             className="w-44"
             type="date"
@@ -58,7 +62,7 @@ const Calendar: React.FC = () => {
       </div>
       <div className="flex gap-4">
         <div>
-          <label>강좌 종료 날짜: </label>
+          <SubTitleLabel>강좌 종료 날짜: </SubTitleLabel>
           <SelectDate
             className="w-44"
             type="date"
