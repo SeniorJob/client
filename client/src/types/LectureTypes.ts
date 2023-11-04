@@ -16,6 +16,7 @@ export type LectureParamProps = {
 
 export type LectureProps = {
   create_id?: number;
+  region?: string;
   image_url?: string;
   title?: string;
   creator?: string;

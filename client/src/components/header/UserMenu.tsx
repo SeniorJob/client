@@ -33,7 +33,7 @@ export const UserMenu = () => {
       </button> */}
 
       {/* 이 부분 코드처럼 로그인 성공 여부인 isLoggedIn을 체크하고 로그인, 로그아웃을 변경해주시면 됩니다. */}
-      {isLoggedIn ? (
+      {!isLoggedIn ? (
         // 아래 버튼들도 따로 컴포넌트로 빼고 클릭 이벤트만 받게하는 법도 있습니다. 그렇게되면 onClick {} 안에 들어가는게 clickEvent={handleClickEvent} 이런식으로 줄어들겠죠.
         <StyledUserMenu
           onClick={e => {

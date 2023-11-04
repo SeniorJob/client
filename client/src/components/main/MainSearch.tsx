@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Magnifier from '../../assets/images/magnifier.svg?react';
-import { SearchHandleChange, SearchSubmitHandler } from '../../utils/Search';
+import { searchHandleChange, searchSubmitHandler } from '../../utils/Search';
 import { useNavigate } from 'react-router-dom';
 import { useSearchStore } from '../../store/store';
 
@@ -65,14 +65,14 @@ export const MainSearch = () => {
           <SearchForm
             onSubmit={e => {
               e.preventDefault();
-              SearchSubmitHandler(navigate, inputValue);
+              searchSubmitHandler(navigate, inputValue);
             }}
           >
             <MainSearchBar
               type="text"
               placeholder="배우고 싶은 지식을 입력해보세요."
               // value={inputValue}
-              onChange={e => SearchHandleChange(e, setInputValue)}
+              onChange={e => searchHandleChange(e, setInputValue)}
             />
             <SearchButton>
               <Magnifier width={28} height={28} />
