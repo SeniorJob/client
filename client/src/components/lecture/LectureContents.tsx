@@ -9,6 +9,7 @@ import { getLecture } from '../../api/lecture';
 import { useLocation } from 'react-router-dom';
 import { useSearchStore } from '../../store/store';
 import { LectureFilter } from './LectureFilter';
+import { LectureFooter } from './LectureFooter';
 
 const Contents = styled.div`
   min-height: 700px;
@@ -50,18 +51,22 @@ const HeaderTitle = styled.h1`
 
 export const LectureContents = () => {
   const [data, setData] = useState<LectureObject[]>();
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number | null>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { category, filterMethod, descending } = useSearchStore();
+  const { filterMethod, descending } = useSearchStore();
   const location = useLocation();
   const searchParams = location.search;
   const searchParam = new URLSearchParams(location.search);
   const curCategory = searchParam.get('category');
+  const curPage = Number(searchParam.get('page'));
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const params: { filter?: string; descending?: boolean } = {};
+        const params: { filter?: string; descending?: boolean; page?: number } =
+          {};
         if (filterMethod) params.filter = filterMethod;
         if (!descending) params.descending = descending; // descending의 기본값은 true이므로 false일때만 추가
 
@@ -69,18 +74,23 @@ export const LectureContents = () => {
           `lectures/filter${searchParams}`,
           params,
         );
-        setData(lectureData);
+        if (!lectureData) {
+          setData([]);
+          setTotalPages(null);
+        } else {
+          curPage ? setPage(curPage) : setPage(1);
+          setData(lectureData.content);
+          setTotalPages(lectureData.totalPages);
+        }
       } catch (error) {
         console.error('에러 발생:', error);
       } finally {
-        setTimeout(() => {
-          setIsLoading(false); // .5초 후에 로딩 상태를 해제
-        }, 200);
+        setIsLoading(false); // .5초 후에 로딩 상태를 해제
       }
     };
 
     fetchData();
-  }, [searchParams, category, descending, filterMethod]);
+  }, [searchParams, descending, filterMethod]);
 
   return (
     <Contents>
@@ -107,6 +117,10 @@ export const LectureContents = () => {
           )}
         </LectureContainer>
       </div>
+      {/* 페이지네이션 */}
+      {totalPages && (
+        <LectureFooter totalPages={totalPages} page={page} setPage={setPage} />
+      )}
     </Contents>
   );
 };

@@ -70,6 +70,8 @@ export const LectureNav = () => {
   const viewAll = () => {
     setCategory('');
     searchParams.delete('category');
+    searchParams.delete('title');
+    searchParams.set('page', '1');
     navigate(
       {
         pathname: '/lectures/filter',
@@ -77,24 +79,24 @@ export const LectureNav = () => {
       },
       { replace: true },
     );
-    console.log(curCategory);
   };
 
   const handleCategoryFilter = (category: string) => {
     if (curCategory === category) {
-      setCategory('');
-      searchParams.delete('category');
+      viewAll();
     } else {
       setCategory(category);
+      searchParams.delete('title');
       searchParams.set('category', category);
+      searchParams.set('page', '1');
+      navigate(
+        {
+          pathname: '/lectures/filter',
+          search: searchParams.toString(),
+        },
+        { replace: true },
+      );
     }
-    navigate(
-      {
-        pathname: '/lectures/filter',
-        search: searchParams.toString(),
-      },
-      { replace: true },
-    );
   };
 
   return (

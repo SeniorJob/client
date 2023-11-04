@@ -48,7 +48,7 @@ export const getLecture = async (
   try {
     const res = await getData(`${endpoint}`, params);
     console.log(res);
-    return res.content ? res.content : res;
+    return res;
   } catch (err) {
     console.log(err);
   }
