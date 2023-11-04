@@ -42,7 +42,7 @@ const DetailButton = styled.button`
 
 const HeaderDesc = styled.div`
   display: flex;
-  flex: 6;
+  flex: 5.5;
   flex-direction: column;
   color: #1c5690;
   h1 {
@@ -61,6 +61,7 @@ const HeaderDesc = styled.div`
   }
   div {
     display: flex;
+    font-weight: 500;
     gap: 0.4rem;
     align-items: center;
     margin-bottom: 0.5rem;
