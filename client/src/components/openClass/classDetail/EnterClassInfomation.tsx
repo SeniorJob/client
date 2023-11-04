@@ -5,28 +5,34 @@ import { OneLineTextBox, TextBox } from '../../../utils/TextBox';
 import LectureCountInput from '../../../utils/CountInput';
 import { OpenButton } from '../OpenButton';
 import { FC } from 'react';
+import styled from 'styled-components';
 
-const Container = tw.div`
-    m-4
-    p-4
+const Container = styled.div``;
 
-    bg-signature
+const SubTitle = styled.div`
+  font-size: 1.5rem;
 `;
 
-const SubTitle = tw.div`
-    text-lg
-    font-bold
-`;
-
-const SelectArea = tw.div`
-    mb-8
-`;
+const SelectArea = styled.div``;
 
 interface EnterClassInfomationProps {
   nextTab: () => void;
 }
 
 const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
+  const category = [
+    '외식',
+    '서비스',
+    '사무직',
+    '생산',
+    '운전',
+    '디자인',
+    'IT',
+    '기술',
+    '교육',
+    '의료',
+  ];
+
   return (
     <>
       <Container>
@@ -34,9 +40,11 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
           <SubTitle>카테고리 선택</SubTitle>
           <form>
             <select name="category" id="category">
-              <option value="외식">외식</option>
-              <option value="서비스">서비스</option>
-              <option value="사무직">사무직</option>
+              {category.map((item, index) => (
+                <option key={index} value={item}>
+                  {item}
+                </option>
+              ))}
             </select>
           </form>
         </SelectArea>
@@ -75,7 +83,7 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
         </SelectArea>
         <SelectArea>
           <SubTitle>최대 참가자 수</SubTitle>
-          <LectureCountInput labelText="강좌에 참가할 수 있는 최대 인원을 설정해쥇요!" />
+          <LectureCountInput labelText="강좌에 참가할 수 있는 최대 인원을 설정해주세요!" />
         </SelectArea>
         <SelectArea>
           <SubTitle>지역</SubTitle>
