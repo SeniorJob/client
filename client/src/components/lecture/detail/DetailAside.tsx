@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { LectureDto } from '../../../types/LectureTypes';
 import { calculateRemain } from '../../../utils/calculateRemain';
+import { formatDate } from '../../../utils/formatData';
 
 const Aside = styled.div`
   flex-basis: calc(100% * 1 / 3);
@@ -25,7 +26,7 @@ const AsideCard = styled.div`
   border: 1px solid #ccc;
   border-radius: 0.5rem;
   padding: 0.6rem 1.3rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 500;
   color: #222222;
   h1 {
@@ -71,8 +72,19 @@ const RegButton = styled.button`
   border-radius: 0.5rem;
 `;
 
+const LectureDate = styled(AsideCard)`
+  height: unset;
+  gap: 1.2rem;
+  padding: 1.4rem 1.5rem;
+  .period {
+    flex: 7;
+  }
+`;
+
 export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
   const remainTime = calculateRemain(data?.recruitEnd_date);
+  const startDate = data ? formatDate(data?.start_date) : '';
+  const endDate = data ? formatDate(data?.end_date) : '';
 
   return (
     <Aside>
@@ -105,6 +117,20 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
         </div>
         <RegButton>신청하기</RegButton>
       </Price>
+      <LectureDate>
+        <div className="flex gap-6 w-full">
+          <div>
+            <h1>교육 기간</h1>
+          </div>
+          <div className="period">
+            <span>{startDate}</span>
+            <span> ~</span>
+            <div className="text-end">
+              <span>{endDate}</span>
+            </div>
+          </div>
+        </div>
+      </LectureDate>
     </Aside>
   );
 };
