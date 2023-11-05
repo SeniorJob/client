@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { getLectureDetail } from '../../api/lecture';
 import { LectureDetailProps } from '../../types/LectureTypes';
 import { DetailHeader } from '../../components/lecture/detail/DetailHeader';
+import { Helmet } from 'react-helmet-async';
 
 export const LectureDetail = () => {
   const [data, setData] = useState<LectureDetailProps | null>();
@@ -26,6 +27,9 @@ export const LectureDetail = () => {
 
   return (
     <main id="main">
+      <Helmet>
+        <title>{data?.lectureDto.title}</title>
+      </Helmet>
       <section className="lecture-detail">
         <DetailHeader data={data?.lectureDto} />
         <div className="container relative">

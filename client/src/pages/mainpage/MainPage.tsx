@@ -8,6 +8,7 @@ import {
 } from '../../components/main/recommendType';
 import { useEffect } from 'react';
 import { useSearchStore } from '../../store/store';
+import { Helmet } from 'react-helmet-async';
 
 export const MainPage = () => {
   const {
@@ -28,6 +29,9 @@ export const MainPage = () => {
 
   return (
     <main id="main">
+      <Helmet>
+        <title>SeniorJob</title>
+      </Helmet>
       <TopBanner />
       <MainSearch />
       <Category />
