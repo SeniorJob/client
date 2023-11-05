@@ -7,7 +7,7 @@ export function formatDate(dateString: string) {
   const hours = dateObj.getHours().toString().padStart(2, '0');
   const minutes = dateObj.getMinutes().toString().padStart(2, '0');
 
-  const formattedDate = `${year}.${month}.${day} ${hours}:${minutes}`;
+  const formattedDate = `${year}.${month}.${day} ${hours}시 ${minutes}분`;
 
   return formattedDate;
 }
