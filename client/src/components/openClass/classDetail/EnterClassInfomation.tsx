@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import DaumPostcode from 'react-daum-postcode';
 import { Modal } from './Modal';
 import tw from 'tailwind-styled-components';
+import axios from 'axios';
 
 const Container = styled.div``;
 
@@ -61,6 +62,22 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
   const [address, setAddress] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [learningTarget, setLearningTarget] = useState('');
+  const [week, setWeek] = useState('');
+  const [recruitEndDate, setRecruitEndDate] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [maxParticipants, setMaxParticipants] = useState('');
+  const [region, setRegion] = useState('');
+  const [price, setPrice] = useState('');
+  const [bankName, setBankName] = useState('');
+  const [accountName, setAccountName] = useState('');
+  const [accountNumber, setAccountNumber] = useState('');
+  const [createdDate, setCreatedDate] = useState('');
+
   const handleAddress = (data: AddressData) => {
     let fullAddress = data.address;
     let extraAddress = '';
@@ -80,13 +97,45 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
     setIsModalOpen(false);
   };
 
+  const handleSubmit = async () => {
+    const data = {
+      category: selectedCategory,
+      title,
+      content,
+      learning_target: learningTarget,
+      week,
+      recruitEnd_date: recruitEndDate,
+      start_date: startDate,
+      end_date: endDate,
+      max_participants: maxParticipants,
+      region,
+      price,
+      bank_name: bankName,
+      account_name: accountName,
+      account_number: accountNumber,
+      createdDate,
+    };
+    const apiUrl = process.env.VITE_API_URL;
+
+    try {
+      const res = await axios.post(process.env.VITE_API_URL, data);
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <Container>
         <SelectArea>
           <SubTitle>카테고리 선택</SubTitle>
           <form>
-            <SelectCategory name="category" id="category">
+            <SelectCategory
+              name="category"
+              id="category"
+              onChange={e => setSelectedCategory(e.target.value)}
+            >
               {category.map((item, index) => (
                 <option key={index} value={item}>
                   {item}
