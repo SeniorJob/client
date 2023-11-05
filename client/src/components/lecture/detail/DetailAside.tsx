@@ -8,12 +8,12 @@ const Aside = styled.div`
   margin-right: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1rem;
 `;
 
 const CurrentStatus = styled.div`
   display: flex;
-  gap: 0.8rem;
+  gap: 1rem;
 `;
 
 const AsideCard = styled.div`
@@ -40,7 +40,7 @@ const AsideCard = styled.div`
 `;
 
 const Participants = styled(AsideCard)`
-  width: 120px;
+  position: relative;
 `;
 
 const RemainTime = styled(AsideCard)`
