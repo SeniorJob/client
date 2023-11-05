@@ -33,7 +33,7 @@ export const LectureDetail = () => {
       <section className="lecture-detail">
         <DetailHeader data={data?.lectureDto} />
         <div className="container relative">
-          <div className="lecture-detail-contents flex gap-5 px-8 w-full">
+          <div className="lecture-detail-contents flex gap-5 px-8 py-6 w-full">
             <DetailContent />
             <DetailAside />
           </div>
