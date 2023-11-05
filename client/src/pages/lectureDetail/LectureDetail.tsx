@@ -35,7 +35,7 @@ export const LectureDetail = () => {
         <div className="container relative">
           <div className="lecture-detail-contents flex gap-5 px-8 py-6 w-full">
             <DetailContent />
-            <DetailAside />
+            <DetailAside data={data?.lectureDto} />
           </div>
         </div>
       </section>
