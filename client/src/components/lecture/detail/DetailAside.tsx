@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 import { LectureDto } from '../../../types/LectureTypes';
+import { calculateRemain } from '../../../utils/calculateRemain';
 
 const Aside = styled.div`
   flex-basis: calc(100% * 1 / 3);
   max-width: calc(100% * 1 / 3);
   margin-right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 `;
 
 const CurrentStatus = styled.div`
@@ -20,7 +24,7 @@ const AsideCard = styled.div`
   height: 75px;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
-  padding: 0.6rem 0.9rem;
+  padding: 0.6rem 1.3rem;
   font-size: 0.9rem;
   font-weight: 500;
   color: #222222;
@@ -46,10 +50,32 @@ const RemainTime = styled(AsideCard)`
   }
 `;
 
+const Price = styled(AsideCard)`
+  height: unset;
+  gap: 1.2rem;
+  align-items: baseline;
+  padding: 1.4rem 1.5rem;
+  .price {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+`;
+
+const RegButton = styled.button`
+  width: 100%;
+  padding: 1rem 1rem;
+  background-color: var(--primaryColor);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+`;
+
 export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
+  const remainTime = calculateRemain(data?.recruitEnd_date);
+
   return (
     <Aside>
-      nav
       <CurrentStatus>
         <Participants>
           <h1>모집 인원</h1>
@@ -64,9 +90,21 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
         </Participants>
         <RemainTime>
           <h1>모집 기한</h1>
-          <span>{data?.daysUntilRecruitEndMessage}</span>
+          <span>
+            {/* 정규식 이용하여 숫자만 추출 */}
+            <strong>{remainTime?.match(/\d+/)?.[0]}</strong>
+            {remainTime?.includes('시간') ? <span>시간</span> : <span>일</span>}
+            <span></span>
+            <span className="ml-1">남았습니다!</span>
+          </span>
         </RemainTime>
       </CurrentStatus>
+      <Price>
+        <div>
+          <span className="price">{data?.price.toLocaleString()}원</span>
+        </div>
+        <RegButton>신청하기</RegButton>
+      </Price>
     </Aside>
   );
 };
