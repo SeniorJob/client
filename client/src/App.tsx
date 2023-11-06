@@ -7,6 +7,11 @@ import OpenClassPage from './components/openClass/OpenClassPage';
 import SignUp from './components/signup/SignUp';
 import { LectureList } from './pages/lectureList/LectureList';
 import { ScrollToTop } from './utils/ScrollToTop';
+import MyPage from './pages/MyPage/MyPage';
+import Opening from './pages/MyPage/Opening';
+import Suggestion from './pages/MyPage/Suggestion';
+import EditProfile from './pages/MyPage/EditProfile';
+import Application from './pages/MyPage/Application';
 
 function App() {
   return (
@@ -19,6 +24,12 @@ function App() {
           <Route path="/openclass" element={<OpenClassPage />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/lectures/filter?" element={<LectureList />} />
+
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/mypage/editprofile" element={<EditProfile />} />
+          <Route path="/mypage/lecture/application" element={<Application />} />
+          <Route path="/mypage/lecture/opening" element={<Opening />} />
+          <Route path="/mypage/lecture/suggestion" element={<Suggestion />} />
         </Routes>
       </div>
     </BrowserRouter>
