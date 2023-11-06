@@ -9,6 +9,7 @@ import { getLecture } from '../../api/lecture';
 import { useLocation } from 'react-router-dom';
 import { useSearchStore } from '../../store/store';
 import { LectureFilter } from './LectureFilter';
+import { LectureFooter } from './LectureFooter';
 
 const Contents = styled.div`
   min-height: 700px;
@@ -32,12 +33,13 @@ const LectureContainer = styled.div`
   min-height: 700px;
   position: relative;
   display: flex;
+  align-content: flex-start;
   flex-wrap: wrap;
 `;
 
 const LectureItem = styled.div`
-  width: 25%;
-  padding: 0.7rem 0.4rem;
+  width: 229px;
+  padding: 0.3rem 0.4rem;
 `;
 
 const HeaderTitle = styled.h1`
@@ -50,40 +52,53 @@ const HeaderTitle = styled.h1`
 
 export const LectureContents = () => {
   const [data, setData] = useState<LectureObject[]>();
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number | null>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { category } = useSearchStore();
+  const { filterMethod, descending } = useSearchStore();
   const location = useLocation();
   const searchParams = location.search;
+  const searchParam = new URLSearchParams(location.search);
+  const curCategory = searchParam.get('category');
+  const curPage = Number(searchParam.get('page'));
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const lectureData = await getLecture(`lectures/filter${searchParams}`, {
-          filter: 'latest',
-          descending: true,
-        });
-        setData(lectureData);
-        console.log(lectureData);
-        console.log(searchParams);
+        const params: { filter?: string; descending?: boolean; page?: number } =
+          {};
+        if (filterMethod) params.filter = filterMethod;
+        if (!descending) params.descending = descending; // descending의 기본값은 true이므로 false일때만 추가
+
+        const lectureData = await getLecture(
+          `lectures/filter${searchParams}`,
+          params,
+        );
+        if (!lectureData) {
+          setData([]);
+          setTotalPages(null);
+        } else {
+          curPage ? setPage(curPage) : setPage(1);
+          setData(lectureData.content);
+          setTotalPages(lectureData.totalPages);
+        }
       } catch (error) {
         console.error('에러 발생:', error);
       } finally {
-        setTimeout(() => {
-          setIsLoading(false); // .5초 후에 로딩 상태를 해제
-        }, 200);
+        setIsLoading(false); // .5초 후에 로딩 상태를 해제
       }
     };
 
     fetchData();
-  }, [searchParams, category]);
+  }, [searchParams, descending, filterMethod]);
 
   return (
     <Contents>
       <LectureHeader>
         <HeaderTitle className="text-xl flex gap-3">
           <span>전체 강의</span>
-          {category && <span className="category">{category}</span>}
+          {curCategory && <span className="category">{curCategory}</span>}
         </HeaderTitle>
         <SearchBar />
       </LectureHeader>
@@ -103,6 +118,10 @@ export const LectureContents = () => {
           )}
         </LectureContainer>
       </div>
+      {/* 페이지네이션 */}
+      {totalPages && (
+        <LectureFooter totalPages={totalPages} page={page} setPage={setPage} />
+      )}
     </Contents>
   );
 };

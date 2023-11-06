@@ -4,6 +4,8 @@ import { LectureDataProps } from '../../types/LectureTypes';
 import { Tag } from '../../assets/styles/CommonStyles';
 import CategorySVG from '../../assets/images/category.svg?react';
 import TargetSVG from '../../assets/images/target.svg?react';
+import LocationSVG from '../../assets/images/location.svg?react';
+import { splitRegion } from '../../utils/splitRegion';
 
 const LectureCard = styled.div`
   position: relative;
@@ -112,21 +114,24 @@ const LectureHoverCard = styled.div`
     display: -webkit-box;
     text-overflow: ellipsis;
     overflow: hidden;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     margin-bottom: 0.25rem;
   }
   .lecture-hover-category,
+  .lecture-hover-region,
   .lecture-hover-target {
     color: #82acc0;
   }
 `;
 
 export const LectureData = ({ data }: LectureDataProps) => {
+  const region = splitRegion(data.region);
+
   return (
     <LectureWrapper>
       <LectureCard>
-        <Link to={`/lectures/${data.create_id}`}>
+        <Link to={`/lectures/detail/${data.create_id}`}>
           <Card>
             <img src={data.image_url} alt={data.title} />
           </Card>
@@ -156,12 +161,19 @@ export const LectureData = ({ data }: LectureDataProps) => {
         </Link>
       </LectureCard>
       <LectureHoverCard>
-        <Link to={`/lectures/${data.create_id}`} className="lecture-hover-link">
+        <Link
+          to={`/lectures/detail/${data.create_id}`}
+          className="lecture-hover-link"
+        >
           <h2>{data.title}</h2>
           <p className="lecture-hover-desc">{data.content}</p>
           <p className="lecture-hover-category">
             <CategorySVG width={20} height={20} />
             {data.category}
+          </p>
+          <p className="lecture-hover-region">
+            <LocationSVG width={20} height={20} />
+            {region}
           </p>
           <p className="lecture-hover-target">
             <TargetSVG width={20} height={20} />

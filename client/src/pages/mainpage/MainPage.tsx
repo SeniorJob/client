@@ -8,17 +8,30 @@ import {
 } from '../../components/main/recommendType';
 import { useEffect } from 'react';
 import { useSearchStore } from '../../store/store';
+import { Helmet } from 'react-helmet-async';
 
 export const MainPage = () => {
-  const { setInputValue, setCategory } = useSearchStore();
+  const {
+    setInputValue,
+    setFilterMethod,
+    setDescending,
+    setCategory,
+    setRegion,
+  } = useSearchStore();
 
   useEffect(() => {
     setCategory('');
     setInputValue('');
-  }, [setInputValue, setCategory]);
+    setRegion('');
+    setFilterMethod('latest');
+    setDescending(true);
+  }, [setInputValue, setCategory, setRegion, setFilterMethod, setDescending]);
 
   return (
     <main id="main">
+      <Helmet>
+        <title>SeniorJob</title>
+      </Helmet>
       <TopBanner />
       <MainSearch />
       <Category />

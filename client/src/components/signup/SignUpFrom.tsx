@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import 'react-calendar/dist/Calendar.css'; // css import
+// import 'react-calendar/dist/Calendar.css'; // css import
 import PostCode from './SignPostCode';
 import axios from 'axios';
 

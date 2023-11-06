@@ -1,12 +1,17 @@
 import { useState } from 'react';
 
-const ImageUploader: React.FC = () => {
+interface ImageUploaderProps {
+  setSelectedImage: (image: File | null) => void;
+}
+
+const ImageUploader: React.FC<ImageUploaderProps> = ({ setSelectedImage }) => {
   const [image, setImage] = useState<File | null>(null);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
     if (file) {
       setImage(file);
+      setSelectedImage(file);
     }
   };
 

@@ -7,6 +7,7 @@ import { Autoplay, Navigation, Pagination, Controller } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { Divider } from '../../assets/styles/CommonStyles';
 
 const CustomSlide = styled(SwiperSlide)`
   display: flex;
@@ -99,13 +100,6 @@ const CustomBullets = styled.div<{ $curIndex: number }>`
     color: #00c471;
     box-shadow: inset 0 0 0 2px #00c471;
   }
-`;
-
-const Divider = styled.div`
-  margin: 0 1rem;
-  width: 1px;
-  height: 36px;
-  background-color: #dee2e6;
 `;
 
 export const TopBanner = () => {

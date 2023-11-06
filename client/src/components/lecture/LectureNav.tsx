@@ -70,25 +70,33 @@ export const LectureNav = () => {
   const viewAll = () => {
     setCategory('');
     searchParams.delete('category');
-    navigate({
-      pathname: '/lectures/filter',
-      search: searchParams.toString(),
-    });
-    console.log(curCategory);
+    searchParams.delete('title');
+    searchParams.set('page', '1');
+    navigate(
+      {
+        pathname: '/lectures/filter',
+        search: searchParams.toString(),
+      },
+      { replace: true },
+    );
   };
 
   const handleCategoryFilter = (category: string) => {
     if (curCategory === category) {
-      setCategory('');
-      searchParams.delete('category');
+      viewAll();
     } else {
       setCategory(category);
+      searchParams.delete('title');
       searchParams.set('category', category);
+      searchParams.set('page', '1');
+      navigate(
+        {
+          pathname: '/lectures/filter',
+          search: searchParams.toString(),
+        },
+        { replace: true },
+      );
     }
-    navigate({
-      pathname: '/lectures/filter',
-      search: searchParams.toString(),
-    });
   };
 
   return (
