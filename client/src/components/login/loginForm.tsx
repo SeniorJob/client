@@ -7,7 +7,11 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useUserStore } from '../../store/user';
 
-const LoginTop: React.FC = () => {
+interface LoginTopProps {
+  handleModal: () => void;
+}
+
+const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
   const [id, setId] = useState<string>('');
   const [pw, setPw] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
@@ -28,16 +32,23 @@ const LoginTop: React.FC = () => {
     }
 
     axios
-      .post(`${import.meta.env.VITE_API_URL}api/users/login`, loginData, {
+      .post(`${import.meta.env.VITE_API_URL}/api/users/login`, loginData, {
         headers: {
           'Content-Type': 'application/json',
         },
+        withCredentials: true,
       })
       .then(response => {
         // 로그인 성공 시 isLoggedIn을 true로 바꿈. (true -> 로그인 중)
-        setIsLoggedIn();
         console.log(response); // 서버 응답 데이터 확인
+        setIsLoggedIn();
+        axios
+          .get(`${import.meta.env.VITE_API_URL}/api/users/detail`, {
+            withCredentials: true,
+          })
+          .then(res => console.log(res));
         // 메인페이지로 연결.
+        handleModal();
       })
       .catch(error => {
         console.log(error.message, error);
@@ -52,13 +63,11 @@ const LoginTop: React.FC = () => {
   }, [error]);
 
   return (
-    <LoginDownDivBox>
-      <LoginLeftDivBox>
-        <LoginLeftText>
-          <img src={Logo} className="w-[280px] pr-[5px]" />
-        </LoginLeftText>
-      </LoginLeftDivBox>
-      <LoginRightDivBox>
+    <LoginFormLayout>
+      <LoginFormImgBox>
+        <img src={Logo} className="w-[280px] pr-[5px]" />
+      </LoginFormImgBox>
+      <LoginFormBox>
         <LoginInPutForm onSubmit={LoginSubmit}>
           <InputWrapper>
             <img src={IdIcon} alt="아이디 아이콘"></img>
@@ -82,44 +91,34 @@ const LoginTop: React.FC = () => {
           <LoginMainBtn type="submit">로그인</LoginMainBtn>
         </LoginInPutForm>
         <LoginDivBox>
-          <LoginDivBox>
-            <AccountHelpBox>
-              <LoginBtnBox>아이디 찾기 </LoginBtnBox>
-              <LoginBtnBox>비밀번호 찾기 </LoginBtnBox>
-              <SignBtnBox>
-                <a href="signup">회원가입</a>
-              </SignBtnBox>
-            </AccountHelpBox>
-          </LoginDivBox>
+          <AccountHelpBox>
+            <LoginBtnBox>아이디 찾기 </LoginBtnBox>
+            <LoginBtnBox>비밀번호 찾기 </LoginBtnBox>
+            <SignBtnBox>
+              <a href="signup">회원가입</a>
+            </SignBtnBox>
+          </AccountHelpBox>
         </LoginDivBox>
-      </LoginRightDivBox>
-    </LoginDownDivBox>
+      </LoginFormBox>
+    </LoginFormLayout>
   );
 };
 
-export default LoginTop;
+export default LoginForm;
 
 const LoginDivBox = tw.div``;
 
-const LoginDownDivBox = styled.div`
+const LoginFormLayout = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
   flex-direction: column;
 `;
-const LoginLeftDivBox = styled.div`
-  strong {
-    color: #e75410d1;
-    font-size: 40px;
-  }
-  margin-bottom: 15px;
-`;
-const LoginLeftText = styled.h2`
-  font-size: 16px;
-`;
-const LoginRightDivBox = styled.div`
-  width: 300px;
 
+const LoginFormImgBox = styled.div``;
+
+const LoginFormBox = styled.div`
+  width: 300px;
   padding: 10px 10px 10px 10px;
 `;
 
