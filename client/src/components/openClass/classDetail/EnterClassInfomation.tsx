@@ -94,6 +94,7 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
     }
 
     setAddress(fullAddress);
+    setRegion(data.address);
     setIsModalOpen(false);
   };
 
@@ -208,7 +209,6 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
             <OneLineTextBox
               value={address}
               placeholder="ex) 경기도 안양시 만안구 삼덕로 37번길 22"
-              onChange={e => setRegion(e.target.value)}
             />
             <SearchAddressBtn onClick={() => setIsModalOpen(true)}>
               주소 검색
