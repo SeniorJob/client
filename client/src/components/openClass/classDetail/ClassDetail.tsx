@@ -7,8 +7,6 @@ import styled from 'styled-components';
 const Container = tw.div`
   m-4
   p-4
-
-  bg-signature
 `;
 
 const SubTitle = tw.div`
@@ -50,6 +48,9 @@ const WeekClassContent = styled.div`
 const ActionButton = tw.div`
   text-lg
   font-normal
+  cursor-pointer
+
+  hover:text-red-600
 `;
 
 const AddContentButton = tw.div`
@@ -98,19 +99,28 @@ const WeekClass: FC<WeekClassProps> = ({ week, classTitle }) => {
 };
 
 const ClassDetail: FC<ClassDetailProps> = ({ nextTab }) => {
-  const [week, setWeek] = useState(1);
-  const [classTitle, setClassTitle] = useState('');
+  const [weeks, setWeeks] = useState([{ week: 1, classTitle: '' }]);
 
   const addWeek = () => {
-    setWeek([...week, week.length + 1]);
+    const newWeek = weeks.length + 1;
+    const newTitle = prompt('주차별 학습 소제목을 입력하세요');
+    if (newTitle !== null) {
+      setWeeks([...weeks, { week: newWeek, classTitle: newTitle }]);
+    }
   };
 
   return (
     <>
       <Container>
         <SubTitle>주차 정보 및 주차별 학습 내용 입력</SubTitle>
-        <WeekClass week={week} classTitle={classTitle} />
-        <AddWeekButton>주차 추가하기</AddWeekButton>
+        {weeks.map((weekClass, index) => (
+          <WeekClass
+            key={index}
+            week={weekClass.week}
+            classTitle={weekClass.classTitle}
+          />
+        ))}
+        <AddWeekButton onClick={addWeek}>주차 추가하기</AddWeekButton>
         <OpenButton onClick={() => nextTab()}>다음으로</OpenButton>
       </Container>
     </>
