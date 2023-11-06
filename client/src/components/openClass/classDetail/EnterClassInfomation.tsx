@@ -76,7 +76,6 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
   const [bankName, setBankName] = useState('');
   const [accountName, setAccountName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
-  const [createdDate, setCreatedDate] = useState('');
 
   const handleAddress = (data: AddressData) => {
     let fullAddress = data.address;
@@ -114,7 +113,7 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
       bank_name: bankName,
       account_name: accountName,
       account_number: accountNumber,
-      createdDate,
+      createdDate: new Date(),
     };
     const apiUrl = import.meta.env.VITE_API_URL;
     console.log(data);
