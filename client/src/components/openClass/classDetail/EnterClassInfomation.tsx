@@ -66,11 +66,11 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [learningTarget, setLearningTarget] = useState('');
-  const [week, setWeek] = useState('');
+  const [week, setWeek] = useState(0);
   const [recruitEndDate, setRecruitEndDate] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [maxParticipants, setMaxParticipants] = useState('');
+  const [maxParticipants, setMaxParticipants] = useState(0);
   const [region, setRegion] = useState('');
   const [price, setPrice] = useState('');
   const [bankName, setBankName] = useState('');
@@ -193,14 +193,14 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
           <LectureCountInput
             labelTitle="강의 회차: "
             labelText="한 주에 실시되는 강좌의 횟수를 알려주세요!"
-            onChange={e => setWeek(e.target.value)}
+            setCount={setWeek}
           />
         </SelectArea>
         <SelectArea>
           <SubTitle>최대 참가자 수</SubTitle>
           <LectureCountInput
             labelText="강좌에 참가할 수 있는 최대 인원을 설정해주세요!"
-            onChange={e => setMaxParticipants(e.target.value)}
+            setCount={setMaxParticipants}
           />
         </SelectArea>
         <SelectArea>
