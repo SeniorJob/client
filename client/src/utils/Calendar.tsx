@@ -1,25 +1,35 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 
-const Calendar: React.FC = () => {
-  // 선택된 날짜를 관리하는 상태
-  const [recruitmentDate, setRecruitmentDate] = useState<string | null>(null);
-  const [courseStartDate, setCourseStartDate] = useState<string | null>(null);
-  const [courseEndDate, setCourseEndDate] = useState<string | null>(null);
+interface CalendarProps {
+  recruitEndDate: string;
+  startDate: string;
+  endDate: string;
+  setRecruitEndDate: (date: string) => void;
+  setStartDate: (date: string) => void;
+  setEndDate: (date: string) => void;
+}
 
+const Calendar: React.FC<CalendarProps> = ({
+  recruitEndDate,
+  startDate,
+  endDate,
+  setRecruitEndDate,
+  setStartDate,
+  setEndDate,
+}) => {
   // 모집 날짜 선택을 처리하는 함수
   const handleRecruitmentDate = (selectedDate: string) => {
-    setRecruitmentDate(selectedDate);
+    setRecruitEndDate(selectedDate);
   };
 
   // 강좌 시작 날짜 선택을 처리하는 함수
   const handleCourseStartDate = (selectedDate: string) => {
-    setCourseStartDate(selectedDate);
+    setStartDate(selectedDate);
   };
 
   // 강좌 종료 날짜 선택을 처리하는 함수
   const handleCourseEndDate = (selectedDate: string) => {
-    setCourseEndDate(selectedDate);
+    setEndDate(selectedDate);
   };
 
   const SelectDate = styled.input`
@@ -38,7 +48,7 @@ const Calendar: React.FC = () => {
           <SelectDate
             className="w-44"
             type="date"
-            value={recruitmentDate || ''}
+            value={recruitEndDate || ''}
             onChange={e => handleRecruitmentDate(e.target.value)}
           />
         </div>
@@ -52,7 +62,7 @@ const Calendar: React.FC = () => {
           <SelectDate
             className="w-44"
             type="date"
-            value={courseStartDate || ''}
+            value={startDate || ''}
             onChange={e => handleCourseStartDate(e.target.value)}
           />
         </div>
@@ -66,7 +76,7 @@ const Calendar: React.FC = () => {
           <SelectDate
             className="w-44"
             type="date"
-            value={courseEndDate || ''}
+            value={endDate || ''}
             onChange={e => handleCourseEndDate(e.target.value)}
           />
         </div>
