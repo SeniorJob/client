@@ -76,6 +76,7 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
   const [bankName, setBankName] = useState('');
   const [accountName, setAccountName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
   const handleAddress = (data: AddressData) => {
     let fullAddress = data.address;
@@ -98,23 +99,27 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
   };
 
   const handleSubmit = async () => {
-    const data = {
-      category: selectedCategory,
-      title,
-      content,
-      learning_target: learningTarget,
-      week,
-      recruitEnd_date: recruitEndDate,
-      start_date: startDate,
-      end_date: endDate,
-      max_participants: maxParticipants,
-      region,
-      price,
-      bank_name: bankName,
-      account_name: accountName,
-      account_number: accountNumber,
-      createdDate: new Date(),
-    };
+    const data = new FormData();
+    data.append('category', selectedCategory);
+    data.append('title', title);
+    data.append('content', content);
+    data.append('learning_target', learningTarget);
+    data.append('week', week.toString());
+    data.append('recruitEnd_date', recruitEndDate);
+    data.append('start_date', startDate);
+    data.append('end_date', endDate);
+    data.append('max_participants', maxParticipants.toString());
+    data.append('region', region);
+    data.append('price', price);
+    data.append('bank_name', bankName);
+    data.append('account_name', accountName);
+    data.append('account_number', accountNumber);
+    data.append('createdDate', new Date().toString());
+
+    if (image) {
+      data.append('image', image);
+    }
+
     const apiUrl = import.meta.env.VITE_API_URL + '/api/lectures';
     console.log(data);
 
