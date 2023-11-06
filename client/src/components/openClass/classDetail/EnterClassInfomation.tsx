@@ -116,8 +116,8 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
     data.append('account_number', accountNumber);
     data.append('createdDate', new Date().toString());
 
-    if (image) {
-      data.append('image', image);
+    if (selectedImage) {
+      data.append('file', selectedImage);
     }
 
     const apiUrl = import.meta.env.VITE_API_URL + '/api/lectures';
@@ -158,7 +158,7 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
         </SelectArea>
         <SelectArea>
           <SubTitle>강좌 대표 이미지</SubTitle>
-          <ImageUploader />
+          <ImageUploader setSelectedImage={setSelectedImage} />
         </SelectArea>
         <SelectArea>
           <SubTitle>강좌 제목</SubTitle>
