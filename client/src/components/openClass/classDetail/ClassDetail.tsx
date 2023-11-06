@@ -17,6 +17,14 @@ const SubTitle = styled.div`
 const AddWeekButton = styled.div`
   font-size: 2rem;
   padding: 8px;
+  display: flex;
+  justify-content: center;
+
+  cursor: pointer;
+
+  &:hover {
+    color: red;
+  }
 `;
 
 interface ClassDetailProps {
