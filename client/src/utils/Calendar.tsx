@@ -9,6 +9,14 @@ interface CalendarProps {
   setEndDate: (date: string) => void;
 }
 
+const SelectDate = styled.input`
+  width: 150px;
+`;
+
+const SubTitleLabel = styled.label`
+  font-weight: bold;
+`;
+
 const Calendar: React.FC<CalendarProps> = ({
   recruitEndDate,
   startDate,
@@ -31,14 +39,6 @@ const Calendar: React.FC<CalendarProps> = ({
   const handleCourseEndDate = (selectedDate: string) => {
     setEndDate(selectedDate);
   };
-
-  const SelectDate = styled.input`
-    width: 150px;
-  `;
-
-  const SubTitleLabel = styled.label`
-    font-weight: bold;
-  `;
 
   return (
     <div className="flex flex-col gap-2">
