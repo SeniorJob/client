@@ -1,5 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { CategoryProps } from '../../types/CategoryTypes';
+import { useSearchStore } from '../../store/store';
 
 const Card = styled.div`
   width: 70px;
@@ -29,17 +31,26 @@ const CardButton = styled.button`
   }
 `;
 
-type CategoryProps = {
-  data: {
-    img: string;
-    title: string;
-  };
-};
-
 export const CategoryCard = ({ data }: CategoryProps) => {
+  const { setCategory } = useSearchStore();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleCategoryClick = () => {
+    setCategory(data.title);
+
+    // URL의 searchParams 업데이트
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set('category', data.title);
+    navigate({
+      pathname: '/lectures/filter',
+      search: `${searchParams.toString()}`,
+    });
+  };
+
   return (
-    <CardButton>
-      <Link to={`/lectures/filter?category=${data.title}`}>
+    <CardButton onClick={handleCategoryClick}>
+      <Link to={`/lectures`}>
         <Card>
           <img src={data.img} alt={data.title} />
         </Card>

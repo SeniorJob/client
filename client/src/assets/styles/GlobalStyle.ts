@@ -12,10 +12,13 @@ export const GlobalStyle = styled.createGlobalStyle`
     --primaryColor: #1dc078;
   }
 
+  #main {
+    min-height: 700px;
+  }
+
   .container {
     max-width: 1200px;
     position: relative;
     margin: 0 auto;
-    flex-grow: 1;
   }
 `;

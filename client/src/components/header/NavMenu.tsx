@@ -20,19 +20,19 @@ export const NavMenu = () => {
     <Nav>
       <ul>
         <li>
-          <StyledMenu>
-            <Link to="#">강좌탐색</Link>
-          </StyledMenu>
+          <Link to="/lectures">
+            <StyledMenu>강좌탐색</StyledMenu>
+          </Link>
         </li>
         <li>
-          <StyledMenu>
-            <Link to="/openclass">강좌개설</Link>
-          </StyledMenu>
+          <Link to="/openclass">
+            <StyledMenu>강좌개설</StyledMenu>
+          </Link>
         </li>
         <li>
-          <StyledMenu>
-            <Link to="#">강좌제안</Link>
-          </StyledMenu>
+          <Link to="#">
+            <StyledMenu>강좌제안</StyledMenu>
+          </Link>
         </li>
       </ul>
     </Nav>

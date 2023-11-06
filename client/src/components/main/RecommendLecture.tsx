@@ -3,9 +3,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { NavButton } from './SwiperNavButton';
 import styled from 'styled-components';
-import { LectureData } from '../lecture/LectureCard';
-import { getPopularLecture } from '../../api/lecture';
+import { LectureData } from '../lecture/LectureData';
+import { getLecture } from '../../api/lecture';
 import { Link } from 'react-router-dom';
+import { recommendProps, LectureObject } from '../../types/LectureTypes';
 
 const Nodata = styled.div`
   display: flex;
@@ -30,7 +31,7 @@ const LectureHeader = styled.div`
     font-weight: 600;
     &::after {
       content: '〉';
-      font-size: 1rem;
+      font-size: 1.2rem;
       padding-left: 0.7rem;
     }
   }
@@ -41,18 +42,19 @@ const LectureHeader = styled.div`
   }
 `;
 
-type LectureObject = {
-  [key: string]: string | number | undefined;
-};
-
-export const RecommendLecture = () => {
+export const RecommendLecture = ({ recommendType }: recommendProps) => {
   const [data, setData] = useState<LectureObject[]>();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const lectureData = await getPopularLecture('limit=10');
-        setData(lectureData);
+        const lectureData = await getLecture(
+          `lectures/${recommendType.endPoint}`,
+          recommendType.params,
+        );
+        lectureData.content
+          ? setData(lectureData.content)
+          : setData(lectureData);
         console.log(lectureData);
       } catch (error) {
         console.error('에러 발생:', error);
@@ -60,7 +62,7 @@ export const RecommendLecture = () => {
     };
 
     fetchData();
-  }, []);
+  }, [recommendType.endPoint, recommendType.params]);
 
   return (
     <section className="py-6">
@@ -68,17 +70,17 @@ export const RecommendLecture = () => {
         <LectureHeader>
           <div>
             <Link to={'/'}>
-              <h1>지금 HOT한 강좌들이에요 🔥</h1>
+              <h1>{recommendType.title}</h1>
             </Link>
-            <p>인기많은 강좌를 수강해 보세요!</p>
+            <p>{recommendType.subTitle}</p>
           </div>
         </LectureHeader>
         <Swiper
           slidesPerView={5}
           spaceBetween={10}
           navigation={{
-            prevEl: '.swiper-lecture-prev',
-            nextEl: '.swiper-lecture-next',
+            prevEl: `.swiper-${recommendType.name}-lecture-prev`,
+            nextEl: `.swiper-${recommendType.name}-lecture-next`,
           }}
           modules={[Navigation]}
         >
@@ -94,7 +96,7 @@ export const RecommendLecture = () => {
             </Nodata>
           )}
         </Swiper>
-        <NavButton navName="swiper-lecture" />
+        <NavButton navName={`swiper-${recommendType.name}-lecture`} />
       </div>
     </section>
   );

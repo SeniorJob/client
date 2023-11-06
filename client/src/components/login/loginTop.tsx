@@ -3,32 +3,53 @@ import IdIcon from '../../assets/images/IdIcon.svg';
 import PwIcon from '../../assets/images/PwIcon.svg';
 import styled from 'styled-components';
 import Logo from '../../assets/images/logo.png';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useUserStore } from '../../store/user';
 
-const LoginTop = () => {
+const LoginTop: React.FC = () => {
   const [id, setId] = useState<string>('');
   const [pw, setPw] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
 
-  const LoginSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
+  const setIsLoggedIn = useUserStore().setIsLoggedIn;
+
+  const LoginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     const loginData = {
       phoneNumber: id,
       password: pw,
     };
+
+    // 간단한 유효성 검사 예시: 아이디와 비밀번호가 비어있지 않아야 함
+    if (!id || !pw) {
+      setError('사용자 정보를 정확히 기입해 주세요.');
+      return;
+    }
+
     axios
-      .post(
-        'http://ec2-52-78-219-176.ap-northeast-2.compute.amazonaws.com:8080/api/users/login',
-        loginData,
-      )
+      .post(`${import.meta.env.VITE_API_URL}api/users/login`, loginData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(response => {
-        console.log(response.data);
+        // 로그인 성공 시 isLoggedIn을 true로 바꿈. (true -> 로그인 중)
+        setIsLoggedIn();
+        console.log(response); // 서버 응답 데이터 확인
+        // 메인페이지로 연결.
       })
       .catch(error => {
-        console.log(error);
+        console.log(error.message, error);
+        setError('로그인 실패:' + error.message);
       });
   };
+
+  useEffect(() => {
+    if (error) {
+      alert(error); // 에러 메시지를 알림창으로 출력
+    }
+  }, [error]);
 
   return (
     <LoginDownDivBox>
@@ -38,7 +59,7 @@ const LoginTop = () => {
         </LoginLeftText>
       </LoginLeftDivBox>
       <LoginRightDivBox>
-        <LoginInPutForm>
+        <LoginInPutForm onSubmit={LoginSubmit}>
           <InputWrapper>
             <img src={IdIcon} alt="아이디 아이콘"></img>
             <Input
@@ -57,10 +78,9 @@ const LoginTop = () => {
               onChange={e => setPw(e.target.value)}
             />
           </InputWrapper>
-          <LoginMainBtn onSubmit={LoginSubmit}>로그인</LoginMainBtn>
+          {error && <div className="text-red-500">{error}</div>}
+          <LoginMainBtn type="submit">로그인</LoginMainBtn>
         </LoginInPutForm>
-        <p>{id}</p>
-        <p>{pw}</p>
         <LoginDivBox>
           <LoginDivBox>
             <AccountHelpBox>
