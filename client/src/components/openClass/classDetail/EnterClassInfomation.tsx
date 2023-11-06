@@ -115,7 +115,7 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
       account_number: accountNumber,
       createdDate: new Date(),
     };
-    const apiUrl = import.meta.env.VITE_API_URL;
+    const apiUrl = import.meta.env.VITE_API_URL + '/api/lectures';
     console.log(data);
 
     if (!apiUrl) {
