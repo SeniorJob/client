@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ProfileImage from './ProfileImage';
+import defaultImage from '../../assets/images/imageDefault.png';
 import { Link } from 'react-router-dom';
 
 const MyProfile = () => {
@@ -20,10 +20,12 @@ const MyProfile = () => {
           <div>지역</div>
         </div>
       </div>
-      <ProfileImage />
+      <Image src={defaultImage} />
     </Container>
   );
 };
+
+export default MyProfile;
 
 const Container = styled(Link)`
   border-bottom: 1px solid lightgray;
@@ -33,4 +35,9 @@ const Container = styled(Link)`
   padding: 20px 0;
 `;
 
-export default MyProfile;
+const Image = styled.img`
+  border: 1px solid lightgray;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+`;
