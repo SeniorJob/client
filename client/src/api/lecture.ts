@@ -8,7 +8,7 @@ export const getData = async (
   params?: LectureParamProps,
 ) => {
   try {
-    const response = await axios.get(`${API}/${endpoint}`, {
+    const response = await axios.get(`${API}${endpoint}`, {
       params: params,
     });
     // console.log(response.data);
@@ -46,7 +46,18 @@ export const getLecture = async (
   params?: LectureParamProps,
 ) => {
   try {
-    const res = await getData(`${endpoint}`, params);
+    const res = await getData(`/${endpoint}`, params);
+    console.log(res);
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// Detail fetch
+export const getLectureDetail = async (endpoint?: string) => {
+  try {
+    const res = await getData(`${endpoint}`);
     console.log(res);
     return res;
   } catch (err) {
