@@ -11,6 +11,8 @@ interface LoginTopProps {
   handleModal: () => void;
 }
 
+axios.defaults.withCredentials = true;
+
 const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
   const [id, setId] = useState<string>('');
   const [pw, setPw] = useState<string>('');
@@ -18,11 +20,16 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
 
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
 
+  const setTokensInLocalStorage = (accessToken: any, refreshToken: any) => {
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
+  };
+
   const LoginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const loginData = {
       phoneNumber: id,
-      password: pw,
+      encryptionCode: pw,
     };
 
     // 간단한 유효성 검사 : 아이디와 비밀번호가 비어있지 않아야 함
@@ -36,16 +43,19 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        withCredentials: true,
       })
       .then(response => {
         // 로그인 성공 시 isLoggedIn을 true로 바꿈. (true -> 로그인 중)
-        console.log(response); // 서버 응답 데이터 확인
+        console.log(response.data.token); // 서버 응답 데이터 확인
+        const { accessToken, refreshToken } = response.data;
+        setTokensInLocalStorage(accessToken, refreshToken);
+
+        console.log('액세스 토큰:', accessToken);
+        console.log('리프레시 토큰:', refreshToken);
+
         setIsLoggedIn();
         axios
-          .get(`${import.meta.env.VITE_API_URL}/api/users/detail`, {
-            withCredentials: true,
-          })
+          .get(`${import.meta.env.VITE_API_URL}/api/users/detail`)
           .then(res => console.log(res));
         // 메인페이지로 연결.
         handleModal();
@@ -87,7 +97,6 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
               onChange={e => setPw(e.target.value)}
             />
           </InputWrapper>
-          {error && <div className="text-red-500">{error}</div>}
           <LoginMainBtn type="submit">로그인</LoginMainBtn>
         </LoginInPutForm>
         <LoginDivBox>

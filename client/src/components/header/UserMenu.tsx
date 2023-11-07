@@ -12,6 +12,8 @@ const MenuList = styled.div`
   gap: 0.8rem;
 `;
 
+axios.defaults.withCredentials = true;
+
 export const UserMenu: React.FC = () => {
   const [isModal, setIsModal] = useState(false);
 
@@ -24,9 +26,11 @@ export const UserMenu: React.FC = () => {
 
   const handleLogout = async () => {
     try {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/users/logout`,
-        { credentials: 'include' },
       );
       console.log(response);
       setIsLoggedIn();
@@ -53,20 +57,6 @@ export const UserMenu: React.FC = () => {
       {!isLoggedIn ? (
         // 아래 버튼들도 따로 컴포넌트로 빼고 클릭 이벤트만 받게하는 법도 있습니다. 그렇게되면 onClick {} 안에 들어가는게 clickEvent={handleClickEvent} 이런식으로 줄어들겠죠.
         <>
-          <Link to={'/'}>
-            <StyledUserMenu>마이페이지</StyledUserMenu>
-          </Link>
-          <StyledUserMenu
-            onClick={e => {
-              e.preventDefault();
-              handleLogout();
-            }}
-          >
-            로그아웃
-          </StyledUserMenu>
-        </>
-      ) : (
-        <>
           <StyledUserMenu
             onClick={e => {
               e.preventDefault();
@@ -78,6 +68,20 @@ export const UserMenu: React.FC = () => {
           <Link to={'/signup'}>
             <StyledUserMenu>회원가입</StyledUserMenu>
           </Link>
+        </>
+      ) : (
+        <>
+          <Link to={'/'}>
+            <StyledUserMenu>마이페이지</StyledUserMenu>
+          </Link>
+          <StyledUserMenu
+            onClick={e => {
+              e.preventDefault();
+              handleLogout();
+            }}
+          >
+            로그아웃
+          </StyledUserMenu>
         </>
       )}
 
