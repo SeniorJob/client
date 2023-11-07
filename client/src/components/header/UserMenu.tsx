@@ -1,6 +1,6 @@
 import { StyledUserMenu } from '../../assets/styles/MenuStyle';
 import LoginComponent from '../login/loginForm';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -12,9 +12,11 @@ const MenuList = styled.div`
   gap: 0.8rem;
 `;
 
+axios.defaults.withCredentials = true;
+
 export const UserMenu: React.FC = () => {
   const [isModal, setIsModal] = useState(false);
-
+  const [userName, setUserName] = useState('');
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
   const isLoggedIn = useUserStore().isLoggedIn;
 
@@ -23,19 +25,22 @@ export const UserMenu: React.FC = () => {
   };
 
   const handleLogout = async () => {
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/users/logout`,
-        { credentials: 'include' },
-      );
-      console.log(response);
-      setIsLoggedIn();
-    } catch (error) {
-      {
-        console.error(error);
-      }
-    }
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    setIsLoggedIn();
   };
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/api/users/detail`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      })
+      .then(res => {
+        setUserName(res.data.name);
+      });
+  }, []);
 
   return (
     <MenuList>
@@ -53,20 +58,6 @@ export const UserMenu: React.FC = () => {
       {!isLoggedIn ? (
         // 아래 버튼들도 따로 컴포넌트로 빼고 클릭 이벤트만 받게하는 법도 있습니다. 그렇게되면 onClick {} 안에 들어가는게 clickEvent={handleClickEvent} 이런식으로 줄어들겠죠.
         <>
-          <Link to={'/'}>
-            <StyledUserMenu>마이페이지</StyledUserMenu>
-          </Link>
-          <StyledUserMenu
-            onClick={e => {
-              e.preventDefault();
-              handleLogout();
-            }}
-          >
-            로그아웃
-          </StyledUserMenu>
-        </>
-      ) : (
-        <>
           <StyledUserMenu
             onClick={e => {
               e.preventDefault();
@@ -78,6 +69,21 @@ export const UserMenu: React.FC = () => {
           <Link to={'/signup'}>
             <StyledUserMenu>회원가입</StyledUserMenu>
           </Link>
+        </>
+      ) : (
+        <>
+          <div>{userName}님 어서오세요</div>
+          <Link to={'/'}>
+            <StyledUserMenu>마이페이지</StyledUserMenu>
+          </Link>
+          <StyledUserMenu
+            onClick={e => {
+              e.preventDefault();
+              handleLogout();
+            }}
+          >
+            로그아웃
+          </StyledUserMenu>
         </>
       )}
 
