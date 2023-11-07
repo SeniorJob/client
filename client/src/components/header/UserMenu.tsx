@@ -1,6 +1,6 @@
 import { StyledUserMenu } from '../../assets/styles/MenuStyle';
 import LoginComponent from '../login/loginForm';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -16,7 +16,7 @@ axios.defaults.withCredentials = true;
 
 export const UserMenu: React.FC = () => {
   const [isModal, setIsModal] = useState(false);
-
+  const [userName, setUserName] = useState('');
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
   const isLoggedIn = useUserStore().isLoggedIn;
 
@@ -25,21 +25,22 @@ export const UserMenu: React.FC = () => {
   };
 
   const handleLogout = async () => {
-    try {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/users/logout`,
-      );
-      console.log(response);
-      setIsLoggedIn();
-    } catch (error) {
-      {
-        console.error(error);
-      }
-    }
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    setIsLoggedIn();
   };
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/api/users/detail`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      })
+      .then(res => {
+        setUserName(res.data.name);
+      });
+  }, []);
 
   return (
     <MenuList>
@@ -71,6 +72,7 @@ export const UserMenu: React.FC = () => {
         </>
       ) : (
         <>
+          <div>{userName}님 어서오세요</div>
           <Link to={'/'}>
             <StyledUserMenu>마이페이지</StyledUserMenu>
           </Link>
