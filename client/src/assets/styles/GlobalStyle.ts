@@ -20,6 +20,5 @@ export const GlobalStyle = styled.createGlobalStyle`
     max-width: 1200px;
     position: relative;
     margin: 0 auto;
-    flex-grow: 1;
   }
 `;

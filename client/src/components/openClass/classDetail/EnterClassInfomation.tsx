@@ -1,55 +1,171 @@
-import tw from 'tailwind-styled-components';
 import ImageUploader from '../../../utils/ImageUploader';
-// import 'react-calendar/dist/Calendar.css';
-import MadeCalendar from '../../../utils/Calendar';
+import Calendar from '../../../utils/Calendar';
 import { OneLineTextBox, TextBox } from '../../../utils/TextBox';
 import LectureCountInput from '../../../utils/CountInput';
 import { OpenButton } from '../OpenButton';
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import styled from 'styled-components';
+import DaumPostcode from 'react-daum-postcode';
+import { Modal } from './Modal';
+import tw from 'tailwind-styled-components';
+import axios from 'axios';
 
-const Container = tw.div`
-    m-4
-    p-4
+const Container = styled.div``;
 
-    bg-signature
+const SubTitle = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-top: 10px;
 `;
 
-const SubTitle = tw.div`
-    text-lg
-    font-bold
-`;
+const SelectArea = styled.div``;
 
-const SelectArea = tw.div`
-    mb-8
+const SelectCategory = styled.select`
+  font-size: 1.3rem;
+  border: 1px solid black;
+  border-radius: 10px;
 `;
 
 interface EnterClassInfomationProps {
   nextTab: () => void;
 }
 
+interface AddressData {
+  address: string;
+  addressType: string;
+  bname: string;
+  buildingName: string;
+}
+
+const SearchAddressBtn = tw.button`
+  bg-signature
+  p-2
+  m-2
+
+  hover:
+`;
+
 const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
+  const category = [
+    '외식',
+    '서비스',
+    '사무직',
+    '생산',
+    '운전',
+    '디자인',
+    'IT',
+    '기술',
+    '교육',
+    '의료',
+  ];
+
+  const [address, setAddress] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [learningTarget, setLearningTarget] = useState('');
+  const [week, setWeek] = useState(0);
+  const [recruitEndDate, setRecruitEndDate] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [maxParticipants, setMaxParticipants] = useState(0);
+  const [region, setRegion] = useState('');
+  const [price, setPrice] = useState('');
+  const [bankName, setBankName] = useState('');
+  const [accountName, setAccountName] = useState('');
+  const [accountNumber, setAccountNumber] = useState('');
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+
+  const handleAddress = (data: AddressData) => {
+    let fullAddress = data.address;
+    let extraAddress = '';
+
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== '') {
+        extraAddress +=
+          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
+    }
+
+    setAddress(fullAddress);
+    setRegion(data.address);
+    setIsModalOpen(false);
+  };
+
+  const handleSubmit = async () => {
+    const data = new FormData();
+    data.append('category', selectedCategory);
+    data.append('title', title);
+    data.append('content', content);
+    data.append('learning_target', learningTarget);
+    data.append('week', week.toString());
+    data.append('recruitEnd_date', recruitEndDate);
+    data.append('start_date', startDate);
+    data.append('end_date', endDate);
+    data.append('max_participants', maxParticipants.toString());
+    data.append('region', region);
+    data.append('price', price);
+    data.append('bank_name', bankName);
+    data.append('account_name', accountName);
+    data.append('account_number', accountNumber);
+    data.append('createdDate', new Date().toString());
+
+    if (selectedImage) {
+      data.append('file', selectedImage);
+    }
+
+    const apiUrl = import.meta.env.VITE_API_URL + '/api/lectures';
+    console.log(data);
+
+    if (!apiUrl) {
+      console.error('환경변수 설정 에러');
+      return;
+    }
+
+    try {
+      const res = await axios.post(apiUrl, data);
+      console.log(res.data);
+      nextTab();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <Container>
         <SelectArea>
           <SubTitle>카테고리 선택</SubTitle>
           <form>
-            <select name="category" id="category">
-              <option value="외식">외식</option>
-              <option value="서비스">서비스</option>
-              <option value="사무직">사무직</option>
-            </select>
+            <SelectCategory
+              name="category"
+              id="category"
+              onChange={e => setSelectedCategory(e.target.value)}
+            >
+              {category.map((item, index) => (
+                <option key={index} value={item}>
+                  {item}
+                </option>
+              ))}
+            </SelectCategory>
           </form>
         </SelectArea>
         <SelectArea>
           <SubTitle>강좌 대표 이미지</SubTitle>
-          <ImageUploader />
+          <ImageUploader setSelectedImage={setSelectedImage} />
         </SelectArea>
         <SelectArea>
           <SubTitle>강좌 제목</SubTitle>
           <OneLineTextBox
             maxLength={30}
             placeholder="ex) 강좌 제목을 입력해주세요. (30자 이하)"
+            onChange={e => setTitle(e.target.value)}
           />
         </SelectArea>
         <SelectArea>
@@ -57,6 +173,7 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
           <TextBox
             maxLength={200}
             placeholder="ex) 강좌의 목적 또는 학습목표의 내용을 간략하게 기재해 다른 사람들에게 소개해보세요! (200자 이하)"
+            onChange={e => setContent(e.target.value)}
           ></TextBox>
         </SelectArea>
         <SelectArea>
@@ -64,41 +181,76 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
           <OneLineTextBox
             maxLength={30}
             placeholder="ex) 음식을 좋아하는 누구나! (30자 이하)"
+            onChange={e => setLearningTarget(e.target.value)}
           />
         </SelectArea>
         <SelectArea>
           <SubTitle>강좌 날짜 선택</SubTitle>
-          <MadeCalendar />
+          <Calendar
+            recruitEndDate={recruitEndDate}
+            startDate={startDate}
+            endDate={endDate}
+            setRecruitEndDate={setRecruitEndDate}
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+          />
           <LectureCountInput
             labelTitle="강의 회차: "
             labelText="한 주에 실시되는 강좌의 횟수를 알려주세요!"
+            setCount={setWeek}
           />
         </SelectArea>
         <SelectArea>
           <SubTitle>최대 참가자 수</SubTitle>
-          <LectureCountInput labelText="강좌에 참가할 수 있는 최대 인원을 설정해쥇요!" />
+          <LectureCountInput
+            labelText="강좌에 참가할 수 있는 최대 인원을 설정해주세요!"
+            setCount={setMaxParticipants}
+          />
         </SelectArea>
         <SelectArea>
           <SubTitle>지역</SubTitle>
-          <OneLineTextBox placeholder="ex) 경기도 안양시 만안구 삼덕로 37번길 22" />
+          <div className="flex">
+            <OneLineTextBox
+              value={address}
+              placeholder="ex) 경기도 안양시 만안구 삼덕로 37번길 22"
+            />
+            <SearchAddressBtn onClick={() => setIsModalOpen(true)}>
+              주소 검색
+            </SearchAddressBtn>
+          </div>
+          <Modal isOpen={isModalOpen} close={() => setIsModalOpen(false)}>
+            <DaumPostcode onComplete={handleAddress} />
+          </Modal>
         </SelectArea>
         <SelectArea>
           <SubTitle>가격</SubTitle>
-          <OneLineTextBox placeholder="ex) 15000" />
+          <OneLineTextBox
+            placeholder="ex) 15000"
+            onChange={e => setPrice(e.target.value)}
+          />
         </SelectArea>
         <SelectArea>
           <SubTitle>은행</SubTitle>
-          <OneLineTextBox placeholder="ex) 은행을 입력해주세요" />
+          <OneLineTextBox
+            placeholder="ex) 은행을 입력해주세요"
+            onChange={e => setBankName(e.target.value)}
+          />
         </SelectArea>
         <SelectArea>
           <SubTitle>예금주</SubTitle>
-          <OneLineTextBox placeholder="ex) 신이어" />
+          <OneLineTextBox
+            placeholder="ex) 신이어"
+            onChange={e => setAccountName(e.target.value)}
+          />
         </SelectArea>
         <SelectArea>
           <SubTitle>계좌번호</SubTitle>
-          <OneLineTextBox placeholder="ex) '-' 없이 입력해주세요" />
+          <OneLineTextBox
+            placeholder="ex) '-' 없이 입력해주세요"
+            onChange={e => setAccountNumber(e.target.value)}
+          />
         </SelectArea>
-        <OpenButton onClick={() => nextTab()}>다음으로</OpenButton>
+        <OpenButton onClick={handleSubmit}>다음으로</OpenButton>
       </Container>
     </>
   );

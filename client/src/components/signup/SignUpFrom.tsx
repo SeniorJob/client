@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import 'react-calendar/dist/Calendar.css'; // css import
+// import 'react-calendar/dist/Calendar.css'; // css import
 import PostCode from './SignPostCode';
 import axios from 'axios';
 
 import tw from 'tailwind-styled-components';
 import styled from 'styled-components';
+
+axios.defaults.withCredentials = true;
 
 const SingUpFrom: React.FC = () => {
   const [form, setForm] = useState({
@@ -62,15 +64,11 @@ const SingUpFrom: React.FC = () => {
 
     console.log(formData);
     axios
-      .post(
-        'http://ec2-3-34-248-169.ap-northeast-2.compute.amazonaws.com:8080/api/users/join',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data', // 컨텐츠 타입을 multipart/form-data로 설정합니다.
-          },
+      .post(`${import.meta.env.VITE_API_URL}/api/users/join`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // 컨텐츠 타입을 multipart/form-data로 설정합니다.
         },
-      )
+      })
       .then(response => {
         // 요청이 성공하면 서버 응답을 처리합니다.
         console.log('서버 응답:', response.data);

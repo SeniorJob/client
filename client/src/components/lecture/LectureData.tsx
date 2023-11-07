@@ -131,7 +131,7 @@ export const LectureData = ({ data }: LectureDataProps) => {
   return (
     <LectureWrapper>
       <LectureCard>
-        <Link to={`/lectures/${data.create_id}`}>
+        <Link to={`/lectures/detail/${data.create_id}`}>
           <Card>
             <img src={data.image_url} alt={data.title} />
           </Card>
@@ -161,7 +161,10 @@ export const LectureData = ({ data }: LectureDataProps) => {
         </Link>
       </LectureCard>
       <LectureHoverCard>
-        <Link to={`/lectures/${data.create_id}`} className="lecture-hover-link">
+        <Link
+          to={`/lectures/detail/${data.create_id}`}
+          className="lecture-hover-link"
+        >
           <h2>{data.title}</h2>
           <p className="lecture-hover-desc">{data.content}</p>
           <p className="lecture-hover-category">

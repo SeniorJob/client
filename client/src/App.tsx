@@ -2,11 +2,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { Header } from './components/header/Header';
 import { MainPage } from './pages/mainpage/MainPage';
-
 import OpenClassPage from './components/openClass/OpenClassPage';
 import SignUp from './components/signup/SignUp';
 import { LectureList } from './pages/lectureList/LectureList';
 import { ScrollToTop } from './utils/ScrollToTop';
+import { LectureDetail } from './pages/lectureDetail/LectureDetail';
+
 import MyPage from './pages/MyPage/MyPage';
 import Opening from './pages/MyPage/Opening';
 import Suggestion from './pages/MyPage/Suggestion';
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/openclass" element={<OpenClassPage />} />
           <Route path="/signup" element={<SignUp />} />
+
           <Route path="/lectures/filter?" element={<LectureList />} />
 
           <Route path="/mypage" element={<MyPage />} />
@@ -30,6 +32,10 @@ function App() {
           <Route path="/mypage/lecture/application" element={<Application />} />
           <Route path="/mypage/lecture/opening" element={<Opening />} />
           <Route path="/mypage/lecture/suggestion" element={<Suggestion />} />
+
+          <Route path="/lectures/detail/*" element={<LectureDetail />} />
+          <Route path="/lectures/*" element={<LectureList />} />
+
         </Routes>
       </div>
     </BrowserRouter>

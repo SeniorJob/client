@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 
 const NodataContent = styled.div`
   width: 100%;
+  height: 700px;
   display: flex;
   align-items: center;
   flex-direction: column;
