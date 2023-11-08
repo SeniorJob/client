@@ -19,7 +19,7 @@ export const UserMenu: React.FC = () => {
   const [userName, setUserName] = useState('');
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
   const isLoggedIn = useUserStore().isLoggedIn;
-
+  const LoginInfo = localStorage.getItem('isLogIn');
   const handleModal = () => {
     setIsModal(!isModal);
   };
@@ -28,19 +28,24 @@ export const UserMenu: React.FC = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     setIsLoggedIn();
+    localStorage.removeItem('isLogIn');
   };
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_API_URL}/api/users/detail`, {
+      .post(`${import.meta.env.VITE_API_URL}/api/users/detail`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       })
       .then(res => {
+        console.log(res.data);
         setUserName(res.data.name);
+      })
+      .catch(error => {
+        console.log(error, error.message);
       });
-  }, []);
+  }, [LoginInfo]);
 
   return (
     <MenuList>
@@ -55,7 +60,7 @@ export const UserMenu: React.FC = () => {
       </button> */}
 
       {/* 이 부분 코드처럼 로그인 성공 여부인 isLoggedIn을 체크하고 로그인, 로그아웃을 변경해주시면 됩니다. */}
-      {!isLoggedIn ? (
+      {!LoginInfo ? (
         // 아래 버튼들도 따로 컴포넌트로 빼고 클릭 이벤트만 받게하는 법도 있습니다. 그렇게되면 onClick {} 안에 들어가는게 clickEvent={handleClickEvent} 이런식으로 줄어들겠죠.
         <>
           <StyledUserMenu
