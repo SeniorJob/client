@@ -8,7 +8,7 @@ import MyPageTitle from '../../components/MyPage/MyPageTitle';
 const Opening = () => {
   return (
     <MyPageLayout>
-      <MyPageTitle />
+      <MyPageTitle title="개설" />
 
       <RecommendDiv>
         새로운 강좌에 참여하고 싶은신가요?

@@ -1,21 +1,18 @@
-import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-const MyPageTitle = () => {
-  const pathname = useLocation().pathname;
-  const title = pathname.substring(pathname.lastIndexOf('/') + 1);
+interface MyPageTitle_I {
+  title: '제안' | '신청' | '개설';
+  type?: 'edit';
+}
 
+const MyPageTitle = ({ title, type }: MyPageTitle_I) => {
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
       <H2>
-        {title === 'application'
-          ? '신청'
-          : title === 'opening'
-          ? '개설'
-          : title === 'suggestion' && '제안'}
-        한 강좌
+        {title}
+        {type !== 'edit' ? '한 강좌' : '한 강좌 수정'}
       </H2>
-      <SearchBox type="text" placeholder="강좌 검색" />
+      {type !== 'edit' && <SearchBox type="text" placeholder="강좌 검색" />}
     </div>
   );
 };
