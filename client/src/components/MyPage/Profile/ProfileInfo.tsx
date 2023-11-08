@@ -1,38 +1,59 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import defaultImage from '../../../assets/images/imageDefault.png';
 import { ChangeEvent, useState } from 'react';
 import SignPostCode from '../../signup/SignPostCode';
 import { Link } from 'react-router-dom';
+import { useUserStore } from '../../../store/user';
+import {
+  INTEREST_CATEGORY_OPTIONS,
+  JOB_OPTIONS,
+} from '../../../constants/Profile';
+import { getProfile, updateProfile } from '../../../api/mypage';
 
 interface ProfileInfo_I {
   mode?: '수정';
 }
 
+interface UserDTO_I {
+  name: string | undefined;
+  dateOfBirth: string | undefined;
+  job: string | undefined;
+  address: string | undefined;
+  // addressDetail: string | undefined;
+  category: string | undefined;
+}
+
 const ProfileInfo = ({ mode }: ProfileInfo_I) => {
+  const userStore = useUserStore();
+  const userDetail = userStore.userDetail;
+
   const formData = new FormData();
-  const [image, setImage] = useState(defaultImage);
-  const [userDTO, setUserDTO] = useState({
-    name: '',
-    dateOfBirth: '',
-    job: '',
-    address: '',
-    addressDetail: '',
-    category: '',
+  const [image, setImage] = useState(
+    userDetail.imgKey ? userDetail.imgKey : defaultImage,
+  );
+  const [userDTO, setUserDTO] = useState<UserDTO_I>({
+    name: undefined,
+    dateOfBirth: undefined,
+    job: undefined,
+    address: undefined,
+    // addressDetail: undefined,
+    category: undefined,
   });
 
-  const jobOptions = ['자영업자', '공무원', '프리랜서', '직장인', '전문직'];
-  const interestCategoryOption = [
-    '외식',
-    '서비스',
-    '사무직',
-    '생산',
-    '운전',
-    '디자인',
-    'IT',
-    '기술',
-    '교육',
-    '의료',
-  ];
+  useEffect(() => {
+    const { name, dateOfBirth, job, region, category } = userDetail;
+    setUserDTO(prev => {
+      return {
+        ...prev,
+        name,
+        dateOfBirth,
+        job,
+        address: region,
+        category,
+      };
+    });
+  }, []);
 
   const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -43,10 +64,13 @@ const ProfileInfo = ({ mode }: ProfileInfo_I) => {
     }
   };
 
-  const handleUpdateProfile = () => {
-    const { name, job, dateOfBirth, category, address, addressDetail } =
-      userDTO;
-    console.log(userDTO);
+  const handleGetProfile = async () => {
+    const info = await getProfile();
+    userStore.setUserDetail(info);
+  };
+
+  const handleUpdateProfile = async () => {
+    const { name, job, dateOfBirth, category, address } = userDTO;
     formData.append(
       'userDto',
       JSON.stringify({
@@ -54,16 +78,19 @@ const ProfileInfo = ({ mode }: ProfileInfo_I) => {
         job,
         dateOfBirth,
         category,
-        address: address + ' ' + addressDetail,
+        region: address,
       }),
     );
+    await updateProfile(formData);
+    await handleGetProfile();
+    location.href = '/mypage';
   };
 
   return (
     <Form>
       <Label>
         <Image src={image} alt="프로필 이미지" />
-        {mode !== '수정' && (
+        {mode === '수정' && (
           <InputImage type="file" onChange={handleChangeImage} />
         )}
       </Label>
@@ -71,6 +98,7 @@ const ProfileInfo = ({ mode }: ProfileInfo_I) => {
         이름
         <Input
           disabled={mode !== '수정'}
+          defaultValue={userDTO.name}
           onChange={e => setUserDTO({ ...userDTO, name: e.target.value })}
         />
       </Label>
@@ -79,11 +107,11 @@ const ProfileInfo = ({ mode }: ProfileInfo_I) => {
         <Input
           disabled={mode !== '수정'}
           type="text"
-          value={userDTO.address}
+          defaultValue={userDTO.address}
           onChange={e => setUserDTO({ ...userDTO, address: e.target.value })}
         ></Input>
       </Label>
-      <Label>
+      {/* <Label>
         상세주소
         <Input
           disabled={mode !== '수정'}
@@ -91,12 +119,13 @@ const ProfileInfo = ({ mode }: ProfileInfo_I) => {
             setUserDTO({ ...userDTO, addressDetail: e.target.value })
           }
         />
-      </Label>
+      </Label> */}
       <Label>
         생일
         <Input
           disabled={mode !== '수정'}
           type="date"
+          value={userDTO.dateOfBirth}
           onChange={e =>
             setUserDTO({ ...userDTO, dateOfBirth: e.target.value })
           }
@@ -109,8 +138,12 @@ const ProfileInfo = ({ mode }: ProfileInfo_I) => {
           onChange={e => setUserDTO({ ...userDTO, job: e.target.value })}
         >
           <option>선택하세요</option>
-          {jobOptions.map((option, index) => (
-            <option key={index} value={option}>
+          {JOB_OPTIONS.map((option, index) => (
+            <option
+              key={index}
+              value={option}
+              selected={option === userDTO.job}
+            >
               {option}
             </option>
           ))}
@@ -123,8 +156,12 @@ const ProfileInfo = ({ mode }: ProfileInfo_I) => {
           onChange={e => setUserDTO({ ...userDTO, category: e.target.value })}
         >
           <option>선택하세요</option>
-          {interestCategoryOption.map((option, index) => (
-            <option key={index} value={option}>
+          {INTEREST_CATEGORY_OPTIONS.map((option, index) => (
+            <option
+              key={index}
+              value={option}
+              selected={option === userDTO.category}
+            >
               {option}
             </option>
           ))}

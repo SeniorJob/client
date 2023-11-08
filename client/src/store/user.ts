@@ -1,44 +1,55 @@
-import { create } from 'zustand';
+import { StateCreator, create } from 'zustand';
+import { persist, PersistOptions } from 'zustand/middleware';
 
-interface UserState {
+export interface UserState {
   isLoggedIn: boolean;
-  detail: {
-    uid?: number;
-    name?: string;
-    phoneNumber?: string;
-    encryptionCode?: string;
-    confirmPassword?: string;
-    job?: string;
-    dateOfBirth?: string;
-    category?: string;
-    region?: string;
-    imgKey?: string;
-    updateDate?: string;
-    createDate?: string;
+  userDetail: {
+    uid: number | undefined;
+    name: string | undefined;
+    phoneNumber: string | undefined;
+    encryptionCode: string | undefined;
+    job: string | undefined;
+    dateOfBirth: string | undefined;
+    category: string | undefined;
+    region: string | undefined;
+    imgKey: string | undefined;
+    updateDate: string | undefined;
   };
   setIsLoggedIn: () => void;
+  setUserDetail: (info: UserState['userDetail']) => void;
 }
 
-export const useUserStore = create<UserState>(set => ({
-  isLoggedIn: false,
-  detail: {
-    uid: undefined,
-    name: undefined,
-    phoneNumber: undefined,
-    encryptionCode: undefined,
-    confirmPassword: undefined,
-    job: undefined,
-    dateOfBirth: undefined,
-    category: undefined,
-    region: undefined,
-    imgKey: undefined,
-    updateDate: undefined,
-    createDate: undefined,
-  },
+type UserPersist = (
+  config: StateCreator<UserState>,
+  options: PersistOptions<UserState>,
+) => StateCreator<UserState>;
 
-  setIsLoggedIn: () =>
-    set(prevState => ({ isLoggedIn: !prevState.isLoggedIn })),
-}));
+export const useUserStore = create<UserState>(
+  (persist as UserPersist)(
+    set => ({
+      isLoggedIn: false,
+
+      userDetail: {
+        uid: undefined,
+        name: undefined,
+        phoneNumber: undefined,
+        encryptionCode: undefined,
+        job: undefined,
+        dateOfBirth: undefined,
+        category: undefined,
+        region: undefined,
+        imgKey: undefined,
+        updateDate: undefined,
+      },
+
+      setIsLoggedIn: () =>
+        set(prevState => ({ isLoggedIn: !prevState.isLoggedIn })),
+
+      setUserDetail: info => set(() => ({ userDetail: info })),
+    }),
+    { name: 'UserStore' },
+  ),
+);
 
 // "uid": 3,
 // "name": "이현숙",

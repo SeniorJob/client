@@ -1,16 +1,20 @@
+import { useEffect } from 'react';
 import MyPageLayout from '../../components/MyPage/MyPageLayout';
 import ProfileInfo from '../../components/MyPage/Profile/ProfileInfo';
-
-// import { getProfile } from '../../api/mypage';
+import { getProfile } from '../../api/mypage';
+import { useUserStore } from '../../store/user';
 
 const MyPage = () => {
-  // useEffect(() => {
-  //   const handleGetProfile = async () => {
-  //     await getProfile();
-  //   };
+  const userStore = useUserStore();
 
-  //   handleGetProfile();
-  // }, []);
+  const handleGetProfile = async () => {
+    const info = await getProfile();
+    userStore.setUserDetail(info);
+  };
+
+  useEffect(() => {
+    userStore.isLoggedIn && handleGetProfile();
+  }, []);
 
   return (
     <MyPageLayout>

@@ -9,7 +9,7 @@ const LectureCardList = ({ type }: LectureCardList_I) => {
   console.log(type);
   return (
     <LectureListContainer type={type}>
-      <LectureCard type="제안" />
+      <LectureCard type="제안" id={1} />
       <LectureCard />
       <LectureCard />
       <LectureCard />
