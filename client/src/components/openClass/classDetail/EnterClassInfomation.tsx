@@ -62,7 +62,7 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
   const [address, setAddress] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('외식');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [learningTarget, setLearningTarget] = useState('');
@@ -72,7 +72,7 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
   const [endDate, setEndDate] = useState('');
   const [maxParticipants, setMaxParticipants] = useState(0);
   const [region, setRegion] = useState('');
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState<number>(0);
   const [bankName, setBankName] = useState('');
   const [accountName, setAccountName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
@@ -100,21 +100,24 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
 
   const handleSubmit = async () => {
     const data = new FormData();
-    data.append('category', selectedCategory);
-    data.append('title', title);
-    data.append('content', content);
-    data.append('learning_target', learningTarget);
-    data.append('week', week.toString());
-    data.append('recruitEnd_date', recruitEndDate);
-    data.append('start_date', startDate);
-    data.append('end_date', endDate);
-    data.append('max_participants', maxParticipants.toString());
-    data.append('region', region);
-    data.append('price', price);
-    data.append('bank_name', bankName);
-    data.append('account_name', accountName);
-    data.append('account_number', accountNumber);
-    data.append('createdDate', new Date().toString());
+    const lectureDto = {
+      category: selectedCategory,
+      title: title,
+      content: content,
+      learning_target: learningTarget,
+      week: week.toString(),
+      recruitEnd_date: recruitEndDate,
+      start_date: startDate,
+      end_date: endDate,
+      max_participants: maxParticipants.toString(),
+      region: region,
+      price: price,
+      bank_name: bankName,
+      account_name: accountName,
+      account_number: accountNumber,
+      createdDate: new Date().toString(),
+    };
+    data.append('lectureDto', JSON.stringify(lectureDto));
 
     if (selectedImage) {
       data.append('file', selectedImage);
@@ -122,6 +125,7 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
 
     const apiUrl = import.meta.env.VITE_API_URL + '/api/lectures';
     console.log(data);
+    console.log(lectureDto);
 
     if (!apiUrl) {
       console.error('환경변수 설정 에러');
@@ -231,7 +235,7 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
           <SubTitle>가격</SubTitle>
           <OneLineTextBox
             placeholder="ex) 15000"
-            onChange={e => setPrice(e.target.value)}
+            onChange={e => setPrice(parseInt(e.target.value))}
           />
         </SelectArea>
         <SelectArea>
