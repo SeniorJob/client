@@ -129,7 +129,12 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
     }
 
     try {
-      const res = await axios.post(apiUrl, data);
+      const accessToken = localStorage.getItem('accessToken');
+      const res = await axios.post(apiUrl, data, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       console.log(res.data);
       nextTab();
     } catch (err) {
