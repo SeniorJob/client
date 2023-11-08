@@ -5,8 +5,6 @@ import styled from 'styled-components';
 import Logo from '../../assets/images/logo.png';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useUserStore } from '../../store/user';
-import { isLoginValid } from '../../utils/SignUpLoginOutValidation';
 
 interface LoginTopProps {
   handleModal: () => void;
@@ -19,8 +17,6 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
   const [pw, setPw] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
 
-  const setIsLoggedIn = useUserStore().setIsLoggedIn;
-
   const setTokensInLocalStorage = (accessToken: any, refreshToken: any) => {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
@@ -29,40 +25,33 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
   const LoginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const validationMessage = isLoginValid(id, pw);
+    const loginData = {
+      phoneNumber: id,
+      encryptionCode: pw,
+    };
 
-    if (validationMessage === '유효성 검사 통과') {
-      const loginData = {
-        phoneNumber: id,
-        encryptionCode: pw,
-      };
+    axios
+      .post(`${import.meta.env.VITE_API_URL}/api/users/login`, loginData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => {
+        // 로그인 성공 시 isLoggedIn을 true로 바꿈. (true -> 로그인 중)
+        console.log(response.data.token); // 서버 응답 데이터 확인
+        const { accessToken, refreshToken } = response.data;
+        setTokensInLocalStorage(accessToken, refreshToken);
 
-      axios
-        .post(`${import.meta.env.VITE_API_URL}/api/users/login`, loginData, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        .then(response => {
-          // 로그인 성공 시 isLoggedIn을 true로 바꿈. (true -> 로그인 중)
-          console.log(response.data.token); // 서버 응답 데이터 확인
-          const { accessToken, refreshToken } = response.data;
-          setTokensInLocalStorage(accessToken, refreshToken);
+        console.log('액세스 토큰:', accessToken);
+        console.log('리프레시 토큰:', refreshToken);
 
-          console.log('액세스 토큰:', accessToken);
-          console.log('리프레시 토큰:', refreshToken);
-
-          setIsLoggedIn();
-          handleModal();
-        })
-        .catch(error => {
-          console.log(error.message, error);
-          setError('로그인 실패:' + error.message);
-        });
-    } else {
-      // 유효성 검사 실패 시 처리
-      alert(validationMessage);
-    }
+        localStorage.setItem('isLoggedIn', 'true');
+        handleModal();
+      })
+      .catch(error => {
+        console.log(error.message, error);
+        setError('로그인 실패:' + error.message);
+      });
   };
 
   useEffect(() => {
