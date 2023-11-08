@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import Logo from '../../assets/images/logo.png';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useUserStore } from '../../store/user';
+// import { isLoginValid } from '../../utils/SignUpLoginOutValidation';
 
 interface LoginTopProps {
   handleModal: () => void;
@@ -17,6 +19,8 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
   const [pw, setPw] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
 
+  const setIsLoggedIn = useUserStore().setIsLoggedIn;
+
   const setTokensInLocalStorage = (accessToken: any, refreshToken: any) => {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
@@ -24,6 +28,8 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
 
   const LoginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    // const validationMessage = isLoginValid(id, pw);
 
     const loginData = {
       phoneNumber: id,
@@ -45,7 +51,8 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
         console.log('액세스 토큰:', accessToken);
         console.log('리프레시 토큰:', refreshToken);
 
-        localStorage.setItem('isLoggedIn', 'true');
+        setIsLoggedIn();
+        localStorage.setItem('isLogIn', 'true');
         handleModal();
       })
       .catch(error => {
