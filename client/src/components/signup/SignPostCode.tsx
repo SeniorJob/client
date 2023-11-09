@@ -26,7 +26,13 @@ const SignPostCode: React.FC<SignPostCodeProps> = ({ setForm }) => {
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
     console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
-    setForm(prevForm => ({
+    // 빌드 오류로 인해 임시 수정하였습니다
+    // 수정 전 코드
+    // setForm(prevForm => ({
+    //   ...prevForm,
+    //   address: fullAddress,
+    // }));
+    setForm((prevForm: any) => ({
       ...prevForm,
       address: fullAddress,
     }));

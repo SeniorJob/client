@@ -1,12 +1,8 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { BannerNav } from './SwiperNavButton';
-// Swiper 관련 모듈 Import
 import { Swiper, SwiperSlide, SwiperClass } from 'swiper/react';
-import { Autoplay, Navigation, Pagination, Controller } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import { Autoplay, Pagination } from 'swiper/modules';
 import { Divider } from '../../assets/styles/CommonStyles';
 
 const CustomSlide = styled(SwiperSlide)`
@@ -103,7 +99,7 @@ const CustomBullets = styled.div<{ $curIndex: number }>`
 `;
 
 export const TopBanner = () => {
-  const [swiper, setSwiper] = useState<SwiperClass | null>(null);
+  const [swiper, setSwiper] = useState<SwiperClass>();
   const [curIndex, setCurIndex] = useState<number>(1);
 
   useEffect(() => {
@@ -137,7 +133,7 @@ export const TopBanner = () => {
           },
         }}
         loop={true}
-        modules={[Autoplay, Navigation, Pagination, Controller]}
+        modules={[Autoplay, Pagination]}
         className="mySwiper"
       >
         {/* 나중에 여기에 강의 데이터 mapping 하면 됨 */}
