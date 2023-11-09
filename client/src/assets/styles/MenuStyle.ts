@@ -19,3 +19,11 @@ export const StyledUserMenu = styled(StyledMenu)`
     color: white;
   }
 `;
+
+export const StyledLoginUser = styled.div`
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  font-size: 17px;
+  padding-top: 7px;
+`;

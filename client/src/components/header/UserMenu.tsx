@@ -1,4 +1,4 @@
-import { StyledUserMenu } from '../../assets/styles/MenuStyle';
+import { StyledUserMenu, StyledLoginUser } from '../../assets/styles/MenuStyle';
 import LoginComponent from '../login/loginForm';
 import { useState, useEffect } from 'react';
 
@@ -19,11 +19,12 @@ export const UserMenu: React.FC = () => {
   const [userName, setUserName] = useState('');
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
   const isLoggedIn = useUserStore().isLoggedIn;
+  const accessToken = localStorage.getItem('accessToken');
   const LoginInfo = localStorage.getItem('isLogIn');
+
   const handleModal = () => {
     setIsModal(!isModal);
   };
-  const accessToken = localStorage.getItem('accessToken');
 
   useEffect(() => {
     axios
@@ -83,7 +84,9 @@ export const UserMenu: React.FC = () => {
         </>
       ) : (
         <>
-          <div>{userName}님 어서오세요</div>
+          <StyledLoginUser>
+            <strong>{userName}</strong>님 어서오세요
+          </StyledLoginUser>
           <Link to={'/'}>
             <StyledUserMenu>마이페이지</StyledUserMenu>
           </Link>
