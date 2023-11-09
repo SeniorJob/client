@@ -23,6 +23,28 @@ export const UserMenu: React.FC = () => {
   const handleModal = () => {
     setIsModal(!isModal);
   };
+  const accessToken = localStorage.getItem('accessToken');
+
+  useEffect(() => {
+    axios
+      .post(
+        `${import.meta.env.VITE_API_URL}/api/users/detail`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      )
+      .then(res => {
+        console.log(res.data);
+        setUserName(res.data.name);
+      })
+      .catch(error => {
+        console.error('사용자 세부 정보를 가져올 때 오류 발생:', error);
+        // 오류를 처리하려면 사용자에게 오류 메시지를 표시하는 등의 조치를 취하십시오.
+      });
+  }, [accessToken]);
 
   const handleLogout = async () => {
     localStorage.removeItem('accessToken');
@@ -30,22 +52,6 @@ export const UserMenu: React.FC = () => {
     setIsLoggedIn();
     localStorage.removeItem('isLogIn');
   };
-
-  useEffect(() => {
-    axios
-      .post(`${import.meta.env.VITE_API_URL}/api/users/detail`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      })
-      .then(res => {
-        console.log(res.data);
-        setUserName(res.data.name);
-      })
-      .catch(error => {
-        console.log(error, error.message);
-      });
-  }, [LoginInfo]);
 
   return (
     <MenuList>
