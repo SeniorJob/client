@@ -15,6 +15,10 @@ const SubTitle = styled(Title)`
   padding: 10px;
 `;
 
+const Content = styled.div`
+  padding: 20px;
+`;
+
 const Confirmation = () => {
   // TODO: GET 요청
 
@@ -32,12 +36,19 @@ const Confirmation = () => {
           </div>
         </div>
         <SubTitle>강의 소개</SubTitle>
-        <div className="p-6">(강의 소개가 들어갈 곳)</div>
+        <Content>(강의 소개가 들어갈 곳)</Content>
         <SubTitle>강좌 날짜</SubTitle>
-        <div className="p-6">주 {2} 회</div>
-        <div className="p-6">모집마감날짜</div>
-        <div className="p-6">강좌시작날짜</div>
-        <div className="p-6">강좌종료날짜</div>
+        <Content>주 {2} 회</Content>
+        <Content>모집마감날짜</Content>
+        <Content>강좌시작날짜</Content>
+        <Content>강좌종료날짜</Content>
+        <SubTitle>최대 참가자 수</SubTitle>
+        <Content>{30}명</Content>
+        <SubTitle>계좌 정보</SubTitle>
+        <Content>은행이름</Content>
+        <Content>예금주</Content>
+        <Content>계좌번호</Content>
+        <SubTitle>강의 상세 내용</SubTitle>
       </Container>
     </>
   );
