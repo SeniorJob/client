@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { BannerNav } from './SwiperNavButton';
-import { Swiper, SwiperSlide, SwiperClass } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper as SwiperClass } from 'swiper/types';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Divider } from '../../assets/styles/CommonStyles';
 
-const CustomSlide = styled(SwiperSlide)`
+const CustomSlide = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -102,6 +103,7 @@ export const TopBanner = () => {
     swiper?.on('slideChange', () => {
       setCurIndex(swiper.realIndex + 1);
     });
+    console.log(swiper);
   }, [swiper]);
 
   return (
@@ -132,15 +134,33 @@ export const TopBanner = () => {
         className="mySwiper"
       >
         {/* 나중에 여기에 강의 데이터 mapping 하면 됨 */}
-        <CustomSlide>Slide 1</CustomSlide>
-        <CustomSlide>Slide 2</CustomSlide>
-        <CustomSlide>Slide 3</CustomSlide>
-        <CustomSlide>Slide 4</CustomSlide>
-        <CustomSlide>Slide 5</CustomSlide>
-        <CustomSlide>Slide 6</CustomSlide>
-        <CustomSlide>Slide 7</CustomSlide>
-        <CustomSlide>Slide 8</CustomSlide>
-        <CustomSlide>Slide 9</CustomSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 1</CustomSlide>
+        </SwiperSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 2</CustomSlide>
+        </SwiperSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 3</CustomSlide>
+        </SwiperSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 4</CustomSlide>
+        </SwiperSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 5</CustomSlide>
+        </SwiperSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 6</CustomSlide>
+        </SwiperSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 7</CustomSlide>
+        </SwiperSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 8</CustomSlide>
+        </SwiperSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 9</CustomSlide>
+        </SwiperSlide>
         <PageController>
           <div className="container flex items-center px-8">
             <ControllerBox>
