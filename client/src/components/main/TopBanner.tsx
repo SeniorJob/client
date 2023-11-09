@@ -11,11 +11,7 @@ const CustomSlide = styled(SwiperSlide)`
   align-items: center;
   width: 100%;
   height: 320px;
-  background-color: lightgreen;
-`;
-
-const CustomSwiper = styled(Swiper)`
-  --swiper-theme-color: var(--primaryColor);
+  background-color: #eee;
 `;
 
 const PageController = styled.div`
@@ -103,16 +99,14 @@ export const TopBanner = () => {
   const [curIndex, setCurIndex] = useState<number>(1);
 
   useEffect(() => {
-    if (swiper) {
-      swiper.on('slideChange', () => {
-        setCurIndex(swiper.realIndex + 1);
-      });
-    }
+    swiper?.on('slideChange', () => {
+      setCurIndex(swiper.realIndex + 1);
+    });
   }, [swiper]);
 
   return (
     <section className="banner">
-      <CustomSwiper
+      <Swiper
         onSwiper={setSwiper}
         autoplay={{
           delay: 3500,
@@ -133,6 +127,7 @@ export const TopBanner = () => {
           },
         }}
         loop={true}
+        slidesPerView={1}
         modules={[Autoplay, Pagination]}
         className="mySwiper"
       >
@@ -166,7 +161,7 @@ export const TopBanner = () => {
             </PaginationWrapper>
           </div>
         </PageController>
-      </CustomSwiper>
+      </Swiper>
     </section>
   );
 };
