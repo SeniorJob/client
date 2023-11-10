@@ -34,7 +34,7 @@ export const LectureDetail = () => {
         <DetailHeader data={data?.lectureDto} />
         <div className="container relative">
           <div className="lecture-detail-contents flex gap-5 px-8 py-6 w-full">
-            <DetailContent />
+            <DetailContent data={data} />
             <DetailAside data={data?.lectureDto} />
           </div>
         </div>
