@@ -5,10 +5,14 @@ import axios from 'axios';
 
 import tw from 'tailwind-styled-components';
 import styled from 'styled-components';
+import { PwValid, PwcfValid } from '../../utils/Valiable';
 
 axios.defaults.withCredentials = true;
 
 const SingUpFrom: React.FC = () => {
+  const [err, setErr] = useState<string | null>(null);
+  const [pwValid, setPwValid] = useState<boolean | null>(null); // Fixed declaration
+  const [pwcfValid, setPwcfValid] = useState<boolean | null>(null); // Fixed declaration
   const [form, setForm] = useState({
     name: '',
     phone: '',
@@ -36,17 +40,23 @@ const SingUpFrom: React.FC = () => {
     '기타',
   ];
 
-  // const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   e.preventDefault();
-
-  //   if (e.target.files) {
-  //     const uploadFile = e.target.files[0];
-  //     console.log(uploadFile);
-  //   }
-  // };
-
   const SignUpSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
+
+    if (!isFormValid(form)) {
+      alert('모든 필드를 입력해주세요.');
+      return;
+    }
+
+    if (!pwValid) {
+      alert('비밀번호가 유효하지 않습니다.');
+      return;
+    }
+
+    if (!pwcfValid) {
+      alert('비밀번호 확인이 일치하지 않습니다.');
+      return;
+    }
 
     const userDto = JSON.stringify({
       name: form.name,
@@ -73,8 +83,32 @@ const SingUpFrom: React.FC = () => {
       })
       .catch(error => {
         // 요청이 실패하면 에러를 처리합니다.
-        console.error('에러 발생:', error);
+        setErr(error.message);
+        alert(err);
       });
+  };
+
+  // 유효성 검사 함수
+  const isFormValid = (form: any) => {
+    for (const key in form) {
+      if (!form[key]) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const changePw = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const pw = e.target.value;
+    setForm({ ...form, pw });
+    setPwValid(PwValid(pw));
+    setPwcfValid(null); // Reset pwcfValid when pw changes
+  };
+
+  const changePwcf = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const pwcf = e.target.value;
+    setForm({ ...form, pwcf });
+    setPwcfValid(PwcfValid(form.pw, pwcf));
   };
 
   return (
@@ -102,19 +136,37 @@ const SingUpFrom: React.FC = () => {
           <InputLabel>비밀번호</InputLabel>
           <Input
             type="password"
-            placeholder="******"
+            placeholder="비밀번호를 입력해 주세요"
             value={form.pw}
-            onChange={e => setForm({ ...form, pw: e.target.value })}
+            onChange={changePw}
           />
+          {pwValid === null ? null : pwValid ? (
+            <span className="text-[green] text-[13px] pl-[5px]">
+              비밀번호가 정상적으로 입력 되었습니다.
+            </span>
+          ) : (
+            <span className="text-[#FF0000] text-[13px] pl-[5px]">
+              숫자 + 문자의 합이 8자 이상이 되게 입력해주세요
+            </span>
+          )}
         </InputWrapper>
         <InputWrapper>
           <InputLabel>비밀번호 확인</InputLabel>
           <Input
             type="password"
-            placeholder="******"
+            placeholder="비밀번호를 입력해 주세요"
             value={form.pwcf}
-            onChange={e => setForm({ ...form, pwcf: e.target.value })}
+            onChange={changePwcf}
           />
+          {pwcfValid === null ? null : pwcfValid ? (
+            <span className="text-[green] text-[13px] pl-[5px]">
+              비밀번호 확인이 일치합니다.
+            </span>
+          ) : (
+            <span className="text-[#FF0000] text-[13px] pl-[5px]">
+              비밀번호가 일치하지 않습니다.
+            </span>
+          )}
         </InputWrapper>
         <InputWrapper>
           <InputLabel>생년월일</InputLabel>
