@@ -1,4 +1,4 @@
-import { StyledUserMenu } from '../../assets/styles/MenuStyle';
+import { StyledUserMenu, StyledLoginUser } from '../../assets/styles/MenuStyle';
 import LoginComponent from '../login/loginForm';
 import { useState, useEffect } from 'react';
 
@@ -19,28 +19,40 @@ export const UserMenu: React.FC = () => {
   const [userName, setUserName] = useState('');
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
   const isLoggedIn = useUserStore().isLoggedIn;
+  const accessToken = localStorage.getItem('accessToken');
+  const LoginInfo = localStorage.getItem('isLogIn');
 
   const handleModal = () => {
     setIsModal(!isModal);
   };
 
+  useEffect(() => {
+    axios
+      .post(
+        `${import.meta.env.VITE_API_URL}/api/users/detail`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      )
+      .then(res => {
+        console.log(res.data);
+        setUserName(res.data.name);
+      })
+      .catch(error => {
+        console.error('사용자 세부 정보를 가져올 때 오류 발생:', error);
+        // 오류를 처리하려면 사용자에게 오류 메시지를 표시하는 등의 조치를 취하십시오.
+      });
+  }, [accessToken]);
+
   const handleLogout = async () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     setIsLoggedIn();
+    localStorage.removeItem('isLogIn');
   };
-
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/api/users/detail`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      })
-      .then(res => {
-        setUserName(res.data.name);
-      });
-  }, []);
 
   return (
     <MenuList>
@@ -55,7 +67,7 @@ export const UserMenu: React.FC = () => {
       </button> */}
 
       {/* 이 부분 코드처럼 로그인 성공 여부인 isLoggedIn을 체크하고 로그인, 로그아웃을 변경해주시면 됩니다. */}
-      {!isLoggedIn ? (
+      {!LoginInfo ? (
         // 아래 버튼들도 따로 컴포넌트로 빼고 클릭 이벤트만 받게하는 법도 있습니다. 그렇게되면 onClick {} 안에 들어가는게 clickEvent={handleClickEvent} 이런식으로 줄어들겠죠.
         <>
           <StyledUserMenu
@@ -72,7 +84,9 @@ export const UserMenu: React.FC = () => {
         </>
       ) : (
         <>
-          <div>{userName}님 어서오세요</div>
+          <StyledLoginUser>
+            <strong>{userName}님</strong> 어서오세요
+          </StyledLoginUser>
           <Link to={'/'}>
             <StyledUserMenu>마이페이지</StyledUserMenu>
           </Link>

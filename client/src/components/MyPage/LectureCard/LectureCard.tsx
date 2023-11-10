@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 import Location from '../../../assets/images/location.svg';
 import Applicant from '../../../assets/images/IdIcon.svg';
+import { Link } from 'react-router-dom';
 
 interface LectureCard_I {
   type?: '제안';
+  id?: number;
 }
 
-const LectureCard = ({ type }: LectureCard_I) => {
+const LectureCard = ({ type, id }: LectureCard_I) => {
   return type !== '제안' ? (
     <Container>
       <UpperWrapper>
@@ -16,7 +18,11 @@ const LectureCard = ({ type }: LectureCard_I) => {
           <Status>모집중</Status>
         </CategoryStatusWrapper>
         {/* 내가 개설한 강좌일 때 */}
-        <AdminButton>수정하기 | 삭제하기</AdminButton>
+        <AdminButton>
+          <Link to={`/mypage/lecture/edit/${id}`}>수정하기</Link>
+          &nbsp;|&nbsp;
+          <button type="button">삭제하기</button>
+        </AdminButton>
       </UpperWrapper>
 
       <Region>
@@ -37,13 +43,18 @@ const LectureCard = ({ type }: LectureCard_I) => {
       </ApplicationWrapper>
     </Container>
   ) : (
+    // 제안한 강좌
     <Container>
       <UpperWrapper>
         <Title>대세는 먹방</Title>
         <CategoryStatusWrapper>
           <Category>외식</Category>
         </CategoryStatusWrapper>
-        <AdminButton>수정하기 | 삭제하기</AdminButton>
+        <AdminButton>
+          <Link to={`/mypage/lecture/suggestion/edit/${id}`}>수정하기</Link>
+          &nbsp;|&nbsp;
+          <button type="button">삭제하기</button>
+        </AdminButton>
       </UpperWrapper>
 
       <SuggestionContent>
