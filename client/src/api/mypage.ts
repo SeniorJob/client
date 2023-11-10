@@ -21,7 +21,7 @@ instance.interceptors.request.use(config => {
 
 // 회원 정보 확인
 export const getProfile = async () => {
-  await instance
+  return await instance
     .post('/api/users/detail')
     .then(res => res.data)
     .catch(err => console.error(err));
@@ -31,10 +31,7 @@ export const getProfile = async () => {
 export const updateProfile = async (formData: FormData) => {
   await instance
     .put('/api/users/update', formData)
-    .then(res => {
-      console.log('업데이트 성공');
-      console.log(res);
-    })
+    .then(() => (location.href = '/mypage'))
     .catch(err => console.error(err));
 };
 
