@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useUserStore } from '../../store/user';
 // import { isLoginValid } from '../../utils/SignUpLoginOutValidation';
-
+import { aaa, bbb } from '../../utils/Valiable';
 interface LoginTopProps {
   handleModal: () => void;
 }
@@ -18,7 +18,7 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
   const [id, setId] = useState<string>('');
   const [pw, setPw] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
-
+  const [idValied, setIdValied] = useState<boolean>();
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
 
   const setTokensInLocalStorage = (accessToken: any, refreshToken: any) => {
@@ -67,6 +67,12 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
     }
   }, [error]);
 
+  const changeId = (e: any) => {
+    //이벤트 타입 찾기
+    e = setId(e.target.value);
+    setIdValied(aaa(id));
+  };
+
   return (
     <LoginFormLayout>
       <LoginFormImgBox>
@@ -80,8 +86,9 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
               type="text"
               placeholder="아이디를 입력해주세요"
               value={id}
-              onChange={e => setId(e.target.value)}
+              onChange={changeId}
             />
+            {!idValied ? <div></div> : <div></div>}
           </InputWrapper>
           <InputWrapper>
             <img src={PwIcon} alt="아이디 아이콘"></img>

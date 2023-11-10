@@ -33,6 +33,7 @@ const SingUpFrom: React.FC = () => {
     '기술',
     '교육',
     '의료',
+    '기타',
   ];
 
   // const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,31 +48,28 @@ const SingUpFrom: React.FC = () => {
   const SignUpSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    const formData = new FormData();
-    formData.append(
-      'userDto',
-      JSON.stringify({
-        name: form.name,
-        phoneNumber: form.phone,
-        encryptionCode: form.pw,
-        confirmPassword: form.pwcf,
-        job: form.job,
-        dateOfBirth: form.birthday,
-        category: form.interest,
-        region: form.address + form.DtAddress,
-      }),
-    );
+    const userDto = JSON.stringify({
+      name: form.name,
+      phoneNumber: form.phone,
+      encryptionCode: form.pw,
+      confirmPassword: form.pwcf,
+      job: form.job,
+      dateOfBirth: form.birthday,
+      category: form.interest,
+      region: form.address + form.DtAddress,
+    });
 
-    console.log(formData);
+    console.log(userDto);
     axios
-      .post(`${import.meta.env.VITE_API_URL}/api/users/join`, formData, {
+      .post(`${import.meta.env.VITE_API_URL}/api/users/join`, userDto, {
         headers: {
-          'Content-Type': 'multipart/form-data', // 컨텐츠 타입을 multipart/form-data로 설정합니다.
+          'Content-Type': 'application/json',
         },
       })
       .then(response => {
         // 요청이 성공하면 서버 응답을 처리합니다.
         console.log('서버 응답:', response.data);
+        window.location.href = `${import.meta.env.VITE_API_URL}`;
       })
       .catch(error => {
         // 요청이 실패하면 에러를 처리합니다.
