@@ -57,6 +57,7 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
     '기술',
     '교육',
     '의료',
+    '기타',
   ];
 
   const [address, setAddress] = useState('');
@@ -105,17 +106,16 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
       title: title,
       content: content,
       learning_target: learningTarget,
-      week: week.toString(),
+      week: week,
       recruitEnd_date: recruitEndDate,
       start_date: startDate,
       end_date: endDate,
-      max_participants: maxParticipants.toString(),
+      max_participants: maxParticipants,
       region: region,
       price: price,
       bank_name: bankName,
       account_name: accountName,
       account_number: accountNumber,
-      createdDate: new Date().toString(),
     };
     data.append('lectureDto', JSON.stringify(lectureDto));
 
@@ -123,9 +123,9 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
       data.append('file', selectedImage);
     }
 
-    const apiUrl = import.meta.env.VITE_API_URL + '/api/lectures';
-    console.log(data);
+    const apiUrl = import.meta.env.VITE_API_URL + '/api/lectures/create';
     console.log(lectureDto);
+    console.log(selectedImage);
 
     if (!apiUrl) {
       console.error('환경변수 설정 에러');
