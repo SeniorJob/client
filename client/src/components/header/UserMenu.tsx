@@ -85,7 +85,7 @@ export const UserMenu: React.FC = () => {
       ) : (
         <>
           <StyledLoginUser>
-            <strong>{userName}</strong>님 어서오세요
+            <strong>{userName}님</strong> 어서오세요
           </StyledLoginUser>
           <Link to={'/'}>
             <StyledUserMenu>마이페이지</StyledUserMenu>
