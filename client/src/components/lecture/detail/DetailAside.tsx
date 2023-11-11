@@ -72,6 +72,11 @@ const RegButton = styled.button`
   border-radius: 0.5rem;
 `;
 
+const Closed = styled(RegButton)`
+  cursor: unset;
+  background-color: #ccc;
+`;
+
 const LectureDate = styled(AsideCard)`
   height: unset;
   gap: 1.2rem;
@@ -103,24 +108,32 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
           </Participants>
           <RemainTime>
             <h1>모집 기한</h1>
-            <span>
-              {/* 정규식 이용하여 숫자만 추출 */}
-              <strong>{remainTime?.match(/\d+/)?.[0]}</strong>
-              {remainTime?.includes('시간') ? (
-                <span>시간</span>
-              ) : (
-                <span>일</span>
-              )}
-              <span></span>
-              <span className="ml-1">남았습니다!</span>
-            </span>
+            {data?.status === '신청가능상태' ? (
+              <span>
+                {/* 정규식 이용하여 숫자만 추출 */}
+                <strong>{remainTime?.match(/\d+/)?.[0]}</strong>
+                {remainTime?.includes('시간') ? (
+                  <span>시간</span>
+                ) : (
+                  <span>일</span>
+                )}
+                <span></span>
+                <span className="ml-1">남았습니다!</span>
+              </span>
+            ) : (
+              <span>-</span>
+            )}
           </RemainTime>
         </CurrentStatus>
         <Price>
           <div>
             <span className="price">{data?.price.toLocaleString()}원</span>
           </div>
-          <RegButton>신청하기</RegButton>
+          {data?.status === '신청가능상태' ? (
+            <RegButton>신청하기</RegButton>
+          ) : (
+            <Closed>해당 강좌의 모집은 마감되었습니다.</Closed>
+          )}
         </Price>
         <LectureDate>
           <div className="flex gap-6 w-full">
