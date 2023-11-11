@@ -41,10 +41,8 @@ export const DetailHeader: React.FC<DetailHeaderProps> = ({
               <img src={data?.image_url} />
             </Thumbnail>
             <HeaderDesc>
-              <div>
+              <div className="flex mb-2">
                 <Status $status={data?.status}>{data?.status}</Status>
-              </div>
-              <div className="flex gap-2 mb-2">
                 <span>전체 강의</span>
                 <span className="category">{data?.category}</span>
               </div>
