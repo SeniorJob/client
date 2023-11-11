@@ -1,9 +1,92 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { LectureDto } from '../../../types/LectureTypes';
 import { Link } from 'react-router-dom';
 import LocationSVG from '../../../assets/images/location.svg?react';
 import TargetSVG from '../../../assets/images/target.svg?react';
 import CreatorSVG from '../../../assets/images/creator.svg?react';
+
+interface DetailHeaderProps {
+  data: LectureDto | undefined;
+  introSectionRef: React.RefObject<HTMLDivElement>;
+  curriculumSectionRef: React.RefObject<HTMLDivElement>;
+}
+
+export const DetailHeader: React.FC<DetailHeaderProps> = ({
+  data,
+  introSectionRef,
+  curriculumSectionRef,
+}) => {
+  const [curRef, setCurRef] = useState<'intro' | 'curriculum' | null>('intro');
+
+  const scrollToSection = (
+    ref: React.RefObject<HTMLDivElement>,
+    section: 'intro' | 'curriculum',
+  ) => {
+    if (ref.current) {
+      window.scrollTo({
+        top: ref.current.offsetTop + 370,
+        behavior: 'smooth',
+      });
+      setCurRef(section);
+    }
+  };
+
+  return (
+    <>
+      <Wrapper>
+        <div className="container px-8">
+          <div className="flex gap-10 items-center">
+            <Thumbnail>
+              <img src={data?.image_url} />
+            </Thumbnail>
+            <HeaderDesc>
+              <div className="flex gap-2 mb-2">
+                <span>전체 강의</span>
+                <span className="category">{data?.category}</span>
+              </div>
+              <h1>{data?.title}</h1>
+              <div>
+                <CreatorSVG width={20} height={20} />
+                <span>{data?.creator}</span>
+              </div>
+              <div>
+                <LocationSVG width={20} height={20} />
+                <span>{data?.region}</span>
+              </div>
+              <div>
+                <TargetSVG width={20} height={20} />
+                <span>{data?.learning_target}</span>
+              </div>
+            </HeaderDesc>
+          </div>
+        </div>
+      </Wrapper>
+      <DetailMenu>
+        <div className="container flex gap-10 px-8">
+          <Link to="#intro" replace={true}>
+            <DetailButton
+              onClick={() => scrollToSection(introSectionRef, 'intro')}
+              $isHighlighted={curRef === 'intro'}
+            >
+              강좌 소개
+            </DetailButton>
+          </Link>
+          <Link to="#curriculum" replace={true}>
+            <DetailButton
+              onClick={() =>
+                scrollToSection(curriculumSectionRef, 'curriculum')
+              }
+              $isHighlighted={curRef === 'curriculum'}
+            >
+              커리큘럼
+            </DetailButton>
+          </Link>
+        </div>
+      </DetailMenu>
+    </>
+  );
+};
 
 const Wrapper = styled.div`
   width: 100%;
@@ -39,9 +122,15 @@ const DetailMenu = styled.div`
     0 2px 8px hsla(0, 0%, 0%, 0.05);
 `;
 
-const DetailButton = styled.button`
+const DetailButton = styled.button<{ $isHighlighted?: boolean }>`
   padding: 0.8rem 0;
   color: #9f9f9f;
+  ${({ $isHighlighted }) =>
+    $isHighlighted &&
+    `
+    font-weight: 700;
+    color: #000;
+    border-bottom: 2px solid`}
 `;
 
 const HeaderDesc = styled.div`
@@ -71,48 +160,3 @@ const HeaderDesc = styled.div`
     margin-bottom: 0.5rem;
   }
 `;
-
-export const DetailHeader = ({ data }: { data: LectureDto | undefined }) => {
-  return (
-    <>
-      <Wrapper>
-        <div className="container px-8">
-          <div className="flex gap-10 items-center">
-            <Thumbnail>
-              <img src={data?.image_url} />
-            </Thumbnail>
-            <HeaderDesc>
-              <div className="flex gap-2 mb-2">
-                <span>전체 강의</span>
-                <span className="category">{data?.category}</span>
-              </div>
-              <h1>{data?.title}</h1>
-              <div>
-                <CreatorSVG width={20} height={20} />
-                <span>{data?.creator}</span>
-              </div>
-              <div>
-                <LocationSVG width={20} height={20} />
-                <span>{data?.region}</span>
-              </div>
-              <div>
-                <TargetSVG width={20} height={20} />
-                <span>{data?.learning_target}</span>
-              </div>
-            </HeaderDesc>
-          </div>
-        </div>
-      </Wrapper>
-      <DetailMenu>
-        <div className="container flex gap-10 px-8">
-          <Link to="#intro">
-            <DetailButton>강좌 소개</DetailButton>
-          </Link>
-          <Link to="#curriculum">
-            <DetailButton>강좌 상세 내용</DetailButton>
-          </Link>
-        </div>
-      </DetailMenu>
-    </>
-  );
-};

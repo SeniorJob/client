@@ -4,13 +4,16 @@ import { LectureDetailProps } from '../../../types/LectureTypes';
 
 export const DetailContent = ({
   data,
+  introSectionRef,
+  curriculumSectionRef,
 }: {
   data: LectureDetailProps | null | undefined;
+  introSectionRef: React.RefObject<HTMLDivElement>;
+  curriculumSectionRef: React.RefObject<HTMLDivElement>;
 }) => {
   const lectureDto = data?.lectureDto;
   const weekDto = data?.weekDto;
   const weekPlanDto = data?.weekPlanDto;
-
   const [accordion, setAccordion] = useState<{ [key: number]: boolean }>({});
 
   useEffect(() => {
@@ -28,20 +31,19 @@ export const DetailContent = ({
   // 아코디언 토글 함수
   const toggleAccordion = (weekId: number) => {
     setAccordion(prev => ({ ...prev, [weekId]: !prev[weekId] }));
-    console.log(accordion);
   };
 
   return (
     <ContentWrapper>
       <Content>
         {/* 인트로 섹션 */}
-        <section id="intro" className="mb-8">
+        <section ref={introSectionRef} id="intro" className="mb-8">
           <h2>강좌 소개</h2>
           <p>{lectureDto?.content}</p>
         </section>
 
         {/* 커리큘럼 섹션 */}
-        <section id="curriculum">
+        <section ref={curriculumSectionRef} id="curriculum">
           <CurriculumHeader>
             <span className="curriculum-title">커리큘럼</span>
             <span className="curriculum-info">
