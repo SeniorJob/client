@@ -51,6 +51,17 @@ export const useUserStore = create<UserState>(
   ),
 );
 
+interface ModalState {
+  loginModal: boolean;
+  handleLoginModal: () => void;
+}
+
+export const useLoginModalStore = create<ModalState>(set => ({
+  loginModal: false,
+  handleLoginModal: () =>
+    set(prevState => ({ loginModal: !prevState.loginModal })),
+}));
+
 // "uid": 3,
 // "name": "이현숙",
 // "phoneNumber": "01022222222",
