@@ -11,6 +11,11 @@ export const MapComponent: React.FC<MapComponentProps> = ({ address }) => {
   const [mapError, setMapError] = useState(false);
 
   useEffect(() => {
+    if (!address) {
+      // address가 undefined인 경우 처리
+      return;
+    }
+
     const script = document.createElement('script');
     script.async = true;
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${
