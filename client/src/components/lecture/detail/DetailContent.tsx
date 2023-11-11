@@ -37,9 +37,26 @@ export const DetailContent = ({
     <ContentWrapper>
       <Content>
         {/* 인트로 섹션 */}
-        <section ref={introSectionRef} id="intro" className="mb-8">
-          <h2>강좌 소개</h2>
-          <p>{lectureDto?.content}</p>
+        <section
+          ref={introSectionRef}
+          id="intro"
+          className="mb-8 flex flex-col gap-6"
+        >
+          <div>
+            <h2>강좌 소개</h2>
+            <p>{lectureDto?.content}</p>
+          </div>
+          <div>
+            <h3>이런 분들께 추천드려요!</h3>
+            <p>{lectureDto?.learning_target}</p>
+          </div>
+          <div>
+            <h3>입금 계좌 정보</h3>
+            <p>
+              {lectureDto?.bank_name} {lectureDto?.account_number}
+            </p>
+            <p>예금주 {lectureDto?.account_name}</p>
+          </div>
         </section>
 
         {/* 커리큘럼 섹션 */}
@@ -90,6 +107,10 @@ const ContentWrapper = styled.div`
     font-size: 1.4rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
+  }
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
   }
 `;
 
