@@ -22,10 +22,9 @@ const AsideCard = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 75px;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
-  padding: 0.6rem 1.3rem;
+  padding: 0.7rem 1.3rem;
   font-size: 1rem;
   font-weight: 500;
   color: #222222;

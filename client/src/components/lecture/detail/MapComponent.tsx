@@ -85,6 +85,7 @@ const MapContainer = styled.div`
   border: 1px solid #ddd;
   border-radius: 0.3rem;
   overflow: hidden;
+  margin-bottom: 0.5rem;
 `;
 
 export default MapComponent;
