@@ -73,7 +73,7 @@ const RegButton = styled.button`
 
 const Closed = styled(RegButton)`
   cursor: unset;
-  background-color: #ccc;
+  opacity: 0.3;
 `;
 
 const LectureDate = styled(AsideCard)`
