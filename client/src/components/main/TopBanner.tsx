@@ -1,25 +1,18 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { BannerNav } from './SwiperNavButton';
-// Swiper 관련 모듈 Import
-import { Swiper, SwiperSlide, SwiperClass } from 'swiper/react';
-import { Autoplay, Navigation, Pagination, Controller } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper as SwiperClass } from 'swiper/types';
+import { Autoplay, Pagination } from 'swiper/modules';
 import { Divider } from '../../assets/styles/CommonStyles';
 
-const CustomSlide = styled(SwiperSlide)`
+const CustomSlide = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 320px;
-  background-color: lightgreen;
-`;
-
-const CustomSwiper = styled(Swiper)`
-  --swiper-theme-color: var(--primaryColor);
+  background-color: #eee;
 `;
 
 const PageController = styled.div`
@@ -103,20 +96,19 @@ const CustomBullets = styled.div<{ $curIndex: number }>`
 `;
 
 export const TopBanner = () => {
-  const [swiper, setSwiper] = useState<SwiperClass | null>(null);
+  const [swiper, setSwiper] = useState<SwiperClass>();
   const [curIndex, setCurIndex] = useState<number>(1);
 
   useEffect(() => {
-    if (swiper) {
-      swiper.on('slideChange', () => {
-        setCurIndex(swiper.realIndex + 1);
-      });
-    }
+    swiper?.on('slideChange', () => {
+      setCurIndex(swiper.realIndex + 1);
+    });
+    console.log(swiper);
   }, [swiper]);
 
   return (
     <section className="banner">
-      <CustomSwiper
+      <Swiper
         onSwiper={setSwiper}
         autoplay={{
           delay: 3500,
@@ -137,19 +129,38 @@ export const TopBanner = () => {
           },
         }}
         loop={true}
-        modules={[Autoplay, Navigation, Pagination, Controller]}
+        slidesPerView={1}
+        modules={[Autoplay, Pagination]}
         className="mySwiper"
       >
         {/* 나중에 여기에 강의 데이터 mapping 하면 됨 */}
-        <CustomSlide>Slide 1</CustomSlide>
-        <CustomSlide>Slide 2</CustomSlide>
-        <CustomSlide>Slide 3</CustomSlide>
-        <CustomSlide>Slide 4</CustomSlide>
-        <CustomSlide>Slide 5</CustomSlide>
-        <CustomSlide>Slide 6</CustomSlide>
-        <CustomSlide>Slide 7</CustomSlide>
-        <CustomSlide>Slide 8</CustomSlide>
-        <CustomSlide>Slide 9</CustomSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 1</CustomSlide>
+        </SwiperSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 2</CustomSlide>
+        </SwiperSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 3</CustomSlide>
+        </SwiperSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 4</CustomSlide>
+        </SwiperSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 5</CustomSlide>
+        </SwiperSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 6</CustomSlide>
+        </SwiperSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 7</CustomSlide>
+        </SwiperSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 8</CustomSlide>
+        </SwiperSlide>
+        <SwiperSlide>
+          <CustomSlide>Slide 9</CustomSlide>
+        </SwiperSlide>
         <PageController>
           <div className="container flex items-center px-8">
             <ControllerBox>
@@ -170,7 +181,7 @@ export const TopBanner = () => {
             </PaginationWrapper>
           </div>
         </PageController>
-      </CustomSwiper>
+      </Swiper>
     </section>
   );
 };

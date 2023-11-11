@@ -9,7 +9,10 @@ const MyPage = () => {
 
   const handleGetProfile = async () => {
     const info = await getProfile();
-    userStore.setUserDetail(info);
+    // 빌드 오류로 인해 수정하였습니다.
+    // 수정 전 코드
+    // userStore.setUserDetail(info);
+    if (info !== undefined) userStore.setUserDetail(info);
   };
 
   useEffect(() => {

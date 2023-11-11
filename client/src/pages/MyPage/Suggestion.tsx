@@ -5,7 +5,11 @@ import MyPageTitle from '../../components/MyPage/MyPageTitle';
 const Suggestion = () => {
   return (
     <MyPageLayout>
-      <MyPageTitle />
+      {/* 빌드 오류로 인해 수정하였습니다.
+        수정 전 코드 :
+        <MyPageTitle  />
+        */}
+      <MyPageTitle title="제안" />
 
       <LectureCardList type="제안" />
       {/* {
