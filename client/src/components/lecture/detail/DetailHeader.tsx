@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { LectureDto } from '../../../types/LectureTypes';
 import { Link } from 'react-router-dom';
 import LocationSVG from '../../../assets/images/location.svg?react';
@@ -18,19 +18,38 @@ export const DetailHeader: React.FC<DetailHeaderProps> = ({
   curriculumSectionRef,
 }) => {
   const [curRef, setCurRef] = useState<'intro' | 'curriculum' | null>('intro');
+  const tabHeight = 64 + 51.59;
 
-  const scrollToSection = (
-    ref: React.RefObject<HTMLDivElement>,
-    section: 'intro' | 'curriculum',
-  ) => {
+  const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
     if (ref.current) {
       window.scrollTo({
-        top: ref.current.offsetTop + 370,
+        top: ref.current.offsetTop + tabHeight + 250,
         behavior: 'smooth',
       });
-      setCurRef(section);
     }
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+
+      if (introSectionRef.current && curriculumSectionRef.current) {
+        const curriculumOffset =
+          curriculumSectionRef.current.offsetTop + tabHeight + 240;
+
+        if (scrollY >= curriculumOffset) {
+          setCurRef('curriculum');
+        } else {
+          setCurRef('intro');
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [tabHeight, introSectionRef, curriculumSectionRef]);
 
   return (
     <>
@@ -67,7 +86,7 @@ export const DetailHeader: React.FC<DetailHeaderProps> = ({
         <div className="container flex gap-10 px-8">
           <Link to="#intro" replace={true}>
             <DetailButton
-              onClick={() => scrollToSection(introSectionRef, 'intro')}
+              onClick={() => scrollToSection(introSectionRef)}
               $isHighlighted={curRef === 'intro'}
             >
               강좌 소개
@@ -75,9 +94,7 @@ export const DetailHeader: React.FC<DetailHeaderProps> = ({
           </Link>
           <Link to="#curriculum" replace={true}>
             <DetailButton
-              onClick={() =>
-                scrollToSection(curriculumSectionRef, 'curriculum')
-              }
+              onClick={() => scrollToSection(curriculumSectionRef)}
               $isHighlighted={curRef === 'curriculum'}
             >
               커리큘럼
