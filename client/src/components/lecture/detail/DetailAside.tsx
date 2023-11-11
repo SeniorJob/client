@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { LectureDto } from '../../../types/LectureTypes';
 import { calculateRemain } from '../../../utils/calculateRemain';
 import { formatDate } from '../../../utils/formatData';
+import { useLoginModalStore, useUserStore } from '../../../store/user';
 
 const Aside = styled.aside`
   margin-right: 1.5rem;
@@ -89,6 +90,19 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
   const remainTime = calculateRemain(data?.recruitEnd_date);
   const startDate = data ? formatDate(data?.start_date) : '';
   const endDate = data ? formatDate(data?.end_date) : '';
+  const { isLoggedIn } = useUserStore();
+  const { handleLoginModal } = useLoginModalStore();
+
+  const handleEnrollClick = () => {
+    // 수강신청 버튼을 클릭했을 때 로그인 여부 확인
+    if (!isLoggedIn) {
+      // 로그인이 되어 있지 않으면 로그인 창을 띄움
+      alert('로그인이 필요한 기능입니다.');
+      handleLoginModal();
+    } else {
+      // 로그인이 되어 있으면 수강신청 로직을 진행
+    }
+  };
 
   return (
     <div className="basis-1/3">
@@ -129,7 +143,7 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
             <span className="price">{data?.price.toLocaleString()}원</span>
           </div>
           {data?.status === '신청가능상태' ? (
-            <RegButton>신청하기</RegButton>
+            <RegButton onClick={handleEnrollClick}>신청하기</RegButton>
           ) : (
             <Closed>해당 강좌의 모집은 마감되었습니다.</Closed>
           )}
