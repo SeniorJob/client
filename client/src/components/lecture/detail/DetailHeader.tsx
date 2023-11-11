@@ -28,6 +28,10 @@ const Thumbnail = styled.div`
 `;
 
 const DetailMenu = styled.div`
+  position: sticky;
+  top: 64px;
+  z-index: 64;
+  background-color: #fff;
   width: 100%;
   box-shadow:
     0 1px 2px hsla(0, 0%, 0%, 0.05),
@@ -70,7 +74,7 @@ const HeaderDesc = styled.div`
 
 export const DetailHeader = ({ data }: { data: LectureDto | undefined }) => {
   return (
-    <div>
+    <>
       <Wrapper>
         <div className="container px-8">
           <div className="flex gap-10 items-center">
@@ -109,6 +113,6 @@ export const DetailHeader = ({ data }: { data: LectureDto | undefined }) => {
           </Link>
         </div>
       </DetailMenu>
-    </div>
+    </>
   );
 };
