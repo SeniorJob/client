@@ -41,6 +41,9 @@ export const DetailHeader: React.FC<DetailHeaderProps> = ({
               <img src={data?.image_url} />
             </Thumbnail>
             <HeaderDesc>
+              <div>
+                <Status $status={data?.status}>{data?.status}</Status>
+              </div>
               <div className="flex gap-2 mb-2">
                 <span>전체 강의</span>
                 <span className="category">{data?.category}</span>
@@ -87,6 +90,29 @@ export const DetailHeader: React.FC<DetailHeaderProps> = ({
     </>
   );
 };
+
+const Status = styled.span<{ $status?: string }>`
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  color: white;
+  border: none;
+  background-color: ${({ $status }) => {
+    // data.status 값에 따라 다른 색상을 지정
+    switch ($status) {
+      case '진행상태':
+        return '#f99c74'; // 예시: 진행 중인 경우 초록색
+      case '신청가능상태':
+        return 'var(--primaryColor)'; // 예시: 완료된 경우 파란색
+      default:
+        return '#1c5690'; // 기본 색상
+    }
+  }};
+  font-size: 0.9rem;
+  padding: 0.3rem 0.7rem;
+`;
 
 const Wrapper = styled.div`
   width: 100%;
