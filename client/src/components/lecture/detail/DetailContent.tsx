@@ -34,6 +34,20 @@ const Curriculum = styled.div`
   overflow: hidden;
 `;
 
+const CurriculumHeader = styled.div`
+  margin-bottom: 0.5rem;
+  .curriculum-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+  .curriculum-info {
+    margin-left: 0.6rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #aaa;
+  }
+`;
+
 const AccordionItem = styled.div`
   font-weight: 600;
 `;
@@ -91,7 +105,12 @@ export const DetailContent = ({
 
         {/* 커리큘럼 섹션 */}
         <section id="curriculum">
-          <h2>커리큘럼</h2>
+          <CurriculumHeader>
+            <span className="curriculum-title">커리큘럼</span>
+            <span className="curriculum-info">
+              총 {weekDto?.length}주, {weekPlanDto?.length}개 수업
+            </span>
+          </CurriculumHeader>
           <Curriculum>
             {weekDto?.map((weekItem, weekIndex: number) => (
               <AccordionItem key={weekIndex}>
