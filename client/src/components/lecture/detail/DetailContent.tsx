@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { LectureDetailProps } from '../../../types/LectureTypes';
+import { MapComponent } from './MapComponent';
 
 export const DetailContent = ({
   data,
@@ -14,6 +15,7 @@ export const DetailContent = ({
   const lectureDto = data?.lectureDto;
   const weekDto = data?.weekDto;
   const weekPlanDto = data?.weekPlanDto;
+  const region = data?.lectureDto.region as string;
   const [accordion, setAccordion] = useState<{ [key: number]: boolean }>({});
 
   useEffect(() => {
@@ -40,7 +42,7 @@ export const DetailContent = ({
         <section
           ref={introSectionRef}
           id="intro"
-          className="mb-8 flex flex-col gap-6"
+          className="mb-8 flex flex-col gap-8"
         >
           <div>
             <h2>강좌 소개</h2>
@@ -56,6 +58,11 @@ export const DetailContent = ({
               {lectureDto?.bank_name} {lectureDto?.account_number}
             </p>
             <p>예금주 {lectureDto?.account_name}</p>
+          </div>
+          <div>
+            <h2>장소</h2>
+            <MapComponent address={region} />
+            <div className="text-gray-500">{lectureDto?.region}</div>
           </div>
         </section>
 
