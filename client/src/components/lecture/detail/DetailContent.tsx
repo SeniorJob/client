@@ -2,69 +2,6 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { LectureDetailProps } from '../../../types/LectureTypes';
 
-const ContentWrapper = styled.div`
-  flex-basis: calc(100% * 2 / 3);
-  max-width: calc(100% * 2 / 3);
-  h2 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
-`;
-
-const Content = styled.div`
-  max-width: 700px;
-  padding-right: 2rem;
-`;
-
-const AccordionHeader = styled.div`
-  cursor: pointer;
-  user-select: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.8rem 1rem;
-  background-color: #f2f2f2;
-`;
-
-const Curriculum = styled.div`
-  border: 1px solid #ddd;
-  background-color: #fafafa;
-  border-radius: 0.3rem;
-  overflow: hidden;
-`;
-
-const CurriculumHeader = styled.div`
-  margin-bottom: 0.5rem;
-  .curriculum-title {
-    font-size: 1.4rem;
-    font-weight: 600;
-  }
-  .curriculum-info {
-    margin-left: 0.6rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #aaa;
-  }
-`;
-
-const AccordionItem = styled.div`
-  font-weight: 600;
-`;
-
-const AccordionContent = styled.ul<{ $isOpen: boolean }>`
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: ${({ $isOpen }) => ($isOpen ? 'block' : 'none')};
-`;
-
-const AccordionContentItem = styled.li`
-  padding: 0.8rem 1rem;
-  font-size: 0.9rem;
-  font-weight: 400;
-`;
-
 export const DetailContent = ({
   data,
 }: {
@@ -115,6 +52,7 @@ export const DetailContent = ({
             {weekDto?.map((weekItem, weekIndex: number) => (
               <AccordionItem key={weekIndex}>
                 <AccordionHeader
+                  $isFirst={weekIndex === 0}
                   onClick={() => toggleAccordion(weekItem.week_id)}
                 >
                   <span>
@@ -142,3 +80,69 @@ export const DetailContent = ({
     </ContentWrapper>
   );
 };
+
+const ContentWrapper = styled.div`
+  flex-basis: calc(100% * 2 / 3);
+  max-width: calc(100% * 2 / 3);
+  h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+`;
+
+const Content = styled.div`
+  max-width: 700px;
+  padding-right: 2rem;
+`;
+
+const AccordionHeader = styled.div<{ $isFirst: boolean }>`
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1rem;
+  background-color: #f2f2f2;
+  border-top: 1px solid #ccc;
+  ${props => (props.$isFirst ? `border-top: none` : null)}
+`;
+
+const Curriculum = styled.div`
+  border: 1px solid #ddd;
+  background-color: #fafafa;
+  border-radius: 0.3rem;
+  overflow: hidden;
+`;
+
+const CurriculumHeader = styled.div`
+  margin-bottom: 0.5rem;
+  .curriculum-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+  .curriculum-info {
+    margin-left: 0.6rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #aaa;
+  }
+`;
+
+const AccordionItem = styled.div`
+  font-weight: 600;
+`;
+
+const AccordionContentItem = styled.li`
+  padding: 0.8rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  border-top: 1px solid #ccc;
+`;
+
+const AccordionContent = styled.ul<{ $isOpen: boolean }>`
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: ${({ $isOpen }) => ($isOpen ? 'block' : 'none')};
+`;
