@@ -62,7 +62,10 @@ const AddContentButton = tw.div`
 `;
 
 interface WeekClassProps {
-  week: number;
+  // 빌드 오류로 인해 수정하였습니다
+  // 수정 전 코드
+  // week: number;
+  week: number[];
   classTitle: string | null;
 }
 
@@ -98,7 +101,10 @@ const WeekClass: FC<WeekClassProps> = ({ week, classTitle }) => {
 };
 
 const ClassDetail: FC<ClassDetailProps> = ({ nextTab }) => {
-  const [week, setWeek] = useState(1);
+  // 빌드 오류로 인해 수정하였습니다
+  // 수정 전 코드
+  // const [week, setWeek] = useState(1);
+  const [week, setWeek] = useState([1]);
   const [classTitle, setClassTitle] = useState('');
 
   const addWeek = () => {

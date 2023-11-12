@@ -6,8 +6,6 @@ import Logo from '../../assets/images/logo.png';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useUserStore } from '../../store/user';
-// import { isLoginValid } from '../../utils/SignUpLoginOutValidation';
-
 interface LoginTopProps {
   handleModal: () => void;
 }
@@ -18,7 +16,6 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
   const [id, setId] = useState<string>('');
   const [pw, setPw] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
-
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
 
   const setTokensInLocalStorage = (accessToken: any, refreshToken: any) => {
@@ -29,7 +26,15 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
   const LoginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // const validationMessage = isLoginValid(id, pw);
+    if (!id) {
+      alert('아이디를 입력해주세요.');
+      return;
+    }
+
+    if (!pw) {
+      alert('비밀번호를 입력해주세요.');
+      return;
+    }
 
     const loginData = {
       phoneNumber: id,
@@ -78,7 +83,7 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
             <img src={IdIcon} alt="아이디 아이콘"></img>
             <Input
               type="text"
-              placeholder="아이디를 입력해주세요"
+              placeholder="전화번호를 입력해주세요"
               value={id}
               onChange={e => setId(e.target.value)}
             />
