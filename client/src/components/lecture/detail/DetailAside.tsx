@@ -3,6 +3,8 @@ import { LectureDto } from '../../../types/LectureTypes';
 import { calculateRemain } from '../../../utils/calculateRemain';
 import { formatDate } from '../../../utils/formatData';
 import { useLoginModalStore, useUserStore } from '../../../store/user';
+import { useState } from 'react';
+import { LectureApply } from './LectureApply';
 
 const Aside = styled.aside`
   margin-right: 1.5rem;
@@ -92,6 +94,7 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
   const endDate = data ? formatDate(data?.end_date) : '';
   const { isLoggedIn } = useUserStore();
   const { handleLoginModal } = useLoginModalStore();
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
 
   const handleEnrollClick = () => {
     // 수강신청 버튼을 클릭했을 때 로그인 여부 확인
@@ -101,7 +104,12 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
       handleLoginModal();
     } else {
       // 로그인이 되어 있으면 수강신청 로직을 진행
+      setIsApplyModalOpen(true);
     }
+  };
+
+  const closeApplyModal = () => {
+    setIsApplyModalOpen(false);
   };
 
   return (
@@ -163,6 +171,8 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
           </div>
         </LectureDate>
       </Aside>
+      {/* 강의 신청 Modal */}
+      {isApplyModalOpen && <LectureApply closeModal={closeApplyModal} />}
     </div>
   );
 };
