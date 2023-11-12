@@ -11,19 +11,21 @@ const MyProfileNavgation = () => {
 
       <NavigationContainer>
         <NavigationList
-          active={pathname === '/mypage/lecture/opening'}
+          active={pathname === '/mypage/lecture/opening' ? 'true' : 'string'}
           to="/mypage/lecture/opening"
         >
           개설한 강좌
         </NavigationList>
         <NavigationList
-          active={pathname === '/mypage/lecture/application'}
+          active={
+            pathname === '/mypage/lecture/application' ? 'true' : 'string'
+          }
           to="/mypage/lecture/application"
         >
           신청한 강좌
         </NavigationList>
         <NavigationList
-          active={pathname === '/mypage/lecture/suggestion'}
+          active={pathname === '/mypage/lecture/suggestion' ? 'true' : 'string'}
           to="/mypage/lecture/suggestion"
         >
           제안한 강좌
@@ -49,10 +51,10 @@ const NavigationContainer = styled.ul`
   margin-top: 10px;
 `;
 
-const NavigationList = styled(Link)<{ active: boolean }>`
+const NavigationList = styled(Link)<{ active: 'true' | 'false' }>`
   font-size: 20px;
   padding: 10px 0 10px 0;
-  color: ${props => (!props.active ? 'black' : 'green')};
+  color: ${props => (props.active !== 'true' ? 'black' : 'green')};
 `;
 
 export default MyProfileNavgation;
