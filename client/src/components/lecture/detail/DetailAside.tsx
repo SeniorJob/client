@@ -5,6 +5,7 @@ import { formatDate } from '../../../utils/formatData';
 import { useLoginModalStore, useUserStore } from '../../../store/user';
 import { useState } from 'react';
 import { LectureApply } from './LectureApply';
+import { RegButton } from '../../../assets/styles/CommonStyles';
 
 const Aside = styled.aside`
   margin-right: 1.5rem;
@@ -62,16 +63,6 @@ const Price = styled(AsideCard)`
     font-size: 1.5rem;
     font-weight: 700;
   }
-`;
-
-const RegButton = styled.button`
-  width: 100%;
-  padding: 1rem 1rem;
-  background-color: var(--primaryColor);
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 0.5rem;
 `;
 
 const Closed = styled(RegButton)`
