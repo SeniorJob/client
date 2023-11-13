@@ -10,6 +10,7 @@ import { Modal } from './Modal';
 import tw from 'tailwind-styled-components';
 import axios from 'axios';
 import { AxiosError } from 'axios';
+import useCreateClass from '../../../store/createClass';
 
 const Container = styled.div``;
 
@@ -80,6 +81,8 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
   const [accountNumber, setAccountNumber] = useState('');
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
+  const { setCreateId } = useCreateClass();
+
   const handleAddress = (data: AddressData) => {
     let fullAddress = data.address;
     let extraAddress = '';
@@ -141,6 +144,9 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
         },
       });
       console.log(res.data);
+      const createId = res.data.create_id;
+      console.log(createId);
+      setCreateId(createId);
       nextTab();
     } catch (err) {
       const error = err as AxiosError;
