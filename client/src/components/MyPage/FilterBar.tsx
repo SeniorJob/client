@@ -2,7 +2,11 @@ import { MouseEvent, ReactNode } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-const FilterBar = () => {
+type FilterBar_T = {
+  type: '개설' | '신청' | '제안';
+};
+
+const FilterBar = ({ type }: FilterBar_T) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   function getSiblings(currentNode: ReactNode | any) {
@@ -54,14 +58,14 @@ const FilterBar = () => {
       searchParams.set('filter', 'latest');
     } else if (filter === '오래된순') {
       searchParams.set('filter', 'latest');
-      searchParams.set('descending', 'true');
+      searchParams.set('descending', 'false');
     } else if (filter === '인기순') {
       searchParams.set('filter', 'popularity');
     } else if (filter === '가격높은순') {
       searchParams.set('filter', 'price');
     } else if (filter === '가격낮은순') {
       searchParams.set('filter', 'price');
-      searchParams.set('descending', 'true');
+      searchParams.set('descending', 'false');
     }
 
     target.classList.add('active');
@@ -81,10 +85,14 @@ const FilterBar = () => {
       }}
     >
       <FilterListContainer>
-        <FilterList onClick={onClickStatusFilter}>모집중</FilterList>
-        <FilterList onClick={onClickStatusFilter}>개설대기중</FilterList>
-        <FilterList onClick={onClickStatusFilter}>진행중</FilterList>
-        <FilterList onClick={onClickStatusFilter}>완료강좌</FilterList>
+        {type !== '제안' && (
+          <>
+            <FilterList onClick={onClickStatusFilter}>모집중</FilterList>
+            <FilterList onClick={onClickStatusFilter}>개설대기중</FilterList>
+            <FilterList onClick={onClickStatusFilter}>진행중</FilterList>
+            <FilterList onClick={onClickStatusFilter}>완료강좌</FilterList>
+          </>
+        )}
       </FilterListContainer>
 
       <FilterListContainer>
@@ -92,9 +100,13 @@ const FilterBar = () => {
           최신순
         </FilterList>
         <FilterList onClick={onClickTimeFilter}>오래된순</FilterList>
-        <FilterList onClick={onClickTimeFilter}>인기순</FilterList>
-        <FilterList onClick={onClickTimeFilter}>가격높은순</FilterList>
-        <FilterList onClick={onClickTimeFilter}>가격낮은순</FilterList>
+        {type !== '제안' && (
+          <>
+            <FilterList onClick={onClickTimeFilter}>인기순</FilterList>
+            <FilterList onClick={onClickTimeFilter}>가격높은순</FilterList>
+            <FilterList onClick={onClickTimeFilter}>가격낮은순</FilterList>
+          </>
+        )}
       </FilterListContainer>
     </div>
   );
