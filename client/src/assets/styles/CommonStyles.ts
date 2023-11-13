@@ -18,3 +18,14 @@ export const Divider = styled.div`
   height: 36px;
   background-color: #dee2e6;
 `;
+
+// 초록이 버튼
+export const RegButton = styled.button`
+  width: 100%;
+  padding: 1rem 1rem;
+  background-color: var(--primaryColor);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+`;

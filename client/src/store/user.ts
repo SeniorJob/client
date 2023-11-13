@@ -53,6 +53,17 @@ export const useUserStore = create<UserState>(
   ),
 );
 
+interface ModalState {
+  loginModal: boolean;
+  handleLoginModal: () => void;
+}
+
+export const useLoginModalStore = create<ModalState>(set => ({
+  loginModal: false,
+  handleLoginModal: () =>
+    set(prevState => ({ loginModal: !prevState.loginModal })),
+}));
+
 export interface LecturesState {
   myOpeningLectures: LectureDto[];
   myApplicationLectures: LectureDto[];
