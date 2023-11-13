@@ -4,11 +4,16 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import DeleteModal from '../DeleteModal';
 import { createPortal } from 'react-dom';
+import DeleteButton from './DeleteButton';
 
-type Card_T = { info: LectureDto };
+interface Card_T {
+  type: '개설' | '신청' | '제안';
+  info: LectureDto;
+}
 
-const Card = ({ info }: Card_T) => {
+const Card = ({ type, info }: Card_T) => {
   const {
+    le_id,
     create_id,
     image_url,
     title,
@@ -18,7 +23,6 @@ const Card = ({ info }: Card_T) => {
     current_participants,
     max_participants,
   } = info;
-
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -40,14 +44,16 @@ const Card = ({ info }: Card_T) => {
           </CardInfoWrapper>
         </LinkWrapper>
 
-        <DeleteButton onClick={() => setShowModal(true)}>삭제</DeleteButton>
+        <DeleteButton type={type} status={status} setShowModal={setShowModal} />
       </Container>
 
       {showModal &&
         createPortal(
           <DeleteModal
-            title={title}
+            type={type}
+            le_id={le_id}
             create_id={create_id}
+            title={title}
             setShowModal={setShowModal}
           />,
           document.body,
@@ -84,7 +90,7 @@ const CardInfoWrapper = styled.div`
 const Title = styled.h3`
   font-size: 22px;
   font-weight: bold;
-  width: 200px;
+  width: 180px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -115,14 +121,4 @@ const BottomInfoWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 14px;
-`;
-
-const DeleteButton = styled.button.attrs({ type: 'button' })`
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  border: 1px solid lightgray;
-  font-size: 14px;
-  padding: 4px 6px;
-  border-radius: 10px;
 `;
