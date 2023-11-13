@@ -52,6 +52,7 @@ interface WeekClassProps {
   weekNumber: number;
   weekTitle: string;
   weekId: number;
+  onDelete: () => void;
 }
 
 const WeekClass: FC<WeekClassProps> = ({
@@ -60,6 +61,7 @@ const WeekClass: FC<WeekClassProps> = ({
   weekNumber,
   weekTitle,
   weekId,
+  onDelete,
 }) => {
   const [title, setTitle] = useState(weekTitle);
 
@@ -84,6 +86,21 @@ const WeekClass: FC<WeekClassProps> = ({
     }
   };
 
+  const handleDelete = async () => {
+    if (window.confirm('정말로 이 주차를 삭제하시겠습니까?')) {
+      try {
+        await axios.delete(`${apiUrl}/weeks/${weekId}/week-delete`, {
+          headers,
+        });
+        alert('주차가 성공적으로 삭제되었습니다!');
+        onDelete();
+      } catch (err) {
+        console.error(err);
+        alert('주차를 삭제하는 데 실패했습니다. 다시 시도해 주세요.');
+      }
+    }
+  };
+
   return (
     <WeekClassContainer>
       <WeekClassTitle>
@@ -92,7 +109,7 @@ const WeekClass: FC<WeekClassProps> = ({
         </div>
         <div className="flex gap-2">
           <ActionButton onClick={handleEditTitle}>수정</ActionButton>
-          <ActionButton>삭제</ActionButton>
+          <ActionButton onClick={handleDelete}>삭제</ActionButton>
         </div>
       </WeekClassTitle>
       {/* {contents.map((content, index) => (

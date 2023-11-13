@@ -95,6 +95,13 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
             weekNumber={week.week_number}
             weekTitle={week.week_title}
             weekId={week.week_id}
+            onDelete={() => {
+              setWeekDto(prevWeekDto =>
+                prevWeekDto.filter(
+                  prevWeek => prevWeek.week_id !== week.week_id,
+                ),
+              );
+            }}
           />
         ))}
       </Container>
