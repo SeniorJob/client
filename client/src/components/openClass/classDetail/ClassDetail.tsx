@@ -33,6 +33,7 @@ interface ClassDetailProps {
 
 const ClassDetail: FC<ClassDetailProps> = ({ nextTab }) => {
   const [weeks, setWeeks] = useState([{ week: 1, classTitle: '강의 소개' }]);
+  const [classTitle, setClassTitle] = useState('');
 
   const addWeek = () => {
     const newWeek = weeks.length + 1;

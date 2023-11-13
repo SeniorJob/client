@@ -32,6 +32,7 @@ const ProfileInfo = ({ mode }: ProfileInfo_I) => {
   const [image, setImage] = useState(
     userDetail.imgKey ? userDetail.imgKey : defaultImage,
   );
+  const [selectedImage, setSelectedImage] = useState<string | Blob>(image);
   const [userDTO, setUserDTO] = useState<UserDTO_I>({
     name: undefined,
     dateOfBirth: undefined,
@@ -60,17 +61,21 @@ const ProfileInfo = ({ mode }: ProfileInfo_I) => {
 
     if (files) {
       setImage(URL.createObjectURL(files[0]));
-      formData.append('file', files[0]);
+      setSelectedImage(files[0]);
     }
   };
 
   const handleGetProfile = async () => {
     const info = await getProfile();
-    userStore.setUserDetail(info);
+    // 빌드 오류로 인해 임시 수정하였습니다
+    // 수정 전 코드
+    // userStore.setUserDetail(info);
+    if (info !== undefined) userStore.setUserDetail(info);
   };
 
   const handleUpdateProfile = async () => {
     const { name, job, dateOfBirth, category, address } = userDTO;
+    formData.append('file', selectedImage);
     formData.append(
       'userDto',
       JSON.stringify({
@@ -83,7 +88,6 @@ const ProfileInfo = ({ mode }: ProfileInfo_I) => {
     );
     await updateProfile(formData);
     await handleGetProfile();
-    location.href = '/mypage';
   };
 
   return (

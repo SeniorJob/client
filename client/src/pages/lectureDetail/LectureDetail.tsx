@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { DetailContent } from '../../components/lecture/detail/DetailContent';
 import { DetailAside } from '../../components/lecture/detail/DetailAside';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { getLectureDetail } from '../../api/lecture';
 import { LectureDetailProps } from '../../types/LectureTypes';
 import { DetailHeader } from '../../components/lecture/detail/DetailHeader';
@@ -11,6 +11,8 @@ export const LectureDetail = () => {
   const [data, setData] = useState<LectureDetailProps | null>();
   const location = useLocation();
   const currentURL = location.pathname;
+  const introSectionRef = useRef<HTMLDivElement>(null);
+  const curriculumSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,10 +33,18 @@ export const LectureDetail = () => {
         <title>{data?.lectureDto.title}</title>
       </Helmet>
       <section className="lecture-detail">
-        <DetailHeader data={data?.lectureDto} />
+        <DetailHeader
+          data={data?.lectureDto}
+          introSectionRef={introSectionRef}
+          curriculumSectionRef={curriculumSectionRef}
+        />
         <div className="container relative">
           <div className="lecture-detail-contents flex gap-5 px-8 py-6 w-full">
-            <DetailContent />
+            <DetailContent
+              data={data}
+              introSectionRef={introSectionRef}
+              curriculumSectionRef={curriculumSectionRef}
+            />
             <DetailAside data={data?.lectureDto} />
           </div>
         </div>

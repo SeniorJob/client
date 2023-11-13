@@ -9,7 +9,7 @@ const MyPage = () => {
 
   const handleGetProfile = async () => {
     const info = await getProfile();
-    userStore.setUserDetail(info);
+    if (info !== undefined) userStore.setUserDetail(info);
   };
 
   useEffect(() => {
