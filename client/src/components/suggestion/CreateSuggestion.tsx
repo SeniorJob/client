@@ -55,11 +55,22 @@ const CreateSuggestion = () => {
     <>
       <Title>제안하고 싶은 내용을 작성해주세요!</Title>
       <Title>제안강좌제목</Title>
-      <TextBox type="text" placeholder="제안강좌제목을 입력해주세요." />
+      <TextBox
+        type="text"
+        placeholder="제안강좌제목을 입력해주세요."
+        onChange={e => setTitle(e.target.value)}
+      />
       <Title>제안강좌의 소개</Title>
-      <TextArea placeholder="예) 제안강좌의 목적 또는 학습목표의 내용을 간략하게 기재해 다른 사람들에게 소개해보세요!" />
+      <TextArea
+        placeholder="예) 제안강좌의 목적 또는 학습목표의 내용을 간략하게 기재해 다른 사람들에게 소개해보세요!"
+        onChange={e => setContent(e.target.value)}
+      />
       <Title>카테고리 선택</Title>
-      <SelectBox name="category" id="category">
+      <SelectBox
+        name="category"
+        id="category"
+        onChange={e => setCategory(e.target.value)}
+      >
         {categoryData.map(data => {
           return <option value={data.id}>{data.title}</option>;
         })}
@@ -70,6 +81,7 @@ const CreateSuggestion = () => {
         type="text"
         placeholder="지역을 선택하면 자동으로 입력됩니다."
         readOnly
+        onChange={e => setRegion(e.target.value)}
       />
       <CreateButton onClick={handleCreate}>강좌제안개설</CreateButton>
     </>
