@@ -40,6 +40,7 @@ type WeekDtoType = {
 
 function ClassDetail({ nextTab }: { nextTab: () => void }) {
   const { createId } = useCreateClass();
+  console.log(createId);
   const [weekDto, setWeekDto] = useState<WeekDtoType[]>([]);
 
   const apiUrl =
@@ -70,13 +71,12 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
 
     try {
       const response = await axios.post(
-        apiUrl + '/weeks?title=' + weekTitle,
+        `${apiUrl}/weeks?title=${weekTitle}`,
         {},
         {
           headers,
         },
       );
-      console.log(response.data);
       setWeekDto([...weekDto, response.data]);
     } catch (err) {
       console.error(err);
@@ -89,13 +89,16 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
         <SubTitle>주차 정보 및 주차별 학습 내용 입력</SubTitle>
         {weekDto.map((week, index) => (
           <WeekClass
+            apiUrl={apiUrl}
+            headers={headers}
             key={index}
             weekNumber={week.week_number}
             weekTitle={week.week_title}
+            weekId={week.week_id}
           />
         ))}
       </Container>
-      <AddWeekButton onClick={handleAddWeek}>주차 추가하기</AddWeekButton>;
+      <AddWeekButton onClick={handleAddWeek}>주차 추가하기</AddWeekButton>
       <OpenButton onClick={() => nextTab()}>다음으로</OpenButton>
     </>
   );
