@@ -34,6 +34,20 @@ const OpenClassPage = () => {
   };
 
   return (
+    // 빌드 오류로 인해 임시 비활성화 하였습니다
+    // 수정 전 코드
+    //   <Container>
+    //   <TabContainer activeTab={activeTab} setActiveTab={setActiveTab} />
+    //   {showGuide ? (
+    //     <Guide activeTab={activeTab} onOpenClick={handleOpenClick} />
+    //   ) : activeTab === 0 ? (
+    //     <EnterClassInfomation nextTab={nextTab} />
+    //   ) : activeTab === 1 ? (
+    //     <ClassDetail nextTab={nextTab} prevTab={prevTab} />
+    //   ) : (
+    //     <Confirmation prevTab={prevTab} />
+    //   )}
+    // </Container>
     <Container>
       <TabContainer activeTab={activeTab} setActiveTab={setActiveTab} />
       {showGuide ? (
@@ -41,9 +55,9 @@ const OpenClassPage = () => {
       ) : activeTab === 0 ? (
         <EnterClassInfomation nextTab={nextTab} />
       ) : activeTab === 1 ? (
-        <ClassDetail nextTab={nextTab} prevTab={prevTab} />
+        <ClassDetail nextTab={nextTab} />
       ) : (
-        <Confirmation prevTab={prevTab} />
+        <Confirmation />
       )}
     </Container>
   );

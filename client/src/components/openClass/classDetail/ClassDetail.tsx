@@ -31,8 +31,83 @@ interface ClassDetailProps {
   nextTab: () => void;
 }
 
+// 주차별 학습내용 컴포넌트 관련 코드
+const WeekClassTitle = tw.div`
+  flex
+  bg-stone-100
+  mt-4
+  p-2
+  text-xl
+  font-bold
+
+  justify-between
+`;
+
+const WeekClassContent = styled.div`
+  padding: 10px;
+  background-color: white;
+  font-size: 1.2rem;
+`;
+
+const ActionButton = tw.div`
+  text-lg
+  font-normal
+`;
+
+const AddContentButton = tw.div`
+  flex
+  p-2
+  text-lg
+  justify-center
+  m-auto
+  bg-white
+`;
+
+interface WeekClassProps {
+  // 빌드 오류로 인해 수정하였습니다
+  // 수정 전 코드
+  // week: number;
+  week: number[];
+  classTitle: string | null;
+}
+
+const WeekClass: FC<WeekClassProps> = ({ week, classTitle }) => {
+  const [contents, setContents] = useState<string[]>([]);
+
+  const addContent = () => {
+    const newContent = prompt('새로운 컨텐츠를 입력하세요');
+    if (newContent !== null) {
+      setContents([...contents, newContent]);
+    }
+  };
+
+  return (
+    <div>
+      <WeekClassTitle>
+        <div>
+          {week}주차 {classTitle}
+        </div>
+        <div className="flex gap-2">
+          <ActionButton>수정</ActionButton>
+          <ActionButton>삭제</ActionButton>
+        </div>
+      </WeekClassTitle>
+      {contents.map((content, index) => (
+        <WeekClassContent key={index}>{content}</WeekClassContent>
+      ))}
+      <AddContentButton onClick={addContent}>
+        상세내용 추가하기
+      </AddContentButton>
+    </div>
+  );
+};
+
 const ClassDetail: FC<ClassDetailProps> = ({ nextTab }) => {
-  const [weeks, setWeeks] = useState([{ week: 1, classTitle: '강의 소개' }]);
+  // 빌드 오류로 인해 수정하였습니다
+  // 수정 전 코드
+  // const [week, setWeek] = useState(1);
+  const [week, setWeek] = useState([1]);
+  const [classTitle, setClassTitle] = useState('');
 
   const addWeek = () => {
     const newWeek = weeks.length + 1;

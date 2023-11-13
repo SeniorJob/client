@@ -32,8 +32,8 @@ function App() {
 
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/editprofile" element={<EditProfile />} />
-          <Route path="/mypage/lecture/application" element={<Application />} />
           <Route path="/mypage/lecture/opening" element={<Opening />} />
+          <Route path="/mypage/lecture/application" element={<Application />} />
           <Route path="/mypage/lecture/suggestion" element={<Suggestion />} />
           <Route
             path="/mypage/lecture/edit/:lecture_id"

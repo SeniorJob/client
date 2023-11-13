@@ -3,13 +3,13 @@ import { LectureDto } from '../../../types/LectureTypes';
 import { calculateRemain } from '../../../utils/calculateRemain';
 import { formatDate } from '../../../utils/formatData';
 
-const Aside = styled.div`
-  flex-basis: calc(100% * 1 / 3);
-  max-width: calc(100% * 1 / 3);
+const Aside = styled.aside`
   margin-right: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  position: sticky;
+  top: 134px;
 `;
 
 const CurrentStatus = styled.div`
@@ -72,6 +72,11 @@ const RegButton = styled.button`
   border-radius: 0.5rem;
 `;
 
+const Closed = styled(RegButton)`
+  cursor: unset;
+  background-color: #ccc;
+`;
+
 const LectureDate = styled(AsideCard)`
   height: unset;
   gap: 1.2rem;
@@ -87,50 +92,64 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
   const endDate = data ? formatDate(data?.end_date) : '';
 
   return (
-    <Aside>
-      <CurrentStatus>
-        <Participants>
-          <h1>모집 인원</h1>
-          <div className="flex gap-0.5 items-baseline">
-            <div>
-              <strong>{data?.current_participants}</strong>
-              <span>명</span>
+    <div className="basis-1/3">
+      <Aside>
+        <CurrentStatus>
+          <Participants>
+            <h1>모집 인원</h1>
+            <div className="flex gap-0.5 items-baseline">
+              <div>
+                <strong>{data?.current_participants}</strong>
+                <span>명</span>
+              </div>
+              <span>/</span>
+              <span>{data?.max_participants}명</span>
             </div>
-            <span>/</span>
-            <span>{data?.max_participants}명</span>
-          </div>
-        </Participants>
-        <RemainTime>
-          <h1>모집 기한</h1>
-          <span>
-            {/* 정규식 이용하여 숫자만 추출 */}
-            <strong>{remainTime?.match(/\d+/)?.[0]}</strong>
-            {remainTime?.includes('시간') ? <span>시간</span> : <span>일</span>}
-            <span></span>
-            <span className="ml-1">남았습니다!</span>
-          </span>
-        </RemainTime>
-      </CurrentStatus>
-      <Price>
-        <div>
-          <span className="price">{data?.price.toLocaleString()}원</span>
-        </div>
-        <RegButton>신청하기</RegButton>
-      </Price>
-      <LectureDate>
-        <div className="flex gap-6 w-full">
+          </Participants>
+          <RemainTime>
+            <h1>모집 기한</h1>
+            {data?.status === '신청가능상태' ? (
+              <span>
+                {/* 정규식 이용하여 숫자만 추출 */}
+                <strong>{remainTime?.match(/\d+/)?.[0]}</strong>
+                {remainTime?.includes('시간') ? (
+                  <span>시간</span>
+                ) : (
+                  <span>일</span>
+                )}
+                <span></span>
+                <span className="ml-1">남았습니다!</span>
+              </span>
+            ) : (
+              <span>-</span>
+            )}
+          </RemainTime>
+        </CurrentStatus>
+        <Price>
           <div>
-            <h1>교육 기간</h1>
+            <span className="price">{data?.price.toLocaleString()}원</span>
           </div>
-          <div className="period">
-            <span>{startDate}</span>
-            <span> ~</span>
-            <div className="text-end">
-              <span>{endDate}</span>
+          {data?.status === '신청가능상태' ? (
+            <RegButton>신청하기</RegButton>
+          ) : (
+            <Closed>해당 강좌의 모집은 마감되었습니다.</Closed>
+          )}
+        </Price>
+        <LectureDate>
+          <div className="flex gap-6 w-full">
+            <div>
+              <h1>교육 기간</h1>
+            </div>
+            <div className="period">
+              <span>{startDate}</span>
+              <span> ~</span>
+              <div className="text-end">
+                <span>{endDate}</span>
+              </div>
             </div>
           </div>
-        </div>
-      </LectureDate>
-    </Aside>
+        </LectureDate>
+      </Aside>
+    </div>
   );
 };
