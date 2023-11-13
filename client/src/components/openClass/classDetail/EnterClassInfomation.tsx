@@ -17,10 +17,13 @@ const Container = styled.div``;
 const SubTitle = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
-  padding-top: 10px;
 `;
 
-const SelectArea = styled.div``;
+const SelectArea = styled.div`
+  margin: 1rem 0;
+  display: flex;
+  gap: 1rem;
+`;
 
 const SelectCategory = styled.select`
   font-size: 1.3rem;
@@ -42,9 +45,10 @@ interface AddressData {
 const SearchAddressBtn = tw.button`
   bg-signature
   p-2
-  m-2
+  rounded-xl
+  h-[50px]
 
-  hover:
+  hover:text-red-500
 `;
 
 const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
@@ -169,7 +173,7 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
       <Container>
         <SelectArea>
           <SubTitle>카테고리 선택</SubTitle>
-          <form>
+          <form className="flex items-center">
             <SelectCategory
               name="category"
               id="category"
@@ -211,22 +215,24 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
             onChange={e => setLearningTarget(e.target.value)}
           />
         </SelectArea>
-        <SelectArea>
+        <div className="mt-4">
           <SubTitle>강좌 날짜 선택</SubTitle>
-          <Calendar
-            recruitEndDate={recruitEndDate}
-            startDate={startDate}
-            endDate={endDate}
-            setRecruitEndDate={setRecruitEndDate}
-            setStartDate={setStartDate}
-            setEndDate={setEndDate}
-          />
-          <LectureCountInput
-            labelTitle="강의 회차: "
-            labelText="한 주에 실시되는 강좌의 횟수를 알려주세요!"
-            setCount={setWeek}
-          />
-        </SelectArea>
+          <div>
+            <Calendar
+              recruitEndDate={recruitEndDate}
+              startDate={startDate}
+              endDate={endDate}
+              setRecruitEndDate={setRecruitEndDate}
+              setStartDate={setStartDate}
+              setEndDate={setEndDate}
+            />
+            <LectureCountInput
+              labelTitle="강의 회차: "
+              labelText="한 주에 실시되는 강좌의 횟수를 알려주세요!"
+              setCount={setWeek}
+            />
+          </div>
+        </div>
         <SelectArea>
           <SubTitle>최대 참가자 수</SubTitle>
           <LectureCountInput
@@ -234,9 +240,9 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
             setCount={setMaxParticipants}
           />
         </SelectArea>
-        <SelectArea>
+        <SelectArea className="flex">
           <SubTitle>지역</SubTitle>
-          <div className="flex">
+          <div className="flex w-3/4 gap-2">
             <OneLineTextBox
               value={address}
               placeholder="ex) 경기도 안양시 만안구 삼덕로 37번길 22"
@@ -251,31 +257,39 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
         </SelectArea>
         <SelectArea>
           <SubTitle>가격</SubTitle>
-          <OneLineTextBox
-            placeholder="ex) 15000"
-            onChange={e => setPrice(parseInt(e.target.value))}
-          />
+          <div className="w-3/4">
+            <OneLineTextBox
+              placeholder="ex) 15000"
+              onChange={e => setPrice(parseInt(e.target.value))}
+            />
+          </div>
         </SelectArea>
         <SelectArea>
           <SubTitle>은행</SubTitle>
-          <OneLineTextBox
-            placeholder="ex) 은행을 입력해주세요"
-            onChange={e => setBankName(e.target.value)}
-          />
+          <div className="w-3/4">
+            <OneLineTextBox
+              placeholder="ex) 은행을 입력해주세요"
+              onChange={e => setBankName(e.target.value)}
+            />
+          </div>
         </SelectArea>
         <SelectArea>
           <SubTitle>예금주</SubTitle>
-          <OneLineTextBox
-            placeholder="ex) 신이어"
-            onChange={e => setAccountName(e.target.value)}
-          />
+          <div className="w-3/4">
+            <OneLineTextBox
+              placeholder="ex) 신이어"
+              onChange={e => setAccountName(e.target.value)}
+            />
+          </div>
         </SelectArea>
         <SelectArea>
           <SubTitle>계좌번호</SubTitle>
-          <OneLineTextBox
-            placeholder="ex) '-' 없이 입력해주세요"
-            onChange={e => setAccountNumber(e.target.value)}
-          />
+          <div className="w-3/4">
+            <OneLineTextBox
+              placeholder="ex) '-' 없이 입력해주세요"
+              onChange={e => setAccountNumber(e.target.value)}
+            />
+          </div>
         </SelectArea>
         <OpenButton onClick={handleSubmit}>다음으로</OpenButton>
       </Container>
