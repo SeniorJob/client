@@ -1,7 +1,9 @@
 import { OpenButton } from '../OpenButton';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import WeekClass from './WeekClass';
+import useCreateClass from '../../../store/createClass';
+import axios from 'axios';
 
 const Container = styled.div`
   margin: 16px 16px 0 16px;
@@ -27,19 +29,63 @@ const AddWeekButton = styled.div`
   }
 `;
 
-interface ClassDetailProps {
-  nextTab: () => void;
-}
+function ClassDetail({ nextTab }: { nextTab: () => void }) {
+  const [weeks, setWeeks] = useState<
+    { week: number; classTitle: string; weekId: null | number }[]
+  >([{ week: 1, classTitle: '강의 소개', weekId: null }]);
+  const { createId } = useCreateClass();
+  console.log(createId);
 
-const ClassDetail: FC<ClassDetailProps> = ({ nextTab }) => {
-  const [weeks, setWeeks] = useState([{ week: 1, classTitle: '강의 소개' }]);
-  // const [classTitle, setClassTitle] = useState('');
+  const apiUrl =
+    import.meta.env.VITE_API_URL + `/api/lecturesStepTwo/${createId}`;
+  console.log(apiUrl);
+  const accessToken = localStorage.getItem('accessToken');
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+  };
 
-  const addWeek = () => {
+  const addWeekTitle = async (title: string) => {
+    try {
+      const res = await axios.post(`${apiUrl}/weeks`, { title }, { headers });
+      console.log(res.data);
+      return res.data.week_id;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const updateWeekTitle = async (weekId: number, title: string) => {
+    try {
+      const res = await axios.put(
+        `${apiUrl}/weeks/${weekId}/week-update`,
+        { title },
+        { headers },
+      );
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const deleteWeekPlan = async (weekId: number, planId: number) => {
+    try {
+      const res = await axios.put(
+        `${apiUrl}/weeks/${weekId}/plans/${planId}/plan-delete`,
+        {},
+        { headers },
+      );
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const addWeek = async () => {
     const newWeek = weeks.length + 1;
     const newTitle = prompt('주차별 학습 소제목을 입력하세요');
     if (newTitle !== null) {
-      setWeeks([...weeks, { week: newWeek, classTitle: newTitle }]);
+      const weekId = await addWeekTitle(newTitle);
+      setWeeks([...weeks, { week: newWeek, classTitle: newTitle, weekId }]);
     }
   };
 
@@ -52,6 +98,9 @@ const ClassDetail: FC<ClassDetailProps> = ({ nextTab }) => {
             key={index}
             week={weekClass.week}
             classTitle={weekClass.classTitle}
+            weekId={weekClass.weekId}
+            updateWeekTitle={updateWeekTitle}
+            deleteWeekPlan={deleteWeekPlan}
           />
         ))}
       </Container>
@@ -59,6 +108,6 @@ const ClassDetail: FC<ClassDetailProps> = ({ nextTab }) => {
       <OpenButton onClick={() => nextTab()}>다음으로</OpenButton>
     </>
   );
-};
+}
 
 export default ClassDetail;
