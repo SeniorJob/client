@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { LectureDetailProps } from '../../../types/LectureTypes';
+import { LectureDetails } from '../../../types/LectureTypes';
 import { MapComponent } from './MapComponent';
 
 export const DetailContent = ({
@@ -8,7 +8,7 @@ export const DetailContent = ({
   introSectionRef,
   curriculumSectionRef,
 }: {
-  data: LectureDetailProps | null | undefined;
+  data: LectureDetails | null | undefined;
   introSectionRef: React.RefObject<HTMLDivElement>;
   curriculumSectionRef: React.RefObject<HTMLDivElement>;
 }) => {
