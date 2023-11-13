@@ -16,7 +16,7 @@ axios.defaults.withCredentials = true;
 
 export const UserMenu: React.FC = () => {
   const [isModal, setIsModal] = useState(false);
-  const [userName, setUserName] = useState('');
+  const [userInfo, setUserInfo] = useState('');
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
   const isLoggedIn = useUserStore().isLoggedIn;
   const accessToken = localStorage.getItem('accessToken');
@@ -39,7 +39,7 @@ export const UserMenu: React.FC = () => {
       )
       .then(res => {
         console.log(res.data);
-        setUserName(res.data.name);
+        setUserInfo(res.data);
       })
       .catch(error => {
         console.error('사용자 세부 정보를 가져올 때 오류 발생:', error);
@@ -85,11 +85,11 @@ export const UserMenu: React.FC = () => {
       ) : (
         <>
           <StyledLoginUser>
-            <strong>{userName}님</strong> 어서오세요
+            <strong>{userInfo.name}님</strong> 어서오세요
           </StyledLoginUser>
-          <Link to={'/'}>
+          {/* <Link to={'/'}>
             <StyledUserMenu>마이페이지</StyledUserMenu>
-          </Link>
+          </Link> */}
           <StyledUserMenu
             onClick={e => {
               e.preventDefault();
