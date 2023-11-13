@@ -21,13 +21,7 @@ const Card = ({ info }: Card_T) => {
           <CardInfoWrapper>
             <Title>{title}</Title>
             <Region>{region}</Region>
-            <Content>
-              {content}
-              안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕
-              안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕
-              안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕
-              안녕안녕안녕안녕안녕안녕안녕안녕안녕
-            </Content>
+            <Content>{content}</Content>
           </CardInfoWrapper>
         </LinkWrapper>
 
