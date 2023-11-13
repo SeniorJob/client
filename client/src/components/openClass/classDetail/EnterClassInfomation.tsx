@@ -9,6 +9,7 @@ import DaumPostcode from 'react-daum-postcode';
 import { Modal } from './Modal';
 import tw from 'tailwind-styled-components';
 import axios from 'axios';
+import { AxiosError } from 'axios';
 
 const Container = styled.div``;
 
@@ -107,9 +108,9 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
       content: content,
       learning_target: learningTarget,
       week: week,
-      recruitEnd_date: recruitEndDate,
-      start_date: startDate,
-      end_date: endDate,
+      recruitEnd_date: recruitEndDate + 'T00:00:00',
+      start_date: startDate + 'T00:00:00',
+      end_date: endDate + 'T00:00:00',
       max_participants: maxParticipants,
       region: region,
       price: price,
@@ -142,7 +143,18 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
       console.log(res.data);
       nextTab();
     } catch (err) {
-      console.log(err);
+      const error = err as AxiosError;
+      if (error.response) {
+        const data = error.response.data as { errorMessage: string };
+        console.log(data.errorMessage);
+        alert(data.errorMessage);
+      } else if (error.request) {
+        console.log(error.request);
+        alert('서버에서 응답이 없습니다.');
+      } else {
+        console.log('Error', error.message);
+        alert(error.message);
+      }
     }
   };
 
