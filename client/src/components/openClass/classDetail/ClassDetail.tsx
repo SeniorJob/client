@@ -49,8 +49,8 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
     Authorization: `Bearer ${accessToken}`,
   };
 
+  // 강좌개설 3단계 API 불러오기
   useEffect(() => {
-    // 강좌개설 3단계 API 불러오기
     axios
       .get(apiUrl + '/review')
       .then(res => {
@@ -60,25 +60,42 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
       .catch(err => console.log(err));
   }, []);
 
+  // 주차 추가하기
+  const handleAddWeek = async () => {
+    const weekTitle = prompt('주차 제목을 입력하세요:');
+    if (weekTitle === null || weekTitle.trim() === '') {
+      alert('주차 제목을 입력해주세요!');
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        apiUrl + '/weeks?title=' + weekTitle,
+        {},
+        {
+          headers,
+        },
+      );
+      console.log(response.data);
+      setWeekDto([...weekDto, response.data]);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <Container>
         <SubTitle>주차 정보 및 주차별 학습 내용 입력</SubTitle>
         {weekDto.map((week, index) => (
-          <div key={index}> {week.week_number} 주차 </div>
-        ))}
-        {/* {weeks.map((weekClass, index) => (
           <WeekClass
             key={index}
-            week={weekClass.week}
-            classTitle={weekClass.classTitle}
-            weekId={weekClass.weekId}
-            updateWeekTitle={updateWeekTitle}
-            deleteWeekPlan={deleteWeekPlan}
+            weekNumber={week.week_number}
+            weekTitle={week.week_title}
           />
-        ))} */}
+        ))}
       </Container>
-      <AddWeekButton>주차 추가하기</AddWeekButton>
+      <AddWeekButton onClick={handleAddWeek}>주차 추가하기</AddWeekButton>;
       <OpenButton onClick={() => nextTab()}>다음으로</OpenButton>
     </>
   );

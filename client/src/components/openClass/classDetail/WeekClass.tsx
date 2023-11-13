@@ -46,60 +46,26 @@ const WeekClassContainer = styled.div`
 `;
 
 interface WeekClassProps {
-  week: number;
-  classTitle: string;
-  weekId: number | null;
-  updateWeekTitle: (weekId: number, title: string) => Promise<void>;
-  deleteWeekPlan: (weekId: number, planId: number) => Promise<void>;
+  weekNumber: number;
+  weekTitle: string;
 }
 
-const WeekClass: FC<WeekClassProps> = ({
-  week,
-  classTitle,
-  weekId,
-  updateWeekTitle,
-  deleteWeekPlan,
-}) => {
-  const [contents, setContents] = useState<string[]>([]);
-
-  const addContent = () => {
-    const newContent = prompt('새로운 컨텐츠를 입력하세요');
-    if (newContent !== null) {
-      setContents([...contents, newContent]);
-    }
-  };
-
-  const editTitle = async () => {
-    const newTitle = prompt('새로운 제목을 입력하세요');
-    if (newTitle !== null && weekId !== null) {
-      await updateWeekTitle(weekId, newTitle);
-    }
-  };
-
-  const deleteContent = async (index: number) => {
-    if (weekId !== null) {
-      await deleteWeekPlan(weekId, index);
-      setContents(contents.filter((_, i) => i !== index));
-    }
-  };
-
+const WeekClass: FC<WeekClassProps> = ({ weekNumber, weekTitle }) => {
   return (
     <WeekClassContainer>
       <WeekClassTitle>
         <div>
-          {week}주차 : {classTitle}
+          {weekNumber}주차 : {weekTitle}
         </div>
         <div className="flex gap-2">
-          <ActionButton onClick={editTitle}>수정</ActionButton>
-          <ActionButton onClick={() => deleteContent(0)}>삭제</ActionButton>
+          <ActionButton>수정</ActionButton>
+          <ActionButton>삭제</ActionButton>
         </div>
       </WeekClassTitle>
-      {contents.map((content, index) => (
+      {/* {contents.map((content, index) => (
         <WeekClassContent key={index}>{content}</WeekClassContent>
-      ))}
-      <AddContentButton onClick={addContent}>
-        상세내용 추가하기
-      </AddContentButton>
+      ))} */}
+      <AddContentButton>상세내용 추가하기</AddContentButton>
     </WeekClassContainer>
   );
 };
