@@ -3,12 +3,12 @@ import { DetailContent } from '../../components/lecture/detail/DetailContent';
 import { DetailAside } from '../../components/lecture/detail/DetailAside';
 import { useEffect, useState, useRef } from 'react';
 import { getLectureDetail } from '../../api/lecture';
-import { LectureDetailProps } from '../../types/LectureTypes';
+import { LectureDetails } from '../../types/LectureTypes';
 import { DetailHeader } from '../../components/lecture/detail/DetailHeader';
 import { Helmet } from 'react-helmet-async';
 
 export const LectureDetail = () => {
-  const [data, setData] = useState<LectureDetailProps | null>();
+  const [data, setData] = useState<LectureDetails | null>();
   const location = useLocation();
   const currentURL = location.pathname;
   const introSectionRef = useRef<HTMLDivElement>(null);
