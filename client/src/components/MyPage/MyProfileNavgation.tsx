@@ -1,9 +1,21 @@
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import MyProfile from './MyProfile';
+import { useLecturesStore } from '../../store/user';
 
 const MyProfileNavgation = () => {
   const pathname = useLocation().pathname;
+  const {
+    setMyOpeningLectures,
+    setMySuggestionLectures,
+    setMyApplicationLectures,
+  } = useLecturesStore();
+
+  const handleResetLectures = () => {
+    setMyOpeningLectures([]);
+    setMySuggestionLectures([]);
+    setMyApplicationLectures([]);
+  };
 
   return (
     <NavigationWrapper>
@@ -11,20 +23,23 @@ const MyProfileNavgation = () => {
 
       <NavigationContainer>
         <NavigationList
-          active={pathname === '/mypage/lecture/opening'}
+          active={pathname === '/mypage/lecture/opening' ? 'true' : 'false'}
           to="/mypage/lecture/opening"
+          onClick={handleResetLectures}
         >
           개설한 강좌
         </NavigationList>
         <NavigationList
-          active={pathname === '/mypage/lecture/application'}
+          active={pathname === '/mypage/lecture/application' ? 'true' : 'false'}
           to="/mypage/lecture/application"
+          onClick={handleResetLectures}
         >
           신청한 강좌
         </NavigationList>
         <NavigationList
-          active={pathname === '/mypage/lecture/suggestion'}
+          active={pathname === '/mypage/lecture/suggestion' ? 'true' : 'false'}
           to="/mypage/lecture/suggestion"
+          onClick={handleResetLectures}
         >
           제안한 강좌
         </NavigationList>
@@ -49,10 +64,10 @@ const NavigationContainer = styled.ul`
   margin-top: 10px;
 `;
 
-const NavigationList = styled(Link)<{ active: boolean }>`
+const NavigationList = styled(Link)<{ active: 'true' | 'false' }>`
   font-size: 20px;
   padding: 10px 0 10px 0;
-  color: ${props => (!props.active ? 'black' : 'green')};
+  color: ${props => (props.active !== 'true' ? 'black' : 'green')};
 `;
 
 export default MyProfileNavgation;
