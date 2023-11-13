@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
+import { GetLecturesResponse } from '../types/LectureTypes';
 
 const instance = axios.create({
   baseURL: `${import.meta.env.VITE_API_URL}`,
@@ -16,7 +17,7 @@ export const getProfile = async () => {
   return await instance
     .post('/api/users/detail')
     .then(res => res.data)
-    .catch(err => console.error(err));
+    .catch(err => err);
 };
 
 // 회원 정보 수정
@@ -24,39 +25,28 @@ export const updateProfile = async (formData: FormData) => {
   await instance
     .put('/api/users/update', formData)
     .then(() => (location.href = '/mypage'))
-    .catch(err => console.error(err));
-};
-
-// 강좌 목록 + 필터링
-export const getOpeningLectures = (params: string) => {
-  return instance
-    .get(`/api/mypageCreateLecture/filter?${params}`)
-    .then(res => res.data.content)
-    .catch(err => {
-      console.error(err);
-      return [];
-    });
-};
-
-export const getApplicationLectures = async () => {
-  return await instance
-    .get(`/api/mypageApplyLecture/filter?filter=latest&size=12&page=1`)
-    .then(res => {
-      console.log(res);
-      return res.data.content;
-    })
     .catch(err => err);
 };
 
-export const getSuggestionLectures = async () => {
+// 강좌 목록 + 필터링
+export const getOpeningLectures = async (params: string) => {
   return await instance
-    .get(
-      `/api/myProposalLecture/filter?page=1&size=12&filter=latest&descending=true`,
-    )
-    .then(res => {
-      console.log(res);
-      return res.data.content;
-    })
+    .get(`/api/mypageCreateLecture/filter?size=6&${params}`)
+    .then((res: AxiosResponse<GetLecturesResponse>) => res)
+    .catch(err => err);
+};
+
+export const getApplicationLectures = async (params: string) => {
+  return await instance
+    .get(`/api/mypageApplyLecture/filter?size=6&${params}`)
+    .then((res: AxiosResponse<GetLecturesResponse>) => res)
+    .catch(err => err);
+};
+
+export const getSuggestionLectures = async (params: string) => {
+  return await instance
+    .get(`/api/myProposalLecture/filter?size=6&${params}`)
+    .then(res => res)
     .catch(err => err);
 };
 
@@ -81,11 +71,27 @@ export const getDetailOfSuggestionLectures = (id: number) => {
 };
 // !강좌 상세보기
 
-export const deleteLecture = async (create_id: number) => {
-  await instance
-    .delete(`/api/lectures/delete/${create_id}`)
-    .then(res => {
-      alert(res.data);
-    })
-    .catch(err => console.error(err));
+type deleteLecture = {
+  type: '개설' | '신청' | '제안';
+  id?: number;
+};
+
+export const deleteLecture = async ({ type, id }: deleteLecture) => {
+  type === '개설' &&
+    (await instance
+      .delete(`/api/lectures/delete/${id}`)
+      .then(res => res)
+      .catch(err => err));
+
+  type === '신청' &&
+    (await instance
+      .delete(`/api/lectureapply/cancel/${id}`)
+      .then(res => res)
+      .catch(err => err));
+
+  type === '제안' &&
+    (await instance
+      .delete(`/api/lectureproposal/delete/${id}`)
+      .then(res => res)
+      .catch(err => err));
 };

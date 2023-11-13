@@ -61,6 +61,7 @@ export type WeekDto = {
 };
 
 export type LectureDto = {
+  le_id?: number;
   create_id: number;
   uid: number;
   userName: string;
@@ -86,8 +87,39 @@ export type LectureDto = {
   daysUntilRecruitEndMessage: string;
 };
 
-export type LectureDetailProps = {
+export type LectureDetails = {
   lectureDto: LectureDto;
   weekDto: WeekDto[];
   weekPlanDto: WeekPlan[];
+};
+
+export type GetLecturesResponse = {
+  content: LectureDto[];
+  empty: boolean;
+  first: boolean;
+  last: boolean;
+  number: number;
+  numberOfElements: number;
+  pagable: {
+    offset: number;
+    pageNumber: number;
+    pageSize: number;
+    paged: boolean;
+  };
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  totalElement: number;
+  totalPages: number;
+};
+
+export type SuggestionLectureDto = {
+  category: string;
+  content: string;
+  createdDate: string;
+  proposalId: number;
+  region: string;
+  title: string;
 };
