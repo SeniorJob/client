@@ -163,7 +163,12 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
         </LectureDate>
       </Aside>
       {/* 강의 신청 Modal */}
-      {isApplyModalOpen && <LectureApply closeModal={closeApplyModal} />}
+      {isApplyModalOpen && (
+        <LectureApply
+          lectureId={data?.create_id}
+          closeModal={closeApplyModal}
+        />
+      )}
     </div>
   );
 };
