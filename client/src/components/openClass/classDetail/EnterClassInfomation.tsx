@@ -246,6 +246,7 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
             <OneLineTextBox
               value={address}
               placeholder="ex) 경기도 안양시 만안구 삼덕로 37번길 22"
+              onClick={() => setIsModalOpen(true)}
             />
             <SearchAddressBtn onClick={() => setIsModalOpen(true)}>
               주소 검색
