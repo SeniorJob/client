@@ -1,7 +1,11 @@
-import { StyledUserMenu, StyledLoginUser } from '../../assets/styles/MenuStyle';
+import {
+  StyledUserMenu,
+  StyledLoginUser,
+  StyledLoginUserMenu,
+} from '../../assets/styles/MenuStyle';
 import LoginComponent from '../login/loginForm';
 import { useState, useEffect } from 'react';
-
+import defaultImage from '../../assets/images/imageDefault.png';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useUserStore } from '../../store/user';
@@ -16,14 +20,19 @@ axios.defaults.withCredentials = true;
 
 export const UserMenu: React.FC = () => {
   const [isModal, setIsModal] = useState(false);
+  const [isUserModal, setIsUserModal] = useState(false);
   const [userInfo, setUserInfo] = useState('');
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
   const isLoggedIn = useUserStore().isLoggedIn;
   const accessToken = localStorage.getItem('accessToken');
   const LoginInfo = localStorage.getItem('isLogIn');
 
-  const handleModal = () => {
+  const handleLoginFormModal = () => {
     setIsModal(!isModal);
+  };
+
+  const handleUserModal = () => {
+    setIsUserModal(!isUserModal);
   };
 
   useEffect(() => {
@@ -73,7 +82,7 @@ export const UserMenu: React.FC = () => {
           <StyledUserMenu
             onClick={e => {
               e.preventDefault();
-              handleModal();
+              handleLoginFormModal();
             }}
           >
             로그인
@@ -84,29 +93,41 @@ export const UserMenu: React.FC = () => {
         </>
       ) : (
         <>
+          <img
+            className="w-8 h-8 rounded-[20px] hover:cursor-pointer mt-1"
+            src={userInfo.ImgKey ? userInfo.ImgKey : defaultImage}
+            onClick={handleUserModal}
+          />
           <StyledLoginUser>
-            <strong>{userInfo.name}님</strong> 어서오세요
+            <strong className="">{userInfo.name}님</strong> 어서오세요
           </StyledLoginUser>
-          {/* <Link to={'/'}>
-            <StyledUserMenu>마이페이지</StyledUserMenu>
-          </Link> */}
-          <StyledUserMenu
-            onClick={e => {
-              e.preventDefault();
-              handleLogout();
-            }}
-          >
-            로그아웃
-          </StyledUserMenu>
         </>
       )}
-
       {/* 이 아래 부분 모달 컴포넌트로 따로 빼는게 가독성이 좋습니다. 안빼도 상관은 없는데 코드 위치가 로그인 - 회원가입 사이에 있는 것은 가독성이 떨어집니다. 위치 옮겼습니다 */}
+      {isUserModal ? (
+        <>
+          <UserModalBackdrop onClick={handleUserModal}>
+            <UserModalView>
+              <Link to={'/mypage'}>
+                <StyledLoginUserMenu>마이페이지</StyledLoginUserMenu>
+              </Link>
+              <StyledLoginUserMenu
+                onClick={e => {
+                  e.preventDefault();
+                  handleLogout();
+                }}
+              >
+                로그아웃
+              </StyledLoginUserMenu>
+            </UserModalView>
+          </UserModalBackdrop>
+        </>
+      ) : null}
       {isModal ? (
         // 모달에 백그라운드 주는것도 CSS 가상요소 써서 만드는 방법도 있습니다. 그렇게되면 div 하나가 빠지겠죠
-        <ModalBackdrop onClick={handleModal}>
+        <ModalBackdrop onClick={handleLoginFormModal}>
           <ModalView onClick={e => e.stopPropagation()}>
-            <LoginComponent handleModal={handleModal} />
+            <LoginComponent handleModal={handleLoginFormModal} />
           </ModalView>
         </ModalBackdrop>
       ) : null}
@@ -140,4 +161,35 @@ const ModalView = styled.div`
   justify-content: center; // 수평, 수직 중앙 정렬
   border-radius: 20px;
   background-color: #ffffff;
+`;
+
+const UserModalBackdrop = styled.div`
+  // Modal이 떴을 때의 배경을 깔아주는 CSS를 구현
+  z-index: 1; //위치지정 요소
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`;
+
+const UserModalView = styled.div`
+  // Modal창 CSS를 구현합니다.
+  border: solid 2px #1dc078;
+  z-index: 3;
+  width: 100px;
+  height: 80px;
+  position: fixed;
+  display: flex;
+  flex-direction: column; // 컨텐츠를 세로 방향으로 정렬
+  align-items: center;
+  justify-content: center; // 수평, 수직 중앙 정렬
+  border-radius: 20px;
+  background-color: #ffffff;
+  top: 6%; /* 적절한 값으로 조정하세요. */
+  right: 27.4%; /* 적절한 값으로 조정하세요. */
 `;
