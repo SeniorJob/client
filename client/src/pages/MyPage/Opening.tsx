@@ -15,9 +15,11 @@ const Opening = () => {
   const [searchParams] = useSearchParams();
   const [totalPage, setTotalPage] = useState<number | null>();
   const [page, setPage] = useState<number>(1);
-  const curPage = searchParams.get('page');
+  const curPage = searchParams.get('page') as string;
 
   useEffect(() => {
+    curPage && setPage(parseInt(curPage));
+
     const handleGetOpeningLectures = async () => {
       const params = searchParams.toString();
       const res = await getOpeningLectures(params);

@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { LectureDto } from '../../../types/LectureTypes';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import DeleteModal from '../DeleteModal';
 import { createPortal } from 'react-dom';
-import DeleteButton from './DeleteButton';
+import EditApplicationModal from '../Edit/EditApplicationModal';
+import EditOpeningModal from '../Edit/EditOpeningModal';
 
 interface Card_T {
   type: '개설' | '신청' | '제안';
@@ -44,20 +44,28 @@ const Card = ({ type, info }: Card_T) => {
           </CardInfoWrapper>
         </LinkWrapper>
 
-        <DeleteButton type={type} status={status} setShowModal={setShowModal} />
+        {(status === '신청가능상태' || status === '개설대기상태') && (
+          <DeleteButton onClick={() => setShowModal(true)}>
+            수정하기
+          </DeleteButton>
+        )}
       </Container>
 
       {showModal &&
-        createPortal(
-          <DeleteModal
-            type={type}
-            le_id={le_id}
-            create_id={create_id}
-            title={title}
-            setShowModal={setShowModal}
-          />,
-          document.body,
-        )}
+        (type === '개설'
+          ? createPortal(
+              <EditOpeningModal setShowModal={setShowModal} />,
+              document.body,
+            )
+          : type === '신청' &&
+            createPortal(
+              <EditApplicationModal
+                createId={create_id}
+                leId={le_id}
+                setShowModal={setShowModal}
+              />,
+              document.body,
+            ))}
     </>
   );
 };
@@ -121,4 +129,14 @@ const BottomInfoWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 14px;
+`;
+
+const DeleteButton = styled.button.attrs({ type: 'button' })`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border: 1px solid lightgray;
+  font-size: 14px;
+  padding: 4px 6px;
+  border-radius: 10px;
 `;
