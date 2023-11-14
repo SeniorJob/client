@@ -8,7 +8,11 @@ import { useState, useEffect } from 'react';
 import defaultImage from '../../assets/images/imageDefault.png';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useUserStore } from '../../store/user';
+import {
+  useLoginUserModalStore,
+  useLoginModalStore,
+  useUserStore,
+} from '../../store/user';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,21 +24,24 @@ const MenuList = styled.div`
 axios.defaults.withCredentials = true;
 
 export const UserMenu: React.FC = () => {
-  const [isModal, setIsModal] = useState(false);
-  const [isUserModal, setIsUserModal] = useState(false);
+  // zustand로 Modal을 관리하게 되어서 주석 처리
+  // const [isModal, setIsModal] = useState(false);
+  const { loginModal, handleLoginModal } = useLoginModalStore();
+  const { loginUserModal, handleLoginUserModal } = useLoginUserModalStore();
+  // const [isUserModal, setIsUserModal] = useState(false);
   const [userInfo, setUserInfo] = useState('');
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
-  const isLoggedIn = useUserStore().isLoggedIn;
+  // const isLoggedIn = useUserStore().isLoggedIn;
   const accessToken = localStorage.getItem('accessToken');
   const LoginInfo = localStorage.getItem('isLogIn');
   const navigate = useNavigate();
 
   const handleLoginFormModal = () => {
-    setIsModal(!isModal);
+    handleLoginModal();
   };
 
   const handleUserModal = () => {
-    setIsUserModal(!isUserModal);
+    handleLoginUserModal();
   };
 
   useEffect(() => {
@@ -107,7 +114,7 @@ export const UserMenu: React.FC = () => {
         </>
       )}
       {/* 이 아래 부분 모달 컴포넌트로 따로 빼는게 가독성이 좋습니다. 안빼도 상관은 없는데 코드 위치가 로그인 - 회원가입 사이에 있는 것은 가독성이 떨어집니다. 위치 옮겼습니다 */}
-      {isUserModal ? (
+      {loginUserModal ? (
         <>
           <UserModalBackdrop onClick={handleUserModal}>
             <UserModalView>
@@ -126,7 +133,7 @@ export const UserMenu: React.FC = () => {
           </UserModalBackdrop>
         </>
       ) : null}
-      {isModal ? (
+      {loginModal ? (
         // 모달에 백그라운드 주는것도 CSS 가상요소 써서 만드는 방법도 있습니다. 그렇게되면 div 하나가 빠지겠죠
         <ModalBackdrop onClick={handleLoginFormModal}>
           <ModalView onClick={e => e.stopPropagation()}>

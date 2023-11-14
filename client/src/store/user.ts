@@ -53,15 +53,26 @@ export const useUserStore = create<UserState>(
   ),
 );
 
-interface ModalState {
+interface LoginModalState {
   loginModal: boolean;
   handleLoginModal: () => void;
 }
 
-export const useLoginModalStore = create<ModalState>(set => ({
+export const useLoginModalStore = create<LoginModalState>(set => ({
   loginModal: false,
   handleLoginModal: () =>
     set(prevState => ({ loginModal: !prevState.loginModal })),
+}));
+
+interface LoginUserModalState {
+  loginUserModal: boolean;
+  handleLoginUserModal: () => void;
+}
+
+export const useLoginUserModalStore = create<LoginUserModalState>(set => ({
+  loginUserModal: false,
+  handleLoginUserModal: () =>
+    set(prevState => ({ loginUserModal: !prevState.loginUserModal })),
 }));
 
 export interface LecturesState {
