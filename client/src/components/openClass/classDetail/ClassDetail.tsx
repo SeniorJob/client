@@ -38,7 +38,7 @@ type WeekDtoType = {
   createdDate: string;
 };
 
-type WeekPlanDtoType = {
+export type WeekPlanDtoType = {
   plan_id: number;
   week_id: number;
   week_title: string;
@@ -54,8 +54,7 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
   const [weekDto, setWeekDto] = useState<WeekDtoType[]>([]);
   const [weekPlanDto, setWeekPlanDto] = useState<WeekPlanDtoType[]>([]);
 
-  const apiUrl =
-    import.meta.env.VITE_API_URL + `/api/lecturesStepTwo/${createId}`;
+  const apiUrl = import.meta.env.VITE_API_URL + `/api/lecturesStepTwo/${105}`; // TODO: createId 수정해야함
   const accessToken = localStorage.getItem('accessToken');
   const headers = {
     Authorization: `Bearer ${accessToken}`,
@@ -101,7 +100,7 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
       <Container>
         <SubTitle>주차 정보 및 주차별 학습 내용 입력</SubTitle>
         {weekDto.map((week, index) => {
-          const weekPlan = weekPlanDto.find(
+          const weekPlans = weekPlanDto.filter(
             plan => plan.week_id === week.week_id,
           );
           return (
@@ -112,7 +111,7 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
               weekNumber={week.week_number}
               weekTitle={week.week_title}
               weekId={week.week_id}
-              weekPlan={weekPlan}
+              weekPlans={weekPlans}
               onDelete={() => {
                 setWeekDto(prevWeekDto =>
                   prevWeekDto.filter(
@@ -120,6 +119,7 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
                   ),
                 );
               }}
+              createId={createId}
             />
           );
         })}

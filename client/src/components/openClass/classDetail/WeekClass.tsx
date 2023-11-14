@@ -1,6 +1,7 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { FC, useState } from 'react';
 import styled from 'styled-components';
+import { WeekPlanDtoType } from './ClassDetail';
 
 const WeekClassTitle = styled.div`
   display: flex;
@@ -52,8 +53,9 @@ interface WeekClassProps {
   weekNumber: number;
   weekTitle: string;
   weekId: number;
-  weekPlan: any;
   onDelete: () => void;
+  createId: number;
+  weekPlans: WeekPlanDtoType[];
 }
 
 const WeekClass: FC<WeekClassProps> = ({
@@ -62,13 +64,14 @@ const WeekClass: FC<WeekClassProps> = ({
   weekNumber,
   weekTitle,
   weekId,
-  weekPlan,
   onDelete,
+  createId,
+  weekPlans,
 }) => {
   const [title, setTitle] = useState(weekTitle);
-  const [content, setContent] = useState([]);
+  const [content, setContent] = useState<WeekPlanDtoType[]>(weekPlans);
 
-  console.log(weekPlan);
+  console.log(weekPlans);
 
   const handleEditTitle = async () => {
     const newTitle = prompt('주차 제목을 입력하세요:');
@@ -113,14 +116,18 @@ const WeekClass: FC<WeekClassProps> = ({
       return;
     }
     try {
-      await axios.post(
-        `${apiUrl}/weeks/${weekId}/plans?detail=${newContent}`,
+      const response: AxiosResponse = await axios.post(
+        `${
+          import.meta.env.VITE_API_URL
+        }/api/lecturesStepTwo/lectures/${105}/weeks/${weekId}/plans?detail=${newContent}`, // TODO: createId 수정해야함
         {},
         {
           headers,
         },
       );
-      setContent([...content, newContent]);
+
+      setContent(response.data.details);
+      console.log(response.data);
     } catch (err) {
       console.error(err);
     }
@@ -137,9 +144,12 @@ const WeekClass: FC<WeekClassProps> = ({
           <ActionButton onClick={handleDelete}>삭제</ActionButton>
         </div>
       </WeekClassTitle>
-      {content.map((content, index) => (
-        <WeekClassContent key={index}>{content}</WeekClassContent>
-      ))}
+      {content &&
+        content.map((plan: WeekPlanDtoType, index: number) => (
+          <div key={index}>
+            <WeekClassContent key={index}>{plan.detail}</WeekClassContent>
+          </div>
+        ))}
       <AddContentButton onClick={handleAddContent}>
         상세내용 추가하기
       </AddContentButton>
