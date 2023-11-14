@@ -119,7 +119,7 @@ export type SuggestionLectureDto = {
   category: string;
   content: string;
   createdDate: string;
-  proposalId: number;
+  proposalId?: number;
   region: string;
   title: string;
 };

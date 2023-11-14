@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { SuggestionLectureDto } from '../../../types/LectureTypes';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import DeleteModal from '../DeleteModal';
 import { createPortal } from 'react-dom';
+import EditSuggestionModal from '../EditSuggestionModal';
 
 interface Card_T {
   info: SuggestionLectureDto;
@@ -11,7 +11,6 @@ interface Card_T {
 
 const Card = ({ info }: Card_T) => {
   const { content, proposalId, region, title } = info;
-
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -25,15 +24,13 @@ const Card = ({ info }: Card_T) => {
           </CardInfoWrapper>
         </LinkWrapper>
 
-        <DeleteButton onClick={() => setShowModal(true)}>제안취소</DeleteButton>
+        <DeleteButton onClick={() => setShowModal(true)}>수정하기</DeleteButton>
       </Container>
 
       {showModal &&
         createPortal(
-          <DeleteModal
-            type={'제안'}
+          <EditSuggestionModal
             proposalId={proposalId}
-            title={title}
             setShowModal={setShowModal}
           />,
           document.body,

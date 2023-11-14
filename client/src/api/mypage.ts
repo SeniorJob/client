@@ -1,5 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
-import { GetLecturesResponse } from '../types/LectureTypes';
+import {
+  GetLecturesResponse,
+  SuggestionLectureDto,
+} from '../types/LectureTypes';
 
 const instance = axios.create({
   baseURL: `${import.meta.env.VITE_API_URL}`,
@@ -63,32 +66,45 @@ export const getDetailOfOpeningLectures = (id: number) => {
     .then(res => console.log(res))
     .catch(err => console.error(err));
 };
-export const getDetailOfSuggestionLectures = (id: number) => {
-  instance
+export const getDetailOfSuggestionLectures = async (id: number) => {
+  return await instance
     .get(`/api/myProposalLecture/myProposalDetail/${id}`)
-    .then(res => console.log(res))
-    .catch(err => console.error(err));
+    .then((res: AxiosResponse<SuggestionLectureDto>) => res)
+    .catch(err => err);
 };
 // !강좌 상세보기
+
+type UpdateSuggestionLecture = {
+  title: string;
+  content: string;
+  region: string;
+  category: string;
+};
+export const updateSuggestionLecture = async (
+  proposalId: number,
+  data: UpdateSuggestionLecture,
+) => {
+  return await instance
+    .put(`/api/lectureproposal/update/${proposalId}`, data)
+    .then(res => res)
+    .catch(err => err);
+};
 
 type deleteLecture = {
   type: '개설' | '신청' | '제안';
   id?: number;
 };
-
 export const deleteLecture = async ({ type, id }: deleteLecture) => {
   type === '개설' &&
     (await instance
       .delete(`/api/lectures/delete/${id}`)
       .then(res => res)
       .catch(err => err));
-
   type === '신청' &&
     (await instance
       .delete(`/api/lectureapply/cancel/${id}`)
       .then(res => res)
       .catch(err => err));
-
   type === '제안' &&
     (await instance
       .delete(`/api/lectureproposal/delete/${id}`)
