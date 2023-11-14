@@ -30,7 +30,7 @@ export const NavMenu = () => {
           </Link>
         </li>
         <li>
-          <Link to="#">
+          <Link to="/createsuggestion">
             <StyledMenu>강좌제안</StyledMenu>
           </Link>
         </li>
