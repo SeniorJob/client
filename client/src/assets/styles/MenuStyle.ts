@@ -27,3 +27,10 @@ export const StyledLoginUser = styled.div`
   font-size: 17px;
   padding-top: 7px;
 `;
+
+export const StyledLoginUserMenu = styled(StyledMenu)`
+  transition: 0.3s all ease;
+  padding: 3px 3px 3px 3px;
+  font-size: 16px;
+  font-weight: 700;
+`;
