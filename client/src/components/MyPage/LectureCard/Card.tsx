@@ -54,12 +54,17 @@ const Card = ({ type, info }: Card_T) => {
       {showModal &&
         (type === '개설'
           ? createPortal(
-              <EditOpeningModal setShowModal={setShowModal} />,
+              <EditOpeningModal
+                title={title}
+                create_id={create_id}
+                setShowModal={setShowModal}
+              />,
               document.body,
             )
           : type === '신청' &&
             createPortal(
               <EditApplicationModal
+                title={title}
                 createId={create_id}
                 leId={le_id}
                 setShowModal={setShowModal}

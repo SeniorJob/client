@@ -7,10 +7,12 @@ import {
 } from '../../../api/mypage';
 
 const EditApplicationModal = ({
+  title,
   createId,
   leId,
   setShowModal,
 }: {
+  title: string;
   createId?: number;
   leId?: number;
   setShowModal: Dispatch<SetStateAction<boolean>>;
@@ -51,6 +53,7 @@ const EditApplicationModal = ({
   return (
     <>
       <Container>
+        <Title>{title}</Title>
         <Label>
           신청이유
           <TextArea value={reason} onChange={e => setReason(e.target.value)} />
@@ -79,7 +82,7 @@ const Container = styled.div`
   transform: translate(-50%, -50%);
   background-color: #fff;
   width: 400px;
-  height: 380px;
+  height: 440px;
   z-index: 101;
   border-radius: 10px;
   padding: 30px;
@@ -131,4 +134,14 @@ const ModalBackground = styled.div`
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 100;
   cursor: pointer;
+`;
+
+const Title = styled.div`
+  font-size: 22px;
+  font-weight: bold;
+  width: 240px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
 `;
