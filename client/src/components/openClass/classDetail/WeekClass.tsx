@@ -52,6 +52,7 @@ interface WeekClassProps {
   weekNumber: number;
   weekTitle: string;
   weekId: number;
+  weekPlan: any;
   onDelete: () => void;
 }
 
@@ -61,9 +62,13 @@ const WeekClass: FC<WeekClassProps> = ({
   weekNumber,
   weekTitle,
   weekId,
+  weekPlan,
   onDelete,
 }) => {
   const [title, setTitle] = useState(weekTitle);
+  const [content, setContent] = useState([]);
+
+  console.log(weekPlan);
 
   const handleEditTitle = async () => {
     const newTitle = prompt('주차 제목을 입력하세요:');
@@ -101,6 +106,26 @@ const WeekClass: FC<WeekClassProps> = ({
     }
   };
 
+  const handleAddContent = async () => {
+    const newContent = prompt('추가할 내용을 입력하세요');
+    if (newContent === null || newContent.trim() === '') {
+      alert('내용을 입력해주세요!');
+      return;
+    }
+    try {
+      await axios.post(
+        `${apiUrl}/weeks/${weekId}/plans?detail=${newContent}`,
+        {},
+        {
+          headers,
+        },
+      );
+      setContent([...content, newContent]);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <WeekClassContainer>
       <WeekClassTitle>
@@ -112,10 +137,12 @@ const WeekClass: FC<WeekClassProps> = ({
           <ActionButton onClick={handleDelete}>삭제</ActionButton>
         </div>
       </WeekClassTitle>
-      {/* {contents.map((content, index) => (
+      {content.map((content, index) => (
         <WeekClassContent key={index}>{content}</WeekClassContent>
-      ))} */}
-      <AddContentButton>상세내용 추가하기</AddContentButton>
+      ))}
+      <AddContentButton onClick={handleAddContent}>
+        상세내용 추가하기
+      </AddContentButton>
     </WeekClassContainer>
   );
 };

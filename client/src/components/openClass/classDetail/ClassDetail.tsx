@@ -38,10 +38,21 @@ type WeekDtoType = {
   createdDate: string;
 };
 
+type WeekPlanDtoType = {
+  plan_id: number;
+  week_id: number;
+  week_title: string;
+  create_id: number;
+  detail_number: number;
+  detail: string;
+  createdDate: string;
+};
+
 function ClassDetail({ nextTab }: { nextTab: () => void }) {
   const { createId } = useCreateClass();
   console.log(createId);
   const [weekDto, setWeekDto] = useState<WeekDtoType[]>([]);
+  const [weekPlanDto, setWeekPlanDto] = useState<WeekPlanDtoType[]>([]);
 
   const apiUrl =
     import.meta.env.VITE_API_URL + `/api/lecturesStepTwo/${createId}`;
@@ -56,7 +67,9 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
       .get(apiUrl + '/review')
       .then(res => {
         setWeekDto(res.data.weekDto);
+        setWeekPlanDto(res.data.weekPlanDto);
         console.log(weekDto);
+        console.log(weekPlanDto);
       })
       .catch(err => console.log(err));
   }, []);
@@ -87,23 +100,29 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
     <>
       <Container>
         <SubTitle>주차 정보 및 주차별 학습 내용 입력</SubTitle>
-        {weekDto.map((week, index) => (
-          <WeekClass
-            apiUrl={apiUrl}
-            headers={headers}
-            key={index}
-            weekNumber={week.week_number}
-            weekTitle={week.week_title}
-            weekId={week.week_id}
-            onDelete={() => {
-              setWeekDto(prevWeekDto =>
-                prevWeekDto.filter(
-                  prevWeek => prevWeek.week_id !== week.week_id,
-                ),
-              );
-            }}
-          />
-        ))}
+        {weekDto.map((week, index) => {
+          const weekPlan = weekPlanDto.find(
+            plan => plan.week_id === week.week_id,
+          );
+          return (
+            <WeekClass
+              apiUrl={apiUrl}
+              headers={headers}
+              key={index}
+              weekNumber={week.week_number}
+              weekTitle={week.week_title}
+              weekId={week.week_id}
+              weekPlan={weekPlan}
+              onDelete={() => {
+                setWeekDto(prevWeekDto =>
+                  prevWeekDto.filter(
+                    prevWeek => prevWeek.week_id !== week.week_id,
+                  ),
+                );
+              }}
+            />
+          );
+        })}
       </Container>
       <AddWeekButton onClick={handleAddWeek}>주차 추가하기</AddWeekButton>
       <OpenButton onClick={() => nextTab()}>다음으로</OpenButton>
