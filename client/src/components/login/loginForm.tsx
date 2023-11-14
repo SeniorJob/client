@@ -6,6 +6,8 @@ import Logo from '../../assets/images/logo.png';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useUserStore } from '../../store/user';
+import { useNavigate } from 'react-router-dom';
+
 interface LoginTopProps {
   handleModal: () => void;
 }
@@ -17,6 +19,7 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
   const [pw, setPw] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
+  const navigate = useNavigate();
 
   const setTokensInLocalStorage = (accessToken: any, refreshToken: any) => {
     localStorage.setItem('accessToken', accessToken);
@@ -59,6 +62,7 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
         setIsLoggedIn();
         localStorage.setItem('isLogIn', 'true');
         handleModal();
+        navigate('/');
       })
       .catch(error => {
         console.log(error.message, error);

@@ -2,6 +2,7 @@ import { useState } from 'react';
 // import 'react-calendar/dist/Calendar.css'; // css import
 import PostCode from './SignPostCode';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import tw from 'tailwind-styled-components';
 import styled from 'styled-components';
@@ -10,6 +11,7 @@ import { PwValid, PwcfValid } from '../../utils/Valiable';
 axios.defaults.withCredentials = true;
 
 const SingUpFrom: React.FC = () => {
+  const navigate = useNavigate();
   const [err, setErr] = useState<string | null>(null);
   const [pwValid, setPwValid] = useState<boolean | null>(null); // Fixed declaration
   const [pwcfValid, setPwcfValid] = useState<boolean | null>(null); // Fixed declaration
@@ -79,7 +81,8 @@ const SingUpFrom: React.FC = () => {
       .then(response => {
         // 요청이 성공하면 서버 응답을 처리합니다.
         console.log('서버 응답:', response.data);
-        window.location.href = `${import.meta.env.VITE_API_URL}`;
+        alert('회원가입이 정상적으로 완료 되었습니다.');
+        navigate('/');
       })
       .catch(error => {
         // 요청이 실패하면 에러를 처리합니다.

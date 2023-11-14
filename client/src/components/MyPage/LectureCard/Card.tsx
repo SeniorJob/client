@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { LectureDto } from '../../../types/LectureTypes';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import DeleteModal from '../DeleteModal';
+// import DeleteModal from '../DeleteModal';
 import { createPortal } from 'react-dom';
 import DeleteButton from './DeleteButton';
 
