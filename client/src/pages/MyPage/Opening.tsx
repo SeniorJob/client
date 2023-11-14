@@ -8,7 +8,7 @@ import CardList from '../../components/MyPage/LectureCard/CardList';
 import { useLecturesStore } from '../../store/user';
 import { getOpeningLectures } from '../../api/mypage';
 import { useSearchParams } from 'react-router-dom';
-import Pagination from '../../components/MyPage/Pagenation';
+import Pagination from '../../components/MyPage/Pagination';
 
 const Opening = () => {
   const { myOpeningLectures, setMyOpeningLectures } = useLecturesStore();

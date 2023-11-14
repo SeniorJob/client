@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { useLecturesStore } from '../../store/user';
 import { useSearchParams } from 'react-router-dom';
 import CardList from '../../components/MyPage/LectureCard/CardList';
-import Pagination from '../../components/MyPage/Pagenation';
+import Pagination from '../../components/MyPage/Pagination';
 
 const Suggestion = () => {
   const { mySuggestionLectures, setMySuggestionLectures } = useLecturesStore();

@@ -8,20 +8,12 @@ type Pagination_T = {
 };
 
 const Pagination = ({ totalPages, setPage, page }: Pagination_T) => {
-  // const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  // const searchParam = new URLSearchParams(location.search);
   const pageNumber = new Array(totalPages).fill(0);
 
   const paginate = (num: number) => {
     searchParams.set('page', `${num}`);
     setPage(num);
-    // navigate();
-    // {
-    //   pathname: '/lectures/filter',
-    //   search: searchParam.toString(),
-    // },
-    // { replace: true },
 
     setSearchParams(searchParams);
   };

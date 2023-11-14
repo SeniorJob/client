@@ -8,7 +8,7 @@ import FilterBar from '../../components/MyPage/FilterBar';
 import CardList from '../../components/MyPage/LectureCard/CardList';
 import { useSearchParams } from 'react-router-dom';
 import { useLecturesStore } from '../../store/user';
-import Pagination from '../../components/MyPage/Pagenation';
+import Pagination from '../../components/MyPage/Pagination';
 
 const Application = () => {
   const { myApplicationLectures, setMyApplicationLectures } =
