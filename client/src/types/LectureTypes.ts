@@ -123,3 +123,39 @@ export type SuggestionLectureDto = {
   region: string;
   title: string;
 };
+
+export type EditOpeningLecture_1_T = {
+  category: string;
+  title: string;
+  content: string;
+  learning_target: string;
+  week: number;
+  recruitEnd_date: string;
+  start_date: string;
+  end_date: string;
+  max_participants: number;
+  region: string;
+  price: number;
+  bank_name: string;
+  account_name: string;
+  account_number: string;
+  createdDate: string;
+};
+
+export type FirstStep_T = {
+  title: string;
+  content: string;
+  learning_target: string;
+  week: number;
+  recruitEnd_date: string;
+  start_date: string;
+  end_date: string;
+  max_participants: number;
+  region: string;
+  price: number;
+  bank_name: string;
+  account_name: string;
+  account_number: string;
+  createdDate: string;
+  category: string;
+};

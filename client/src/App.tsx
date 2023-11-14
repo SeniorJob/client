@@ -13,7 +13,6 @@ import Opening from './pages/MyPage/Opening';
 import Suggestion from './pages/MyPage/Suggestion';
 import EditProfile from './pages/MyPage/EditProfile';
 import Application from './pages/MyPage/Application';
-import EditSuggestion from './pages/MyPage/EditSuggestion';
 import EditLecture from './pages/MyPage/EditLecture';
 
 function App() {
@@ -37,10 +36,6 @@ function App() {
           <Route
             path="/mypage/lecture/edit/:lecture_id"
             element={<EditLecture />}
-          />
-          <Route
-            path="/mypage/lecture/suggestion/edit/:lecture_id"
-            element={<EditSuggestion />}
           />
 
           <Route path="/lectures/detail/*" element={<LectureDetail />} />

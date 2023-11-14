@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 
 interface MyPageTitle_I {
-  title: '제안' | '신청' | '개설';
+  title: '제안' | '신청' | '개설' | '수정';
   type?: 'edit';
 }
 
@@ -21,7 +21,9 @@ const MyPageTitle = ({ title, type }: MyPageTitle_I) => {
     }
   };
 
-  return (
+  return title === '수정' ? (
+    <H2>강좌 수정</H2>
+  ) : (
     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
       <H2>
         {title}

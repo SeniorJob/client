@@ -17,3 +17,11 @@ export const INTEREST_CATEGORY_OPTIONS = [
   '교육',
   '의료',
 ];
+
+export const BANK_NAMES = [
+  '기업은행',
+  '국민은행',
+  '새마을금고',
+  '농협',
+  '카카오뱅크',
+];

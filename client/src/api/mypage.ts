@@ -54,17 +54,17 @@ export const getSuggestionLectures = async (params: string) => {
 };
 
 // 강좌 상세보기
-export const getDetailOfCompletionLectures = (id: number) => {
-  instance
+export const getDetailOfApplyLectures = (id: number) => {
+  return instance
     .get(`/api/mypageApplyLecture/myAppliedLectureDetail/${id}`)
-    .then(res => console.log(res))
-    .catch(err => console.error(err));
+    .then(res => res)
+    .catch(err => err);
 };
 export const getDetailOfOpeningLectures = (id: number) => {
-  instance
+  return instance
     .get(`/api/mypageCreateLecture/myCreateLectureDetail/${id}`)
-    .then(res => console.log(res))
-    .catch(err => console.error(err));
+    .then(res => res)
+    .catch(err => err);
 };
 export const getDetailOfSuggestionLectures = async (id: number) => {
   return await instance
@@ -73,6 +73,26 @@ export const getDetailOfSuggestionLectures = async (id: number) => {
     .catch(err => err);
 };
 // !강좌 상세보기
+
+type updateApplyReason = {
+  lectureId: number;
+  newApplyReason: string;
+};
+export const updateApplyReason = ({
+  lectureId,
+  newApplyReason,
+}: updateApplyReason) => {
+  return instance
+    .put(
+      `/api/mypageApplyLecture/updateLectureApplyReason?lectureId=${lectureId}&newApplyReason=${newApplyReason}`,
+      {
+        lectureId,
+        newApplyReason,
+      },
+    )
+    .then(res => res)
+    .catch(err => err);
+};
 
 type UpdateSuggestionLecture = {
   title: string;
@@ -104,10 +124,80 @@ export const deleteLecture = async ({ type, id }: deleteLecture) => {
     (await instance
       .delete(`/api/lectureapply/cancel/${id}`)
       .then(res => res)
-      .catch(err => err));
+      .catch(err => {
+        console.error(err);
+        return err;
+      }));
   type === '제안' &&
     (await instance
       .delete(`/api/lectureproposal/delete/${id}`)
       .then(res => res)
       .catch(err => err));
+};
+
+type updateFirstStep_T = {
+  create_id: number;
+  formData: FormData;
+};
+export const updateFirstStep = async ({
+  create_id,
+  formData,
+}: updateFirstStep_T) => {
+  return instance
+    .put(`/api/lectures/${create_id}`, formData)
+    .then(res => res)
+    .catch(err => err);
+};
+
+type UpdateWeekTitle_T = {
+  title: string;
+  weekId: number;
+  lectureId: number;
+};
+export const updateWeekTitle = async ({
+  title,
+  weekId,
+  lectureId,
+}: UpdateWeekTitle_T) => {
+  return await instance
+    .put(
+      `/api/lecturesStepTwo/${lectureId}/weeks/${weekId}/week-update?title=${title}`,
+    )
+    .then(res => res)
+    .catch(err => err);
+};
+
+type UpdateWeekPlan_T = {
+  le_id?: number;
+  weekId: number;
+  planId: number;
+  detail: string;
+};
+export const updateWeekPlan = async ({
+  le_id,
+  weekId,
+  planId,
+  detail,
+}: UpdateWeekPlan_T) => {
+  console.log(le_id, weekId, planId, detail);
+  return await instance
+    .put(
+      `/api/lecturesStepTwo/${le_id}/weeks/${weekId}/plans/${planId}/plan-update?detail=${detail}`,
+    )
+    .then(res => res)
+    .catch(err => err);
+};
+
+type DeleteWeekList_T = {
+  lectureId: number;
+  weekId: number;
+};
+export const deleteWeekList = async ({
+  lectureId,
+  weekId,
+}: DeleteWeekList_T) => {
+  return instance
+    .delete(`/api/lecturesStepTwo/${lectureId}/weeks/${weekId}/week-delete`)
+    .then(res => res)
+    .catch(err => err);
 };
