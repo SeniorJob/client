@@ -51,17 +51,16 @@ const FilterBar = ({ type }: FilterBar_T) => {
     const target = e.target as HTMLLIElement;
     const filter = target.innerHTML;
 
-    searchParams.delete('filter');
-    searchParams.delete('descending');
-
     if (filter === '최신순') {
-      searchParams.set('filter', 'latest');
+      searchParams.delete('filter');
+      searchParams.delete('descending');
     } else if (filter === '오래된순') {
       searchParams.set('filter', 'latest');
-      searchParams.set('descending', 'false');
+      searchParams.set('descending', 'true');
     } else if (filter === '인기순') {
       searchParams.set('filter', 'popularity');
     } else if (filter === '가격높은순') {
+      searchParams.delete('descending');
       searchParams.set('filter', 'price');
     } else if (filter === '가격낮은순') {
       searchParams.set('filter', 'price');
