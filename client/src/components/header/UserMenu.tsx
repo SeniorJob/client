@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useUserStore } from '../../store/user';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const MenuList = styled.div`
   display: flex;
@@ -26,6 +27,7 @@ export const UserMenu: React.FC = () => {
   const isLoggedIn = useUserStore().isLoggedIn;
   const accessToken = localStorage.getItem('accessToken');
   const LoginInfo = localStorage.getItem('isLogIn');
+  const navigate = useNavigate();
 
   const handleLoginFormModal = () => {
     setIsModal(!isModal);
@@ -61,6 +63,7 @@ export const UserMenu: React.FC = () => {
     localStorage.removeItem('refreshToken');
     setIsLoggedIn();
     localStorage.removeItem('isLogIn');
+    navigate('/');
   };
 
   return (
