@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode } from 'react';
+import { MouseEvent, ReactNode, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -8,6 +8,16 @@ type FilterBar_T = {
 
 const FilterBar = ({ type }: FilterBar_T) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [filter, setFilter] = useState('');
+  const [descending, setDescending] = useState('');
+  const [status, setStatus] = useState('');
+
+  useEffect(() => {
+    searchParams.get('filter') &&
+      setFilter(searchParams.get('filter') as string);
+    setDescending(searchParams.get('descending') as string);
+    setStatus(searchParams.get('status') as string);
+  }, []);
 
   function getSiblings(currentNode: ReactNode | any) {
     const slblings = [];
@@ -51,17 +61,16 @@ const FilterBar = ({ type }: FilterBar_T) => {
     const target = e.target as HTMLLIElement;
     const filter = target.innerHTML;
 
-    searchParams.delete('filter');
-    searchParams.delete('descending');
-
     if (filter === '최신순') {
-      searchParams.set('filter', 'latest');
+      searchParams.delete('filter');
+      searchParams.delete('descending');
     } else if (filter === '오래된순') {
       searchParams.set('filter', 'latest');
-      searchParams.set('descending', 'false');
+      searchParams.set('descending', 'true');
     } else if (filter === '인기순') {
       searchParams.set('filter', 'popularity');
     } else if (filter === '가격높은순') {
+      searchParams.delete('descending');
       searchParams.set('filter', 'price');
     } else if (filter === '가격낮은순') {
       searchParams.set('filter', 'price');
@@ -87,24 +96,69 @@ const FilterBar = ({ type }: FilterBar_T) => {
       <FilterListContainer>
         {type !== '제안' && (
           <>
-            <FilterList onClick={onClickStatusFilter}>모집중</FilterList>
-            <FilterList onClick={onClickStatusFilter}>개설대기중</FilterList>
-            <FilterList onClick={onClickStatusFilter}>진행중</FilterList>
-            <FilterList onClick={onClickStatusFilter}>완료강좌</FilterList>
+            <FilterList
+              className={status === '모집중' ? 'active' : ''}
+              onClick={onClickStatusFilter}
+            >
+              모집중
+            </FilterList>
+            <FilterList
+              className={status === '개설대기중' ? 'active' : ''}
+              onClick={onClickStatusFilter}
+            >
+              개설대기중
+            </FilterList>
+            <FilterList
+              className={status === '진행중' ? 'active' : ''}
+              onClick={onClickStatusFilter}
+            >
+              진행중
+            </FilterList>
+            <FilterList
+              className={status === '완료강좌' ? 'active' : ''}
+              onClick={onClickStatusFilter}
+            >
+              완료강좌
+            </FilterList>
           </>
         )}
       </FilterListContainer>
 
       <FilterListContainer>
-        <FilterList className="active" onClick={onClickTimeFilter}>
+        <FilterList
+          className={filter === '' ? 'active' : ''}
+          onClick={onClickTimeFilter}
+        >
           최신순
         </FilterList>
-        <FilterList onClick={onClickTimeFilter}>오래된순</FilterList>
+        <FilterList
+          className={filter === 'latest' ? 'active' : ''}
+          onClick={onClickTimeFilter}
+        >
+          오래된순
+        </FilterList>
         {type !== '제안' && (
           <>
-            <FilterList onClick={onClickTimeFilter}>인기순</FilterList>
-            <FilterList onClick={onClickTimeFilter}>가격높은순</FilterList>
-            <FilterList onClick={onClickTimeFilter}>가격낮은순</FilterList>
+            <FilterList
+              className={filter === 'popularity' ? 'active' : ''}
+              onClick={onClickTimeFilter}
+            >
+              인기순
+            </FilterList>
+            <FilterList
+              className={filter === 'price' ? 'active' : ''}
+              onClick={onClickTimeFilter}
+            >
+              가격높은순
+            </FilterList>
+            <FilterList
+              className={
+                filter === 'price' && descending === 'false' ? 'active' : ''
+              }
+              onClick={onClickTimeFilter}
+            >
+              가격낮은순
+            </FilterList>
           </>
         )}
       </FilterListContainer>

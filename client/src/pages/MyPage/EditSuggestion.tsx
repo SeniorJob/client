@@ -4,6 +4,7 @@ import MyPageTitle from '../../components/MyPage/MyPageTitle';
 import styled from 'styled-components';
 import SignPostCode from '../../components/signup/SignPostCode';
 import { useNavigate } from 'react-router-dom';
+import { INTEREST_CATEGORY_OPTIONS } from '../../constants/Profile';
 
 const EditSuggestion = () => {
   const navigate = useNavigate();
@@ -14,19 +15,6 @@ const EditSuggestion = () => {
     address: '',
     addressDetail: '',
   });
-
-  const interestCategoryOption = [
-    '외식',
-    '서비스',
-    '사무직',
-    '생산',
-    '운전',
-    '디자인',
-    'IT',
-    '기술',
-    '교육',
-    '의료',
-  ];
 
   return (
     <MyPageLayout>
@@ -63,7 +51,7 @@ const EditSuggestion = () => {
           }
         >
           <option>선택하세요</option>
-          {interestCategoryOption.map((option, index) => (
+          {INTEREST_CATEGORY_OPTIONS.map((option, index) => (
             <option key={index} value={option}>
               {option}
             </option>

@@ -8,16 +8,18 @@ import { Link } from 'react-router-dom';
 import { useLecturesStore } from '../../store/user';
 import { useSearchParams } from 'react-router-dom';
 import CardList from '../../components/MyPage/LectureCard/CardList';
-import Pagination from '../../components/MyPage/Pagenation';
+import Pagination from '../../components/MyPage/Pagination';
 
 const Suggestion = () => {
   const { mySuggestionLectures, setMySuggestionLectures } = useLecturesStore();
   const [searchParams] = useSearchParams();
   const [totalPage, setTotalPage] = useState<number | null>();
   const [page, setPage] = useState<number>(1);
-  const curPage = searchParams.get('page');
+  const curPage = searchParams.get('page') as string;
 
   useEffect(() => {
+    curPage && setPage(parseInt(curPage));
+
     const handleGetOpeningLectures = async () => {
       const params = searchParams.toString();
       const res = await getSuggestionLectures(params);

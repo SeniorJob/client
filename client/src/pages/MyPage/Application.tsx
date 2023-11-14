@@ -8,7 +8,7 @@ import FilterBar from '../../components/MyPage/FilterBar';
 import CardList from '../../components/MyPage/LectureCard/CardList';
 import { useSearchParams } from 'react-router-dom';
 import { useLecturesStore } from '../../store/user';
-import Pagination from '../../components/MyPage/Pagenation';
+import Pagination from '../../components/MyPage/Pagination';
 
 const Application = () => {
   const { myApplicationLectures, setMyApplicationLectures } =
@@ -16,9 +16,11 @@ const Application = () => {
   const [searchParams] = useSearchParams();
   const [totalPage, setTotalPage] = useState<number | null>();
   const [page, setPage] = useState<number>(1);
-  const curPage = searchParams.get('page');
+  const curPage = searchParams.get('page') as string;
 
   useEffect(() => {
+    curPage && setPage(parseInt(curPage));
+
     const handleGetApplicationLectures = async () => {
       const params = searchParams.toString();
       const res = await getApplicationLectures(params);
