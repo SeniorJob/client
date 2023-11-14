@@ -95,7 +95,7 @@ export const UserMenu: React.FC = () => {
         <>
           <img
             className="w-8 h-8 rounded-[20px] hover:cursor-pointer mt-1"
-            src={userInfo.ImgKey ? userInfo.ImgKey : defaultImage}
+            src={userInfo.imgKey ? userInfo.imgKey : defaultImage}
             onClick={handleUserModal}
           />
           <StyledLoginUser>
