@@ -4,10 +4,9 @@ import {
   deleteLecture,
   getDetailOfSuggestionLectures,
   updateSuggestionLecture,
-} from '../../api/mypage';
-import SignPostCode from '../signup/SignPostCode';
-import { INTEREST_CATEGORY_OPTIONS } from '../../constants/Profile';
-import { useSearchParams } from 'react-router-dom';
+} from '../../../api/mypage';
+import SignPostCode from '../../signup/SignPostCode';
+import { INTEREST_CATEGORY_OPTIONS } from '../../../constants/Profile';
 
 type LectureDto = {
   title: string;
@@ -23,7 +22,6 @@ const EditSuggestionModal = ({
   proposalId?: number;
   setShowModal: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
   const [lectureDto, setLectureDto] = useState<LectureDto>({
     title: '',
     content: '',
@@ -37,16 +35,12 @@ const EditSuggestionModal = ({
 
     if (proposalId) await updateSuggestionLecture(proposalId, data);
     handleCloseModal();
-    searchParams.delete('page');
-    setSearchParams(searchParams);
     location.reload();
   };
 
   const handleDeleteLecture = async () => {
     await deleteLecture({ type: '제안', id: proposalId });
     handleCloseModal();
-    searchParams.delete('page');
-    setSearchParams(searchParams);
     location.reload();
   };
 

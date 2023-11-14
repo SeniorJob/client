@@ -3,7 +3,7 @@ import { SuggestionLectureDto } from '../../../types/LectureTypes';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import EditSuggestionModal from '../EditSuggestionModal';
+import EditSuggestionModal from '../Edit/EditSuggestionModal';
 
 interface Card_T {
   info: SuggestionLectureDto;
