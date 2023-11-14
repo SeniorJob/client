@@ -10,6 +10,8 @@ export const TextBox = styled.textarea`
 `;
 
 export const OneLineTextBox = styled(TextBox)`
+  display: flex;
+  justify-content: center;
   resize: none;
   height: 50px;
 `;

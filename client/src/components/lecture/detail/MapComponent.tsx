@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import CautionSVG from '../../../assets/images/caution.svg?react';
 
 interface MapComponentProps {
   address: string;
@@ -7,8 +8,14 @@ interface MapComponentProps {
 
 export const MapComponent: React.FC<MapComponentProps> = ({ address }) => {
   const mapRef = useRef<HTMLDivElement>(null);
+  const [mapError, setMapError] = useState(false);
 
   useEffect(() => {
+    if (!address) {
+      // address가 undefined인 경우 처리
+      return;
+    }
+
     const script = document.createElement('script');
     script.async = true;
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${
@@ -64,7 +71,15 @@ export const MapComponent: React.FC<MapComponentProps> = ({ address }) => {
 
               // 마커 위치로 지도 이동
               map.panTo(markerPosition);
+            } else {
+              // 주소 검색 실패 시의 로직 추가
+              console.error('주소 검색 실패');
+              setMapError(true);
             }
+          })
+          .catch(error => {
+            console.error('주소 검색 중 오류 발생', error);
+            setMapError(true);
           });
       });
     };
@@ -76,15 +91,32 @@ export const MapComponent: React.FC<MapComponentProps> = ({ address }) => {
     };
   }, [address]);
 
+  if (mapError) {
+    // 주소 검색 실패 시에 표시할 컴포넌트나 메시지
+    return (
+      <MapContainer>
+        <CautionSVG width={70} />
+        주소 데이터 불러오기에 실패했습니다.
+      </MapContainer>
+    );
+  }
+
   return <MapContainer ref={mapRef} />;
 };
 
 const MapContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 300px;
   border: 1px solid #ddd;
   border-radius: 0.3rem;
   overflow: hidden;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #bbb;
 `;
 
 export default MapComponent;

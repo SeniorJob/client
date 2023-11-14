@@ -1,6 +1,6 @@
 import { StateCreator, create } from 'zustand';
 import { persist, PersistOptions } from 'zustand/middleware';
-import { LectureDto } from '../types/LectureTypes';
+import { LectureDto, SuggestionLectureDto } from '../types/LectureTypes';
 
 export interface UserState {
   isLoggedIn: boolean;
@@ -53,23 +53,36 @@ export const useUserStore = create<UserState>(
   ),
 );
 
-export interface LecturesState {
-  myLectures: LectureDto[] | [];
-  setMyLectures: (lectures: LectureDto[]) => void;
+interface ModalState {
+  loginModal: boolean;
+  handleLoginModal: () => void;
 }
 
-type LecturesPersist = (
-  config: StateCreator<LecturesState>,
-  options: PersistOptions<LecturesState>,
-) => StateCreator<LecturesState>;
+export const useLoginModalStore = create<ModalState>(set => ({
+  loginModal: false,
+  handleLoginModal: () =>
+    set(prevState => ({ loginModal: !prevState.loginModal })),
+}));
 
-export const useLecturesStore = create<LecturesState>(
-  (persist as LecturesPersist)(
-    set => ({
-      myLectures: [],
+export interface LecturesState {
+  myOpeningLectures: LectureDto[];
+  myApplicationLectures: LectureDto[];
+  mySuggestionLectures: SuggestionLectureDto[];
 
-      setMyLectures: lectures => set(() => ({ myLectures: lectures })),
-    }),
-    { name: 'LecturesStore' },
-  ),
-);
+  setMyOpeningLectures: (lectures: LectureDto[]) => void;
+  setMyApplicationLectures: (lectures: LectureDto[]) => void;
+  setMySuggestionLectures: (lectures: SuggestionLectureDto[]) => void;
+}
+
+export const useLecturesStore = create<LecturesState>(set => ({
+  myOpeningLectures: [],
+  mySuggestionLectures: [],
+  myApplicationLectures: [],
+
+  setMyOpeningLectures: lectures =>
+    set(() => ({ myOpeningLectures: lectures })),
+  setMyApplicationLectures: lectures =>
+    set(() => ({ myApplicationLectures: lectures })),
+  setMySuggestionLectures: lectures =>
+    set(() => ({ mySuggestionLectures: lectures })),
+}));

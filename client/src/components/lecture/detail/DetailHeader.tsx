@@ -154,7 +154,7 @@ const Thumbnail = styled.div`
 const DetailMenu = styled.div`
   position: sticky;
   top: 64px;
-  z-index: 64;
+  z-index: 10;
   background-color: #fff;
   width: 100%;
   box-shadow:

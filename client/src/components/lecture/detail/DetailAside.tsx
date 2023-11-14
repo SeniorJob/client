@@ -2,6 +2,10 @@ import styled from 'styled-components';
 import { LectureDto } from '../../../types/LectureTypes';
 import { calculateRemain } from '../../../utils/calculateRemain';
 import { formatDate } from '../../../utils/formatData';
+import { useLoginModalStore, useUserStore } from '../../../store/user';
+import { useState } from 'react';
+import { LectureApply } from './LectureApply';
+import { RegButton } from '../../../assets/styles/CommonStyles';
 
 const Aside = styled.aside`
   margin-right: 1.5rem;
@@ -22,10 +26,9 @@ const AsideCard = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 75px;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
-  padding: 0.6rem 1.3rem;
+  padding: 0.7rem 1.3rem;
   font-size: 1rem;
   font-weight: 500;
   color: #222222;
@@ -62,19 +65,9 @@ const Price = styled(AsideCard)`
   }
 `;
 
-const RegButton = styled.button`
-  width: 100%;
-  padding: 1rem 1rem;
-  background-color: var(--primaryColor);
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 0.5rem;
-`;
-
 const Closed = styled(RegButton)`
   cursor: unset;
-  background-color: #ccc;
+  opacity: 0.3;
 `;
 
 const LectureDate = styled(AsideCard)`
@@ -90,6 +83,25 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
   const remainTime = calculateRemain(data?.recruitEnd_date);
   const startDate = data ? formatDate(data?.start_date) : '';
   const endDate = data ? formatDate(data?.end_date) : '';
+  const { isLoggedIn } = useUserStore();
+  const { handleLoginModal } = useLoginModalStore();
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+
+  const handleEnrollClick = () => {
+    // 수강신청 버튼을 클릭했을 때 로그인 여부 확인
+    if (!isLoggedIn) {
+      // 로그인이 되어 있지 않으면 로그인 창을 띄움
+      alert('로그인이 필요한 기능입니다.');
+      handleLoginModal();
+    } else {
+      // 로그인이 되어 있으면 수강신청 로직을 진행
+      setIsApplyModalOpen(true);
+    }
+  };
+
+  const closeApplyModal = () => {
+    setIsApplyModalOpen(false);
+  };
 
   return (
     <div className="basis-1/3">
@@ -130,7 +142,7 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
             <span className="price">{data?.price.toLocaleString()}원</span>
           </div>
           {data?.status === '신청가능상태' ? (
-            <RegButton>신청하기</RegButton>
+            <RegButton onClick={handleEnrollClick}>신청하기</RegButton>
           ) : (
             <Closed>해당 강좌의 모집은 마감되었습니다.</Closed>
           )}
@@ -150,6 +162,13 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
           </div>
         </LectureDate>
       </Aside>
+      {/* 강의 신청 Modal */}
+      {isApplyModalOpen && (
+        <LectureApply
+          lectureId={data?.create_id}
+          closeModal={closeApplyModal}
+        />
+      )}
     </div>
   );
 };

@@ -15,6 +15,7 @@ import EditProfile from './pages/MyPage/EditProfile';
 import Application from './pages/MyPage/Application';
 import EditSuggestion from './pages/MyPage/EditSuggestion';
 import EditLecture from './pages/MyPage/EditLecture';
+import CreateSuggestion from './components/suggestion/CreateSuggestion';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
 
           <Route path="/lectures/detail/*" element={<LectureDetail />} />
           <Route path="/lectures/*" element={<LectureList />} />
+          <Route path="/createsuggestion" element={<CreateSuggestion />} />
         </Routes>
       </div>
     </BrowserRouter>

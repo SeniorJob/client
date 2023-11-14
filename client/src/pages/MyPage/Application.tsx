@@ -1,22 +1,55 @@
 import { Link } from 'react-router-dom';
 import MyPageLayout from '../../components/MyPage/MyPageLayout';
 import styled from 'styled-components';
-import LectureCardList from '../../components/MyPage/LectureCard/LectureCardList';
-import FilterBar from '../../components/MyPage/FilterBar';
 import MyPageTitle from '../../components/MyPage/MyPageTitle';
+import { getApplicationLectures } from '../../api/mypage';
+import { useEffect, useState } from 'react';
+import FilterBar from '../../components/MyPage/FilterBar';
+import CardList from '../../components/MyPage/LectureCard/CardList';
+import { useSearchParams } from 'react-router-dom';
+import { useLecturesStore } from '../../store/user';
+import Pagination from '../../components/MyPage/Pagenation';
 
 const Application = () => {
+  const { myApplicationLectures, setMyApplicationLectures } =
+    useLecturesStore();
+  const [searchParams] = useSearchParams();
+  const [totalPage, setTotalPage] = useState<number | null>();
+  const [page, setPage] = useState<number>(1);
+  const curPage = searchParams.get('page');
+
+  useEffect(() => {
+    const handleGetApplicationLectures = async () => {
+      const params = searchParams.toString();
+      const res = await getApplicationLectures(params);
+
+      if (res.status === 200) {
+        setMyApplicationLectures(res.data.content);
+        setTotalPage(res.data.totalPages);
+      } else {
+        setMyApplicationLectures([]);
+        setTotalPage(null);
+        curPage ? setPage(parseInt(curPage)) : setPage(1);
+      }
+    };
+    handleGetApplicationLectures();
+  }, [curPage, searchParams, setMyApplicationLectures]);
+
   return (
     <MyPageLayout>
       <MyPageTitle title="신청" />
-
       <RecommendDiv>
         새로운 강좌에 참여하고 싶은신가요?
-        <RecommendLink to="">강좌 탐색하기</RecommendLink>
+        <RecommendLink to="/lectures">강좌 탐색하기</RecommendLink>
       </RecommendDiv>
 
-      <FilterBar />
-      <LectureCardList />
+      <FilterBar type="신청" />
+
+      <CardList type="신청" lectures={myApplicationLectures} />
+
+      {totalPage && (
+        <Pagination totalPages={totalPage} page={page} setPage={setPage} />
+      )}
     </MyPageLayout>
   );
 };
@@ -35,9 +68,14 @@ const RecommendDiv = styled.div`
 `;
 
 const RecommendLink = styled(Link)`
-  background-color: #70e270;
+  border: 1px solid gray;
+  color: gray;
   padding: 10px;
   border-radius: 10px;
   font-size: 14px;
   font-weight: 700;
+  &:hover {
+    border-color: green;
+    color: green;
+  }
 `;

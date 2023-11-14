@@ -9,6 +9,10 @@ interface CountInputProps {
 
 const SelectCount = styled.input`
   border: 1px solid black;
+  border-radius: 5%;
+  display: flex;
+  text-align: center;
+  width: 50px;
 `;
 
 const SubTitleLabel = styled.label`
@@ -31,15 +35,15 @@ const CountInput: React.FC<CountInputProps> = ({
   };
 
   return (
-    <div className="flex gap-4 mt-2">
+    <div className="flex gap-2 mt-2">
       <SubTitleLabel>{labelTitle}</SubTitleLabel>
       <SelectCount
+        className="flex items-center"
         type="number"
-        value={count || ''}
+        value={count || 1}
         onChange={e => handleCount(e.target.value)}
         min={1}
         max={7}
-        placeholder="3"
       />
       <div className="text-stone-500">{labelText}</div>
     </div>
