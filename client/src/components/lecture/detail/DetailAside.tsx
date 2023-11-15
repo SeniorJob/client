@@ -6,6 +6,7 @@ import { useLoginModalStore, useUserStore } from '../../../store/user';
 import { useState } from 'react';
 import { LectureApply } from './LectureApply';
 import { RegButton } from '../../../assets/styles/CommonStyles';
+import { DeleteLecture } from './DeleteLecure';
 
 const Aside = styled.aside`
   margin-right: 1.5rem;
@@ -79,13 +80,33 @@ const LectureDate = styled(AsideCard)`
   }
 `;
 
+const AdminMenu = styled(AsideCard)`
+  gap: 1rem;
+  padding: 1rem;
+`;
+
+const ModifyButton = styled(RegButton)`
+  background-color: #abc3eb;
+  &:hover {
+    background-color: #abc3ebd6;
+  }
+`;
+
+const DeleteButton = styled(RegButton)`
+  background-color: #f9827d;
+  &:hover {
+    background-color: #f9817dd6;
+  }
+`;
+
 export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
   const remainTime = calculateRemain(data?.recruitEnd_date);
   const startDate = data ? formatDate(data?.start_date) : '';
   const endDate = data ? formatDate(data?.end_date) : '';
-  const { isLoggedIn } = useUserStore();
+  const { isLoggedIn, userDetail } = useUserStore();
   const { handleLoginModal } = useLoginModalStore();
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const handleEnrollClick = () => {
     // 수강신청 버튼을 클릭했을 때 로그인 여부 확인
@@ -99,9 +120,18 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
     }
   };
 
+  const openDeleteModal = () => {
+    setIsDeleteModalOpen(true);
+  };
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+  };
+
   const closeApplyModal = () => {
     setIsApplyModalOpen(false);
   };
+
+  const isAdmin = data?.uid === userDetail?.uid;
 
   return (
     <div className="basis-1/3">
@@ -137,16 +167,28 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
             )}
           </RemainTime>
         </CurrentStatus>
-        <Price>
-          <div>
-            <span className="price">{data?.price.toLocaleString()}원</span>
-          </div>
-          {data?.status === '신청가능상태' ? (
-            <RegButton onClick={handleEnrollClick}>신청하기</RegButton>
-          ) : (
-            <Closed>해당 강좌의 모집은 마감되었습니다.</Closed>
-          )}
-        </Price>
+
+        {/* 어드민 메뉴 */}
+        {isAdmin ? (
+          <AdminMenu>
+            <h1>관리자 메뉴</h1>
+            <div className="w-full flex gap-3">
+              <ModifyButton>수정하기</ModifyButton>
+              <DeleteButton onClick={openDeleteModal}>삭제하기</DeleteButton>
+            </div>
+          </AdminMenu>
+        ) : (
+          <Price>
+            <div>
+              <span className="price">{data?.price.toLocaleString()}원</span>
+            </div>
+            {data?.status === '신청가능상태' ? (
+              <RegButton onClick={handleEnrollClick}>신청하기</RegButton>
+            ) : (
+              <Closed>해당 강좌의 모집은 마감되었습니다.</Closed>
+            )}
+          </Price>
+        )}
         <LectureDate>
           <div className="flex gap-6 w-full">
             <div>
@@ -162,6 +204,15 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
           </div>
         </LectureDate>
       </Aside>
+      {/* 강의 삭제 Modal */}
+      {isDeleteModalOpen && (
+        <DeleteLecture
+          title={data?.title}
+          lectureId={data?.create_id}
+          closeModal={closeDeleteModal}
+        />
+      )}
+
       {/* 강의 신청 Modal */}
       {isApplyModalOpen && (
         <LectureApply
