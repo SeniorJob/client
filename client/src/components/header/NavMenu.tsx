@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import tw from 'tailwind-styled-components';
 import { StyledMenu } from '../../assets/styles/MenuStyle';
 import { Link } from 'react-router-dom';
+import { useLoginModalStore, useUserStore } from '../../store/user';
 
 const StyledNav = styled.nav`
   ul {
@@ -16,6 +17,16 @@ const Nav = tw(StyledNav)`
 `;
 
 export const NavMenu = () => {
+  const { isLoggedIn } = useUserStore();
+  const { handleLoginModal } = useLoginModalStore();
+
+  const handleOpenCourse = () => {
+    if (!isLoggedIn) {
+      alert('로그인 후 이용해 주세요');
+      handleLoginModal(); // Execute handleLoginModal if the user is not logged in
+    }
+    // You can optionally redirect to the login page here if needed
+  };
   return (
     <Nav>
       <ul>
@@ -25,9 +36,13 @@ export const NavMenu = () => {
           </Link>
         </li>
         <li>
-          <Link to="/openclass">
-            <StyledMenu>강좌개설</StyledMenu>
-          </Link>
+          {isLoggedIn ? (
+            <Link to="/openclass">
+              <StyledMenu>강좌개설</StyledMenu>
+            </Link>
+          ) : (
+            <StyledMenu onClick={handleOpenCourse}>강좌개설</StyledMenu>
+          )}
         </li>
         <li>
           <Link to="/createsuggestion">

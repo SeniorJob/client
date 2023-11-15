@@ -21,7 +21,10 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
   const navigate = useNavigate();
 
-  const setTokensInLocalStorage = (accessToken: any, refreshToken: any) => {
+  const setTokensInLocalStorage = (
+    accessToken: string,
+    refreshToken: string,
+  ) => {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
   };

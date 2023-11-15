@@ -70,6 +70,7 @@ export const UserMenu: React.FC = () => {
     localStorage.removeItem('refreshToken');
     setIsLoggedIn();
     localStorage.removeItem('isLogIn');
+    localStorage.removeItem('UserStore');
     navigate('/');
   };
 
