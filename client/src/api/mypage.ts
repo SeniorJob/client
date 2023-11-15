@@ -25,9 +25,9 @@ export const getProfile = async () => {
 
 // 회원 정보 수정
 export const updateProfile = async (formData: FormData) => {
-  await instance
+  return await instance
     .put('/api/users/update', formData)
-    .then(() => (location.href = '/mypage'))
+    .then(res => res)
     .catch(err => err);
 };
 
