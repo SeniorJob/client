@@ -2,7 +2,6 @@ import { deleteLecture } from '../../../api/mypage';
 import { Modal } from '../../common/Modal';
 import styled from 'styled-components';
 import { RegButton } from '../../../assets/styles/CommonStyles';
-import { useNavigate } from 'react-router-dom';
 
 const DeleteContainer = styled.div`
   display: flex;
@@ -44,16 +43,15 @@ export const DeleteLecture: React.FC<DeleteLecture_T> = ({
   type,
   closeModal,
 }) => {
-  const navigate = useNavigate();
   const handleDeleteLecture = async () => {
     try {
       await deleteLecture({ type: type, id: lectureId });
 
-      closeModal();
       alert(
         `강좌가 성공적으로 ${type === '개설' ? '삭제' : '취소'}되었습니다.`,
       );
-      navigate('/');
+      closeModal();
+      location.reload();
     } catch (error) {
       console.error('API 요청에 실패했습니다:', error);
     }
