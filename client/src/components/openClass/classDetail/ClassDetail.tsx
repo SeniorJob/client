@@ -1,126 +1,133 @@
-import tw from 'tailwind-styled-components';
 import { OpenButton } from '../OpenButton';
-import { FC, useState } from 'react';
 import styled from 'styled-components';
+import WeekClass from './WeekClass';
+import useCreateClass from '../../../store/createClass';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
-// 주차 form 컴포넌트 관련 코드
-const Container = tw.div`
-  m-4
-  p-4
-
-  bg-signature
+const Container = styled.div`
+  margin: 16px 16px 0 16px;
 `;
 
-const SubTitle = tw.div`
-  text-2xl
-  font-bold
-  pb-4
-  border-b-4
-  border-dotted
+const SubTitle = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-bottom: 16px;
+  border-bottom: 4px dotted;
 `;
 
-const AddWeekButton = tw.div`
-  text-4xl
-  bg-white
-  p-2
+const AddWeekButton = styled.div`
+  font-size: 2rem;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+
+  cursor: pointer;
+
+  &:hover {
+    color: red;
+  }
 `;
 
-interface ClassDetailProps {
-  nextTab: () => void;
-}
-
-// 주차별 학습내용 컴포넌트 관련 코드
-const WeekClassTitle = tw.div`
-  flex
-  bg-stone-100
-  mt-4
-  p-2
-  text-xl
-  font-bold
-
-  justify-between
-`;
-
-const WeekClassContent = styled.div`
-  padding: 10px;
-  background-color: white;
-  font-size: 1.2rem;
-`;
-
-const ActionButton = tw.div`
-  text-lg
-  font-normal
-`;
-
-const AddContentButton = tw.div`
-  flex
-  p-2
-  text-lg
-  justify-center
-  m-auto
-  bg-white
-`;
-
-interface WeekClassProps {
-  // 빌드 오류로 인해 수정하였습니다
-  // 수정 전 코드
-  // week: number;
-  week: number[];
-  classTitle: string | null;
-}
-
-const WeekClass: FC<WeekClassProps> = ({ week, classTitle }) => {
-  const [contents, setContents] = useState<string[]>([]);
-
-  const addContent = () => {
-    const newContent = prompt('새로운 컨텐츠를 입력하세요');
-    if (newContent !== null) {
-      setContents([...contents, newContent]);
-    }
-  };
-
-  return (
-    <div>
-      <WeekClassTitle>
-        <div>
-          {week}주차 {classTitle}
-        </div>
-        <div className="flex gap-2">
-          <ActionButton>수정</ActionButton>
-          <ActionButton>삭제</ActionButton>
-        </div>
-      </WeekClassTitle>
-      {contents.map((content, index) => (
-        <WeekClassContent key={index}>{content}</WeekClassContent>
-      ))}
-      <AddContentButton onClick={addContent}>
-        상세내용 추가하기
-      </AddContentButton>
-    </div>
-  );
+type WeekDtoType = {
+  week_id: number;
+  create_id: number;
+  lectureTitle: string;
+  week_number: number;
+  week_title: string;
+  createdDate: string;
 };
 
-const ClassDetail: FC<ClassDetailProps> = ({ nextTab }) => {
-  // 빌드 오류로 인해 수정하였습니다
-  // 수정 전 코드
-  // const [week, setWeek] = useState(1);
-  const [week, setWeek] = useState([1]);
-  const [classTitle, setClassTitle] = useState('');
+type WeekPlanDtoType = {
+  plan_id: number;
+  week_id: number;
+  week_title: string;
+  create_id: number;
+  detail_number: number;
+  detail: string;
+  createdDate: string;
+};
 
-  const addWeek = () => {
-    setWeek([...week, week.length + 1]);
+function ClassDetail({ nextTab }: { nextTab: () => void }) {
+  const { createId } = useCreateClass();
+  console.log(createId);
+  const [weekDto, setWeekDto] = useState<WeekDtoType[]>([]);
+  const [weekPlanDto, setWeekPlanDto] = useState<WeekPlanDtoType[]>([]);
+
+  const apiUrl =
+    import.meta.env.VITE_API_URL + `/api/lecturesStepTwo/${createId}`;
+  const accessToken = localStorage.getItem('accessToken');
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+  };
+
+  // 강좌개설 3단계 API 불러오기
+  useEffect(() => {
+    axios
+      .get(apiUrl + '/review')
+      .then(res => {
+        setWeekDto(res.data.weekDto);
+        setWeekPlanDto(res.data.weekPlanDto);
+        console.log(weekDto);
+        console.log(weekPlanDto);
+      })
+      .catch(err => console.log(err));
+  }, []);
+
+  // 주차 추가하기
+  const handleAddWeek = async () => {
+    const weekTitle = prompt('주차 제목을 입력하세요:');
+    if (weekTitle === null || weekTitle.trim() === '') {
+      alert('주차 제목을 입력해주세요!');
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `${apiUrl}/weeks?title=${weekTitle}`,
+        {},
+        {
+          headers,
+        },
+      );
+      setWeekDto([...weekDto, response.data]);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
     <>
       <Container>
         <SubTitle>주차 정보 및 주차별 학습 내용 입력</SubTitle>
-        <WeekClass week={week} classTitle={classTitle} />
-        <AddWeekButton>주차 추가하기</AddWeekButton>
-        <OpenButton onClick={() => nextTab()}>다음으로</OpenButton>
+        {weekDto.map((week, index) => {
+          const weekPlan = weekPlanDto.find(
+            plan => plan.week_id === week.week_id,
+          );
+          return (
+            <WeekClass
+              apiUrl={apiUrl}
+              headers={headers}
+              key={index}
+              weekNumber={week.week_number}
+              weekTitle={week.week_title}
+              weekId={week.week_id}
+              weekPlan={weekPlan}
+              onDelete={() => {
+                setWeekDto(prevWeekDto =>
+                  prevWeekDto.filter(
+                    prevWeek => prevWeek.week_id !== week.week_id,
+                  ),
+                );
+              }}
+            />
+          );
+        })}
       </Container>
+      <AddWeekButton onClick={handleAddWeek}>주차 추가하기</AddWeekButton>
+      <OpenButton onClick={() => nextTab()}>다음으로</OpenButton>
     </>
   );
-};
+}
 
 export default ClassDetail;

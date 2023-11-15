@@ -20,11 +20,11 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ setSelectedImage }) => {
       <input type="file" accept="image/*" onChange={handleImageUpload} />
 
       {image && (
-        <div>
+        <div className="mt-4">
           <img
+            className="object-cover h-48 w-96"
             src={URL.createObjectURL(image)}
             alt="preview"
-            style={{ width: '400px' }}
           />
         </div>
       )}
