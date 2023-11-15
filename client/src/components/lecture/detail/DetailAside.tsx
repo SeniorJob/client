@@ -3,10 +3,11 @@ import { LectureDto } from '../../../types/LectureTypes';
 import { calculateRemain } from '../../../utils/calculateRemain';
 import { formatDate } from '../../../utils/formatData';
 import { useLoginModalStore, useUserStore } from '../../../store/user';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LectureApply } from './LectureApply';
 import { RegButton } from '../../../assets/styles/CommonStyles';
 import { DeleteLecture } from './DeleteLecure';
+import { getAppliedLectureId } from '../../../api/lecture';
 
 const Aside = styled.aside`
   margin-right: 1.5rem;
@@ -107,6 +108,31 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
   const { handleLoginModal } = useLoginModalStore();
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [appliedLectureIds, setAppliedLectureIds] = useState<Array<number>>([]);
+  // 유저가 신청한 강의인지 확인
+  const isApplied = appliedLectureIds.includes(data?.create_id || 0);
+
+  type AppliedLectureIds_T = {
+    create_id: number;
+    le_id: number;
+    uid: number;
+    userName: string;
+  };
+  useEffect(() => {
+    // 사용자가 신청한 강의 ID 불러오기
+    const fetchAppliedLectureIds = async () => {
+      try {
+        const response = await getAppliedLectureId();
+        setAppliedLectureIds(
+          response.map((item: AppliedLectureIds_T) => item.create_id),
+        );
+      } catch (error) {
+        console.error('강의 아이디 불러오기 오류:', error);
+      }
+    };
+
+    fetchAppliedLectureIds();
+  }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때만 실행
 
   const handleEnrollClick = () => {
     // 수강신청 버튼을 클릭했을 때 로그인 여부 확인
@@ -183,7 +209,11 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
               <span className="price">{data?.price.toLocaleString()}원</span>
             </div>
             {data?.status === '신청가능상태' ? (
-              <RegButton onClick={handleEnrollClick}>신청하기</RegButton>
+              isApplied ? (
+                <RegButton onClick={handleEnrollClick}>신청 취소하기</RegButton>
+              ) : (
+                <RegButton onClick={handleEnrollClick}>신청하기</RegButton>
+              )
             ) : (
               <Closed>해당 강좌의 모집은 마감되었습니다.</Closed>
             )}
