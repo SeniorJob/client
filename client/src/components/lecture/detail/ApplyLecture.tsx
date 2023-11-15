@@ -40,7 +40,7 @@ type LectureApplyProps = {
   closeModal: () => void;
 };
 
-export const LectureApply: React.FC<LectureApplyProps> = ({
+export const ApplyLecture: React.FC<LectureApplyProps> = ({
   lectureId,
   closeModal,
 }) => {
