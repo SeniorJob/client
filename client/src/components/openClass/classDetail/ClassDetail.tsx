@@ -1,9 +1,9 @@
 import { OpenButton } from '../OpenButton';
 import styled from 'styled-components';
-import WeekClass from './WeekClass';
 import useCreateClass from '../../../store/createClass';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import WeekClass from './WeekClass';
 
 const Container = styled.div`
   margin: 16px 16px 0 16px;
@@ -18,9 +18,11 @@ const SubTitle = styled.div`
 
 const AddWeekButton = styled.div`
   font-size: 2rem;
-  padding: 8px;
+  padding: 16px;
   display: flex;
   justify-content: center;
+  color: gray;
+  width: 30%;
 
   cursor: pointer;
 
