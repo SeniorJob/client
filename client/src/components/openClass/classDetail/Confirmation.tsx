@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { WeekPlanDtoType } from './ClassDetail';
 import { OpenButton } from '../OpenButton';
 import { useNavigate } from 'react-router-dom';
+import useCreateClass from '../../../store/createClass';
 
 const Container = styled.div`
   padding: 20px;
@@ -99,7 +100,9 @@ type WeekPlanDto = {
   createdDate: string;
 };
 
-const Confirmation = ({ createId }: { createId: number }) => {
+const Confirmation = () => {
+  const { createId } = useCreateClass();
+
   const apiUrl =
     import.meta.env.VITE_API_URL + `/api/lecturesStepTwo/${createId}`;
   const accessToken = localStorage.getItem('accessToken');
@@ -130,7 +133,7 @@ const Confirmation = ({ createId }: { createId: number }) => {
         headers: headers,
       });
       console.log(response.data);
-      alert(response.data.message);
+      alert(`강좌번호 : ${createId} / 정상적으로 개설되었습니다.`);
       navigate(`/lectures/detail/${createId}`);
     } catch (err) {
       console.error(err);
@@ -163,8 +166,11 @@ const Confirmation = ({ createId }: { createId: number }) => {
     <>
       <Container>
         <div className="flex gap-10">
-          <div className="object-cover border-2 h-60 w-96">
-            <img src={lectureInfo ? lectureInfo.image_url : undefined} />
+          <div>
+            <img
+              className="object-cover border-2 h-60 w-96"
+              src={lectureInfo ? lectureInfo.image_url : undefined}
+            />
           </div>
 
           <div>
