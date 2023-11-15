@@ -54,7 +54,7 @@ export const getSuggestionLectures = async (params: string) => {
 };
 
 // 강좌 상세보기
-export const getDetailOfApplyLectures = (id: number) => {
+export const getDetailOfApplyLectures = (id?: number) => {
   return instance
     .get(`/api/mypageApplyLecture/myAppliedLectureDetail/${id}`)
     .then(res => res)
@@ -114,6 +114,7 @@ type deleteLecture = {
   type: '개설' | '신청' | '제안';
   id?: number;
 };
+
 export const deleteLecture = async ({ type, id }: deleteLecture) => {
   type === '개설' &&
     (await instance
@@ -134,6 +135,25 @@ export const deleteLecture = async ({ type, id }: deleteLecture) => {
       .then(res => res)
       .catch(err => err));
 };
+// response 받으려고 작성해놨던 함수
+// export const deleteLecture = async ({ type, id }: deleteLecture) => {
+//   try {
+//     let response;
+
+//     if (type === '개설') {
+//       response = await instance.delete(`/api/lectures/delete/${id}`);
+//     } else if (type === '신청') {
+//       response = await instance.delete(`/api/lectureapply/cancel/${id}`);
+//     } else if (type === '제안') {
+//       response = await instance.delete(`/api/lectureproposal/delete/${id}`);
+//     }
+
+//     return response;
+//   } catch (error) {
+//     console.error('API 요청에 실패했습니다:', error);
+//     throw error;
+//   }
+// };
 
 type updateFirstStep_T = {
   create_id: number;
