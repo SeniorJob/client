@@ -28,6 +28,7 @@ export const UserMenu: React.FC = () => {
   // const [isModal, setIsModal] = useState(false);
   const { loginModal, handleLoginModal } = useLoginModalStore();
   const { loginUserModal, handleLoginUserModal } = useLoginUserModalStore();
+  const { userDetail } = useUserStore();
   // const [isUserModal, setIsUserModal] = useState(false);
   const [userInfo, setUserInfo] = useState('');
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
@@ -105,11 +106,11 @@ export const UserMenu: React.FC = () => {
         <>
           <img
             className="w-8 h-8 rounded-[20px] hover:cursor-pointer mt-1"
-            src={userInfo.imgKey ? userInfo.imgKey : defaultImage}
+            src={userDetail.imgKey ? userDetail.imgKey : defaultImage}
             onClick={handleUserModal}
           />
           <StyledLoginUser>
-            <strong className="">{userInfo.name}님</strong> 어서오세요
+            <strong className="">{userDetail.name}님</strong> 어서오세요
           </StyledLoginUser>
         </>
       )}
