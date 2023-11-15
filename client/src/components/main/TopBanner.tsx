@@ -5,14 +5,19 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperClass } from 'swiper/types';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Divider } from '../../assets/styles/CommonStyles';
+import { getBanner } from '../../api/lecture';
 
 const CustomSlide = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 320px;
+  height: 330px;
   background-color: #eee;
+  overflow: hidden;
+  img {
+    width: 100%;
+    object-fit: cover;
+  }
 `;
 
 const PageController = styled.div`
@@ -98,6 +103,26 @@ const CustomBullets = styled.div<{ $curIndex: number }>`
 export const TopBanner = () => {
   const [swiper, setSwiper] = useState<SwiperClass>();
   const [curIndex, setCurIndex] = useState<number>(1);
+  interface Banner_T {
+    bannerId: number;
+    bannerUrl: string;
+    bannerTitle?: string;
+  }
+
+  const [banner, setBanner] = useState<Banner_T[]>([]);
+
+  useEffect(() => {
+    const fetchBanner = async () => {
+      try {
+        const res = await getBanner();
+        setBanner(res || []);
+        swiper?.update();
+      } catch (err) {
+        console.log(err, '배너 불러오기 오류');
+      }
+    };
+    fetchBanner();
+  }, [swiper]);
 
   useEffect(() => {
     swiper?.on('slideChange', () => {
@@ -119,13 +144,10 @@ export const TopBanner = () => {
           el: '.swiper-pagination',
           clickable: true,
           renderBullet: function (index, className) {
-            return (
-              '<div class="' +
-              className +
-              '"><span>' +
-              '여기에 데이터' +
-              '</span></div>'
-            );
+            const data = banner[index];
+            return `<div class="${className}"><span>${
+              data?.bannerTitle || '배너 타이틀'
+            }</span></div>`;
           },
         }}
         loop={true}
@@ -133,34 +155,13 @@ export const TopBanner = () => {
         modules={[Autoplay, Pagination]}
         className="mySwiper"
       >
-        {/* 나중에 여기에 강의 데이터 mapping 하면 됨 */}
-        <SwiperSlide>
-          <CustomSlide>Slide 1</CustomSlide>
-        </SwiperSlide>
-        <SwiperSlide>
-          <CustomSlide>Slide 2</CustomSlide>
-        </SwiperSlide>
-        <SwiperSlide>
-          <CustomSlide>Slide 3</CustomSlide>
-        </SwiperSlide>
-        <SwiperSlide>
-          <CustomSlide>Slide 4</CustomSlide>
-        </SwiperSlide>
-        <SwiperSlide>
-          <CustomSlide>Slide 5</CustomSlide>
-        </SwiperSlide>
-        <SwiperSlide>
-          <CustomSlide>Slide 6</CustomSlide>
-        </SwiperSlide>
-        <SwiperSlide>
-          <CustomSlide>Slide 7</CustomSlide>
-        </SwiperSlide>
-        <SwiperSlide>
-          <CustomSlide>Slide 8</CustomSlide>
-        </SwiperSlide>
-        <SwiperSlide>
-          <CustomSlide>Slide 9</CustomSlide>
-        </SwiperSlide>
+        {banner.map(data => (
+          <SwiperSlide key={data.bannerId}>
+            <CustomSlide>
+              <img src={data.bannerUrl} alt="banner" />
+            </CustomSlide>
+          </SwiperSlide>
+        ))}
         <PageController>
           <div className="container flex items-center px-8">
             <ControllerBox>
