@@ -54,7 +54,8 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
   const [weekDto, setWeekDto] = useState<WeekDtoType[]>([]);
   const [weekPlanDto, setWeekPlanDto] = useState<WeekPlanDtoType[]>([]);
 
-  const apiUrl = import.meta.env.VITE_API_URL + `/api/lecturesStepTwo/${105}`; // TODO: createId 수정해야함
+  const apiUrl =
+    import.meta.env.VITE_API_URL + `/api/lecturesStepTwo/${createId}`;
   const accessToken = localStorage.getItem('accessToken');
   const headers = {
     Authorization: `Bearer ${accessToken}`,

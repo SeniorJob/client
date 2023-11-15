@@ -129,7 +129,7 @@ const WeekClass: FC<WeekClassProps> = ({
       const response: AxiosResponse = await axios.post(
         `${
           import.meta.env.VITE_API_URL
-        }/api/lecturesStepTwo/lectures/${105}/weeks/${weekId}/plans?detail=${newContent}`, // TODO: createId 수정해야함
+        }/api/lecturesStepTwo/lectures/${createId}/weeks/${weekId}/plans?detail=${newContent}`,
         {},
         {
           headers,
@@ -151,7 +151,7 @@ const WeekClass: FC<WeekClassProps> = ({
       await axios.put(
         `${
           import.meta.env.VITE_API_URL
-        }/api/lecturesStepTwo/${105}/weeks/${weekId}/plans/${planId}/plan-update?detail=${newContent}`, // TODO: createId 수정해야함
+        }/api/lecturesStepTwo/${createId}/weeks/${weekId}/plans/${planId}/plan-update?detail=${newContent}`,
         {},
         {
           headers,
