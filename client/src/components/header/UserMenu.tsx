@@ -105,12 +105,15 @@ export const UserMenu: React.FC = () => {
       ) : (
         <>
           <img
-            className="w-8 h-8 rounded-[20px] hover:cursor-pointer mt-1"
+            className="w-8 h-8 rounded-[20px] hover:cursor-pointer mt-1 relative"
             src={userInfo.imgKey ? userInfo.imgKey : defaultImage}
             onClick={handleUserModal}
           />
           <StyledLoginUser>
-            <strong className="">{userInfo.name}님</strong> 어서오세요
+            <strong className="hover:cursor-pointer" onClick={handleUserModal}>
+              {userInfo.name}님
+            </strong>{' '}
+            어서오세요
           </StyledLoginUser>
         </>
       )}
@@ -194,13 +197,14 @@ const UserModalView = styled.div`
   z-index: 3;
   width: 100px;
   height: 80px;
-  position: fixed;
+  position: absolute;
   display: flex;
-  flex-direction: column; // 컨텐츠를 세로 방향으로 정렬
+  flex-direction: column;
   align-items: center;
-  justify-content: center; // 수평, 수직 중앙 정렬
+  justify-content: center;
   border-radius: 20px;
   background-color: #ffffff;
-  top: 6%; /* 적절한 값으로 조정하세요. */
-  right: 27.4%; /* 적절한 값으로 조정하세요. */
+  top: 60px; /* 변경된 고정된 위치 */
+  right: 530px; /* 변경된 고정된 위치 */
+  transform: translate(0%, 0%);
 `;
