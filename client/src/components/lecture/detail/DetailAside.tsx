@@ -4,10 +4,13 @@ import { calculateRemain } from '../../../utils/calculateRemain';
 import { formatDate } from '../../../utils/formatData';
 import { useLoginModalStore, useUserStore } from '../../../store/user';
 import { useEffect, useState } from 'react';
-import { LectureApply } from './LectureApply';
+import { ApplyLecture } from './ApplyLecture';
 import { RegButton } from '../../../assets/styles/CommonStyles';
 import { DeleteLecture } from './DeleteLecure';
 import { getAppliedLectureId } from '../../../api/lecture';
+import { createPortal } from 'react-dom';
+import EditOpeningModal from '../../MyPage/Edit/EditOpeningModal';
+import { getDetailOfApplyLectures } from '../../../api/mypage';
 
 const Aside = styled.aside`
   margin-right: 1.5rem;
@@ -106,9 +109,10 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
   const endDate = data ? formatDate(data?.end_date) : '';
   const { isLoggedIn, userDetail } = useUserStore();
   const { handleLoginModal } = useLoginModalStore();
-  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState('');
   const [appliedLectureIds, setAppliedLectureIds] = useState<Array<number>>([]);
+  const [lectureId, setLectureId] = useState<number>();
   // 유저가 신청한 강의인지 확인
   const isApplied = appliedLectureIds.includes(data?.create_id || 0);
 
@@ -118,43 +122,40 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
     uid: number;
     userName: string;
   };
+  // 사용자가 신청한 강의 ID 불러오기
+  const fetchAppliedLectureIds = async () => {
+    try {
+      const response = await getAppliedLectureId();
+      setAppliedLectureIds(
+        response.map((item: AppliedLectureIds_T) => item.create_id),
+      );
+    } catch (error) {
+      console.error('강의 아이디 불러오기 오류:', error);
+    }
+  };
   useEffect(() => {
-    // 사용자가 신청한 강의 ID 불러오기
-    const fetchAppliedLectureIds = async () => {
-      try {
-        const response = await getAppliedLectureId();
-        setAppliedLectureIds(
-          response.map((item: AppliedLectureIds_T) => item.create_id),
-        );
-      } catch (error) {
-        console.error('강의 아이디 불러오기 오류:', error);
-      }
+    fetchAppliedLectureIds();
+  }, []);
+
+  useEffect(() => {
+    const getLectureId = async () => {
+      const res = await getDetailOfApplyLectures(data?.create_id);
+      res.status === 200 && setLectureId(res.data.lectureApplyDto.le_id);
     };
 
-    fetchAppliedLectureIds();
-  }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때만 실행
+    getLectureId();
+  }, [data?.create_id]);
 
-  const handleEnrollClick = () => {
-    // 수강신청 버튼을 클릭했을 때 로그인 여부 확인
+  const handleModal = (type: string) => {
     if (!isLoggedIn) {
       // 로그인이 되어 있지 않으면 로그인 창을 띄움
       alert('로그인이 필요한 기능입니다.');
       handleLoginModal();
     } else {
-      // 로그인이 되어 있으면 수강신청 로직을 진행
-      setIsApplyModalOpen(true);
+      setShowModal(true);
+      setModalType(type);
+      fetchAppliedLectureIds();
     }
-  };
-
-  const openDeleteModal = () => {
-    setIsDeleteModalOpen(true);
-  };
-  const closeDeleteModal = () => {
-    setIsDeleteModalOpen(false);
-  };
-
-  const closeApplyModal = () => {
-    setIsApplyModalOpen(false);
   };
 
   const isAdmin = data?.uid === userDetail?.uid;
@@ -199,8 +200,12 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
           <AdminMenu>
             <h1>관리자 메뉴</h1>
             <div className="w-full flex gap-3">
-              <ModifyButton>수정하기</ModifyButton>
-              <DeleteButton onClick={openDeleteModal}>삭제하기</DeleteButton>
+              <ModifyButton onClick={() => handleModal('수정')}>
+                수정하기
+              </ModifyButton>
+              <DeleteButton onClick={() => handleModal('삭제')}>
+                삭제하기
+              </DeleteButton>
             </div>
           </AdminMenu>
         ) : (
@@ -210,9 +215,13 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
             </div>
             {data?.status === '신청가능상태' ? (
               isApplied ? (
-                <RegButton onClick={handleEnrollClick}>신청 취소하기</RegButton>
+                <RegButton onClick={() => handleModal('취소')}>
+                  신청 취소하기
+                </RegButton>
               ) : (
-                <RegButton onClick={handleEnrollClick}>신청하기</RegButton>
+                <RegButton onClick={() => handleModal('신청')}>
+                  신청하기
+                </RegButton>
               )
             ) : (
               <Closed>해당 강좌의 모집은 마감되었습니다.</Closed>
@@ -235,21 +244,41 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
         </LectureDate>
       </Aside>
       {/* 강의 삭제 Modal */}
-      {isDeleteModalOpen && (
-        <DeleteLecture
-          title={data?.title}
-          lectureId={data?.create_id}
-          closeModal={closeDeleteModal}
-        />
-      )}
-
-      {/* 강의 신청 Modal */}
-      {isApplyModalOpen && (
-        <LectureApply
-          lectureId={data?.create_id}
-          closeModal={closeApplyModal}
-        />
-      )}
+      {showModal &&
+        createPortal(
+          <>
+            {modalType === '삭제' && (
+              <DeleteLecture
+                type="개설"
+                title={data?.title}
+                lectureId={data?.create_id}
+                closeModal={() => setShowModal(false)}
+              />
+            )}
+            {modalType === '취소' && (
+              <DeleteLecture
+                type="신청"
+                title={data?.title}
+                lectureId={lectureId}
+                closeModal={() => setShowModal(false)}
+              />
+            )}
+            {modalType === '신청' && (
+              <ApplyLecture
+                lectureId={data?.create_id}
+                closeModal={() => setShowModal(false)}
+              />
+            )}
+            {modalType === '수정' && (
+              <EditOpeningModal
+                title={data?.title}
+                create_id={data?.create_id}
+                setShowModal={setShowModal}
+              />
+            )}
+          </>,
+          document.body,
+        )}
     </div>
   );
 };
