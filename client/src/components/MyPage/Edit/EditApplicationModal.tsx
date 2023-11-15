@@ -42,7 +42,6 @@ const EditApplicationModal = ({
     const handleGetDetailOfApplyLectures = async () => {
       if (createId) {
         const res = await getDetailOfApplyLectures(createId);
-        console.log(res);
         res.status === 200 && setReason(res.data.lectureApplyDto.applyReason);
       }
     };

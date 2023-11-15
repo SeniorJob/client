@@ -146,9 +146,22 @@ export const updateFirstStep = async ({
   return instance
     .put(`/api/lectures/${create_id}`, formData)
     .then(res => res)
-    .catch(err => err);
+    .catch(err => {
+      console.error(err);
+      return err.response.data.errorMessage;
+    });
 };
 
+type AddWeekTitle_T = {
+  lectureId: number;
+  title: string;
+};
+export const addWeekTitle = async ({ lectureId, title }: AddWeekTitle_T) => {
+  return await instance
+    .post(`/api/lecturesStepTwo/${lectureId}/weeks?title=${title}`)
+    .then(res => res)
+    .catch(err => err);
+};
 type UpdateWeekTitle_T = {
   title: string;
   weekId: number;
@@ -166,6 +179,19 @@ export const updateWeekTitle = async ({
     .then(res => res)
     .catch(err => err);
 };
+type DeleteWeekTitle_T = {
+  createId: number;
+  weekId: number;
+};
+export const deleteWeekTitle = async ({
+  createId,
+  weekId,
+}: DeleteWeekTitle_T) => {
+  return instance
+    .delete(`/api/lecturesStepTwo/${createId}/weeks/${weekId}/week-delete`)
+    .then(res => res)
+    .catch(err => err);
+};
 
 type UpdateWeekPlan_T = {
   le_id?: number;
@@ -179,10 +205,31 @@ export const updateWeekPlan = async ({
   planId,
   detail,
 }: UpdateWeekPlan_T) => {
-  console.log(le_id, weekId, planId, detail);
+  const content = detail.replace(/(\n|\r\n)/g, '<br>');
+
   return await instance
     .put(
-      `/api/lecturesStepTwo/${le_id}/weeks/${weekId}/plans/${planId}/plan-update?detail=${detail}`,
+      `/api/lecturesStepTwo/${le_id}/weeks/${weekId}/plans/${planId}/plan-update?detail=${content}`,
+    )
+    .then(res => res)
+    .catch(err => err);
+};
+
+type AddWeekList_T = {
+  lectureId: number;
+  weekId: number;
+  content: string;
+};
+export const addWeekList = async ({
+  lectureId,
+  weekId,
+  content,
+}: AddWeekList_T) => {
+  const detail = content.replace(/(\n|\r\n)/g, '<br>');
+
+  return await instance
+    .post(
+      `/api/lecturesStepTwo/lectures/${lectureId}/weeks/${weekId}/plans?detail=${detail}`,
     )
     .then(res => res)
     .catch(err => err);
@@ -191,13 +238,17 @@ export const updateWeekPlan = async ({
 type DeleteWeekList_T = {
   lectureId: number;
   weekId: number;
+  planId: number;
 };
 export const deleteWeekList = async ({
   lectureId,
   weekId,
+  planId,
 }: DeleteWeekList_T) => {
   return instance
-    .delete(`/api/lecturesStepTwo/${lectureId}/weeks/${weekId}/week-delete`)
+    .delete(
+      `/api/lecturesStepTwo/${lectureId}/weeks/${weekId}/plans/${planId}/plan-delete`,
+    )
     .then(res => res)
     .catch(err => err);
 };

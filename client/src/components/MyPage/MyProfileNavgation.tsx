@@ -12,9 +12,9 @@ const MyProfileNavgation = () => {
   } = useLecturesStore();
 
   const handleResetLectures = () => {
-    setMyOpeningLectures([]);
-    setMySuggestionLectures([]);
-    setMyApplicationLectures([]);
+    // setMyOpeningLectures([]);
+    // setMySuggestionLectures([]);
+    // setMyApplicationLectures([]);
   };
 
   return (

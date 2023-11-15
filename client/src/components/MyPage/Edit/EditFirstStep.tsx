@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, useEffect, useState } from 'react';
+import { ChangeEvent, Dispatch, useState } from 'react';
 import styled from 'styled-components';
 import {
   BANK_NAMES,
@@ -7,20 +7,15 @@ import {
 import { FirstStep_T } from '../../../types/LectureTypes';
 import SignPostCode from '../../signup/SignPostCode';
 import { updateFirstStep } from '../../../api/mypage';
+import { useNavigate } from 'react-router-dom';
 
 type EditFirstStep_T = {
   id?: number;
-  imgUrl: string;
   firstInfo: FirstStep_T;
   setFirstInfo: Dispatch<FirstStep_T>;
 };
 
-const EditFirstStep = ({
-  id,
-  imgUrl,
-  firstInfo,
-  setFirstInfo,
-}: EditFirstStep_T) => {
+const EditFirstStep = ({ id, firstInfo, setFirstInfo }: EditFirstStep_T) => {
   const {
     title,
     content,
@@ -39,25 +34,9 @@ const EditFirstStep = ({
   } = firstInfo;
 
   const formData = new FormData();
-  const [image, setImage] = useState<string>(imgUrl);
-  const [selectedImage, setSelectedImage] = useState<string | Blob>(image);
-
-  useEffect(() => {
-    const handleConvert = async () => {
-      const res = await convertURLtoFile(imgUrl);
-      setSelectedImage(res);
-    };
-    handleConvert();
-  }, []);
-
-  const convertURLtoFile = async (url: string) => {
-    const response = await fetch(url);
-    const data = await response.blob();
-    const ext = url.split('.').pop(); // url 구조에 맞게 수정할 것
-    const filename = url.split('/').pop(); // url 구조에 맞게 수정할 것
-    const metadata = { type: `image/${ext}` };
-    return new File([data], filename!, metadata);
-  };
+  const [image, setImage] = useState<string>();
+  const [selectedImage, setSelectedImage] = useState<string | Blob>('');
+  const navigate = useNavigate();
 
   const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -70,11 +49,13 @@ const EditFirstStep = ({
 
   const handleUpdateFirstStep = async () => {
     formData.append('file', selectedImage);
-    console.log(formData.get('file'));
     formData.append('lectureDto', JSON.stringify(firstInfo));
     if (id) {
       const res = await updateFirstStep({ create_id: id, formData });
-      console.log(res);
+      if (res.status === 200) {
+        alert('수정완료');
+        navigate(-1);
+      } else alert(res);
     }
   };
 
@@ -82,8 +63,8 @@ const EditFirstStep = ({
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <Title>강의 기본 정보 입력</Title>
       <Label>
-        대표 이미지
-        <Image src={image} alt="이미지를 추가해주세요" />
+        대표 이미지를 재설정해주세요
+        {selectedImage && <Image src={image} alt="이미지를 추가해주세요" />}
         <InputImage type="file" onChange={handleChangeImage} />
       </Label>
       <Label width="300px">
@@ -325,7 +306,7 @@ const InputImage = styled.input.attrs({
   accept: 'image/jpg, image/png, image/jpeg',
   name: '프로필 이미지 인풋',
 })`
-  display: none;
+  /* display: none; */
 `;
 
 const Button = styled.button.attrs({ type: 'button' })`

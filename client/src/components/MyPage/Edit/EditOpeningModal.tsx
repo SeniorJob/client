@@ -23,7 +23,6 @@ const EditOpeningModal = ({
   const handleCloseModal = () => {
     setShowModal(false);
   };
-  console.log(create_id);
 
   return (
     <>
@@ -37,9 +36,22 @@ const EditOpeningModal = ({
               height: '100%',
               alignItems: 'center',
             }}
-            to={`/mypage/lecture/edit/${create_id}`}
+            to={`/mypage/lecture/edit/1/${create_id}`}
           >
-            강좌수정하기
+            1단계 강좌수정하기
+          </Link>
+        </Button>
+        <Button>
+          <Link
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              height: '100%',
+              alignItems: 'center',
+            }}
+            to={`/mypage/lecture/edit/2/${create_id}`}
+          >
+            2단계 강좌수정하기
           </Link>
         </Button>
         <Button onClick={handleDeleteLecture}>강좌삭제하기</Button>

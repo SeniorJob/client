@@ -159,3 +159,38 @@ export type FirstStep_T = {
   createdDate: string;
   category: string;
 };
+
+export type SecondStepTitleRequired_T = {
+  create_id: number;
+  week_id: number;
+  week_title: string;
+};
+
+export type SecondStepLineRequired_T = {
+  create_id: number;
+  week_id: number;
+  detail_number: string;
+  detail: string;
+  plan_id: number;
+};
+
+export type SecondStepTitle_T = {
+  create_id: number;
+  week_id: number;
+  week_title: string;
+  week_number: number;
+
+  lectureTitle?: string;
+  createdDate?: string;
+};
+export type SecondStepList_T = {
+  create_id: number;
+  week_id: number;
+  detail_number: string;
+  detail: string;
+  plan_id: number;
+
+  week_number?: number;
+  week_title?: string;
+  createdDate?: string;
+};
