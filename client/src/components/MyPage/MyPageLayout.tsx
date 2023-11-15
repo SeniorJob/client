@@ -19,7 +19,8 @@ export default MyPageLayout;
 
 const Layout = styled.div`
   display: flex;
-  margin: 0 360px;
+  max-width: 1200px;
+  margin: 0 auto;
 `;
 
 const Container = styled.main`

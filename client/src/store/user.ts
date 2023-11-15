@@ -64,17 +64,6 @@ export const useLoginModalStore = create<LoginModalState>(set => ({
     set(prevState => ({ loginModal: !prevState.loginModal })),
 }));
 
-interface LoginUserModalState {
-  loginUserModal: boolean;
-  handleLoginUserModal: () => void;
-}
-
-export const useLoginUserModalStore = create<LoginUserModalState>(set => ({
-  loginUserModal: false,
-  handleLoginUserModal: () =>
-    set(prevState => ({ loginUserModal: !prevState.loginUserModal })),
-}));
-
 export interface LecturesState {
   myOpeningLectures: LectureDto[];
   myApplicationLectures: LectureDto[];
