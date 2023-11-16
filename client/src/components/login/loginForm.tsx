@@ -111,7 +111,7 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
             <LoginBtnBox>아이디 찾기 </LoginBtnBox>
             <LoginBtnBox>비밀번호 찾기 </LoginBtnBox>
             <SignBtnBox>
-              <a href="signup">회원가입</a>
+              <a href="/signup">회원가입</a>
             </SignBtnBox>
           </AccountHelpBox>
         </LoginDivBox>
