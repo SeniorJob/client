@@ -1,6 +1,5 @@
 import { statusData } from './filterData';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSearchStore } from '../../../store/store';
 import {
   FilterInput,
   FilterLabel,
@@ -10,15 +9,12 @@ import {
 export const StatusFilter = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { setStatus } = useSearchStore();
   const searchParams = new URLSearchParams(location.search);
   const curStatus = searchParams.get('status');
   const handleStatusFilter = (status: string) => {
     if (curStatus === status) {
-      setStatus('');
       searchParams.delete('status');
     } else {
-      setStatus(status);
       searchParams.set('status', status);
     }
     navigate(

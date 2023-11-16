@@ -47,13 +47,14 @@ export const getData = async (
 
 // Lecture에 get 요청할 때 endpoint, params 필요
 export const getLecture = async (
-  endpoint?: string,
+  endPoint?: string,
   params?: LectureParamProps,
 ) => {
   try {
-    const res = await getData(`/${endpoint}`, params);
-    console.log(res);
-    return res;
+    const response = await axios.get(API + `/lectures/${endPoint}`, {
+      params: params,
+    });
+    return response.data;
   } catch (err) {
     console.log(err);
   }

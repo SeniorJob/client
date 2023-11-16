@@ -138,7 +138,9 @@ export const LectureData = ({ data }: LectureDataProps) => {
           <CardContents>
             <h2 className="lecture-title">{data.title}</h2>
             <div className="lecture-creator">{data.creator}</div>
-            <div className="lecture-price">₩{data.price?.toLocaleString()}</div>
+            <div className="lecture-price">
+              ₩ {data.price?.toLocaleString()}
+            </div>
             <div className="lecture-tags">
               <Tag
                 className={`lecture-tags status ${

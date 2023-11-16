@@ -30,10 +30,6 @@ const CategoryLabel = styled.label`
     color: var(--primaryColor);
     font-weight: 500;
     background-color: #eee;
-    &::before {
-      content: '✓';
-      margin-right: 0.2rem;
-    }
   }
   &:hover {
     background-color: #f1f1f1;

@@ -102,12 +102,7 @@ const CustomBullets = styled.div<{ $curIndex: number }>`
 
 export const TopBanner = () => {
   const [swiper, setSwiper] = useState<SwiperClass>();
-<<<<<<< HEAD
-  const [curIndex, setCurIndex] = useState<number>(1);
-=======
   const [curIndex, setCurIndex] = useState<number>();
-  const [maxLength, setMaxLength] = useState<number>();
->>>>>>> 75c7b6d4cecf3c045f7d46ceb225c92bbf0f9c85
   interface Banner_T {
     bannerId: number;
     bannerUrl: string;
@@ -120,14 +115,7 @@ export const TopBanner = () => {
     const fetchBanner = async () => {
       try {
         const res = await getBanner();
-<<<<<<< HEAD
-        setBanner(res || []);
-        swiper?.update();
-=======
         if (res?.status === 200) setBanner(res?.data);
-        swiper?.update();
-        setMaxLength(swiper?.slides.length);
->>>>>>> 75c7b6d4cecf3c045f7d46ceb225c92bbf0f9c85
       } catch (err) {
         console.log(err, '배너 불러오기 오류');
       }
@@ -166,15 +154,6 @@ export const TopBanner = () => {
         modules={[Autoplay, Pagination]}
         className="mySwiper"
       >
-<<<<<<< HEAD
-        {banner.map(data => (
-          <SwiperSlide key={data.bannerId}>
-            <CustomSlide>
-              <img src={data.bannerUrl} alt="banner" />
-            </CustomSlide>
-          </SwiperSlide>
-        ))}
-=======
         {banner ? (
           banner.map(data => (
             <SwiperSlide key={data.bannerId}>
@@ -186,12 +165,11 @@ export const TopBanner = () => {
         ) : (
           <CustomSlide>준비중</CustomSlide>
         )}
->>>>>>> 75c7b6d4cecf3c045f7d46ceb225c92bbf0f9c85
         <PageController>
           <div className="container flex items-center px-8">
             <ControllerBox>
-              <div className="custom-pagination flex-1">
-                {curIndex} / {maxLength}
+              <div className="custom-pagination flex-1 flex justify-center">
+                {curIndex} / {swiper?.slides.length}
               </div>
               {/* prev, next, pause 버튼 */}
               <BannerNav />
