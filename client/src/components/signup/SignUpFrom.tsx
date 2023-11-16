@@ -3,7 +3,7 @@ import { useState } from 'react';
 import PostCode from './SignPostCode';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import { categoryData } from '../category/categoryData'; // 후에 카테고리 데이터 변경
 import tw from 'tailwind-styled-components';
 import styled from 'styled-components';
 import { PwValid, PwcfValid } from '../../utils/Valiable';

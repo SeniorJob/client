@@ -22,9 +22,16 @@ axios.defaults.withCredentials = true;
 export const UserMenu: React.FC = () => {
   const { loginModal, handleLoginModal } = useLoginModalStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+<<<<<<< HEAD
+  const [userInfo, setUserInfo] = useState('');
+  const setIsLoggedIn = useUserStore().setIsLoggedIn;
+  const setUserDetail = useUserStore().setUserDetail;
+  const clearUserDetail = useUserStore().clearUserDetail;
+=======
   const { userDetail } = useUserStore();
   const [userInfo, setUserInfo] = useState('');
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
+>>>>>>> 75c7b6d4cecf3c045f7d46ceb225c92bbf0f9c85
   const accessToken = localStorage.getItem('accessToken');
   const LoginInfo = localStorage.getItem('isLogIn');
   const navigate = useNavigate();
@@ -68,7 +75,7 @@ export const UserMenu: React.FC = () => {
         },
       )
       .then(res => {
-        console.log(res.data);
+        setUserDetail(res.data);
         setUserInfo(res.data);
       })
       .catch(error => {
@@ -81,6 +88,7 @@ export const UserMenu: React.FC = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     setIsLoggedIn();
+    clearUserDetail();
     localStorage.removeItem('isLogIn');
     localStorage.removeItem('UserStore');
     navigate('/');
@@ -118,7 +126,11 @@ export const UserMenu: React.FC = () => {
         <div className="flex gap-2 relative" ref={dropdownRef}>
           <img
             className="w-8 h-8 rounded-[20px] hover:cursor-pointer mt-1"
+<<<<<<< HEAD
+            src={userInfo.imgKey ? userInfo.imgKey : defaultImage}
+=======
             src={userDetail.imgKey ? userDetail.imgKey : defaultImage}
+>>>>>>> 75c7b6d4cecf3c045f7d46ceb225c92bbf0f9c85
             onClick={handleDropdown}
           />
           <StyledLoginUser>
@@ -189,7 +201,7 @@ const UserDropdownView = styled.div`
   height: 80px;
   position: absolute;
   display: flex;
-  flex-direction: column; // 컨텐츠를 세로 방향으로 정렬
+  flex-direction: column;
   align-items: center;
   justify-content: center; // 수평, 수직 중앙 정렬
   border-radius: 0.7rem;

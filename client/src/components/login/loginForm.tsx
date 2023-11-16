@@ -55,13 +55,8 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
       })
       .then(response => {
         // 로그인 성공 시 isLoggedIn을 true로 바꿈. (true -> 로그인 중)
-        console.log(response.data.token); // 서버 응답 데이터 확인
         const { accessToken, refreshToken } = response.data;
         setTokensInLocalStorage(accessToken, refreshToken);
-
-        console.log('액세스 토큰:', accessToken);
-        console.log('리프레시 토큰:', refreshToken);
-
         setIsLoggedIn();
         localStorage.setItem('isLogIn', 'true');
         handleModal();
