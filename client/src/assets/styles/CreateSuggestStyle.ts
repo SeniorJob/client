@@ -24,3 +24,8 @@ px-[12px]
 py-[13px]
 mt-[4px]
 `;
+
+export const CreateSuggestFormLayOut = styled.div`
+  display: flex;
+  justify-content: center;
+`;
