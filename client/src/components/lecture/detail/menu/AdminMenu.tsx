@@ -2,11 +2,12 @@ import styled from 'styled-components';
 import { RegButton } from '../../../../assets/styles/CommonStyles';
 import { AsideCard } from '../../../../assets/styles/MenuStyle';
 
-export const AdminMenu = ({
-  handleModal,
-}: {
+type AdminMenu_T = {
   handleModal: (type: string) => void;
-}) => (
+  status?: string;
+};
+
+export const AdminMenu: React.FC<AdminMenu_T> = ({ handleModal, status }) => (
   <AdminMenuCard>
     <h1>관리자 메뉴</h1>
     <div className="w-full flex gap-4">
@@ -17,7 +18,9 @@ export const AdminMenu = ({
         신청자 관리
       </ManageButton>
     </div>
-    <RegButton onClick={() => handleModal('마감')}>모집 마감하기</RegButton>
+    {status === '신청가능상태' && (
+      <RegButton onClick={() => handleModal('마감')}>모집 마감하기</RegButton>
+    )}
   </AdminMenuCard>
 );
 
