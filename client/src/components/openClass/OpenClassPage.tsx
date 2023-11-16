@@ -29,7 +29,11 @@ const OpenClassPage = () => {
 
   return (
     <Container>
-      <TabContainer activeTab={activeTab} setActiveTab={setActiveTab} />
+      <TabContainer
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        showGuide={showGuide}
+      />
       {showGuide ? (
         <Guide activeTab={activeTab} onOpenClick={handleOpenClick} />
       ) : activeTab === 0 ? (

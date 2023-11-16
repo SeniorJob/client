@@ -28,6 +28,7 @@ const Tabs = tw.div`
 interface TabContainerProps {
   activeTab: number;
   setActiveTab: (index: number) => void;
+  showGuide: boolean;
 }
 
 interface TabProps {
@@ -53,12 +54,18 @@ const Tab = tw.div<TabProps>`
    hover:text-black
 `;
 
-const TabContainer: FC<TabContainerProps> = ({ setActiveTab, activeTab }) => {
+const TabContainer: FC<TabContainerProps> = ({
+  activeTab,
+  setActiveTab,
+  showGuide,
+}) => {
   const { userDetail } = useUserStore();
   const userName = userDetail.name;
 
   const handleTabClick = (index: number) => {
-    setActiveTab(index);
+    if (showGuide) {
+      setActiveTab(index);
+    }
   };
 
   return (
