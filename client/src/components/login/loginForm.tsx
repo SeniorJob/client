@@ -19,6 +19,7 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
   const [pw, setPw] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
+  const setUserDetail = useUserStore().setUserDetail;
   const navigate = useNavigate();
 
   const setTokensInLocalStorage = (
@@ -55,14 +56,15 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
       })
       .then(response => {
         // 로그인 성공 시 isLoggedIn을 true로 바꿈. (true -> 로그인 중)
-        console.log(response.data.token); // 서버 응답 데이터 확인
-        const { accessToken, refreshToken } = response.data;
+        console.log('서버 응답 데이터 확인', response.data.token);
+        const { accessToken, refreshToken, userInfo } = response.data;
         setTokensInLocalStorage(accessToken, refreshToken);
 
         console.log('액세스 토큰:', accessToken);
         console.log('리프레시 토큰:', refreshToken);
 
         setIsLoggedIn();
+        setUserDetail(userInfo);
         localStorage.setItem('isLogIn', 'true');
         handleModal();
         navigate('/');

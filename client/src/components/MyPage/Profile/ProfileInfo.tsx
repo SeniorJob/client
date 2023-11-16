@@ -10,6 +10,7 @@ import {
   JOB_OPTIONS,
 } from '../../../constants/Profile';
 import { getProfile, updateProfile } from '../../../api/mypage';
+import { useNavigate } from 'react-router-dom';
 
 interface ProfileInfo_I {
   mode?: '수정';
@@ -25,6 +26,7 @@ interface UserDTO_I {
 }
 
 const ProfileInfo = ({ mode }: ProfileInfo_I) => {
+  const navigate = useNavigate();
   const userStore = useUserStore();
   const userDetail = userStore.userDetail;
 
@@ -86,8 +88,9 @@ const ProfileInfo = ({ mode }: ProfileInfo_I) => {
         region: address,
       }),
     );
-    await updateProfile(formData);
+    const res = await updateProfile(formData);
     await handleGetProfile();
+    res.status === 200 && navigate('/mypage');
   };
 
   return (

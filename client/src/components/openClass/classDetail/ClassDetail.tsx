@@ -1,9 +1,9 @@
 import { OpenButton } from '../OpenButton';
 import styled from 'styled-components';
-import WeekClass from './WeekClass';
 import useCreateClass from '../../../store/createClass';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import WeekClass from './WeekClass';
 
 const Container = styled.div`
   margin: 16px 16px 0 16px;
@@ -18,9 +18,11 @@ const SubTitle = styled.div`
 
 const AddWeekButton = styled.div`
   font-size: 2rem;
-  padding: 8px;
+  padding: 16px;
   display: flex;
   justify-content: center;
+  color: gray;
+  width: 30%;
 
   cursor: pointer;
 
@@ -54,7 +56,8 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
   const [weekDto, setWeekDto] = useState<WeekDtoType[]>([]);
   const [weekPlanDto, setWeekPlanDto] = useState<WeekPlanDtoType[]>([]);
 
-  const apiUrl = import.meta.env.VITE_API_URL + `/api/lecturesStepTwo/${105}`; // TODO: createId 수정해야함
+  const apiUrl =
+    import.meta.env.VITE_API_URL + `/api/lecturesStepTwo/${createId}`;
   const accessToken = localStorage.getItem('accessToken');
   const headers = {
     Authorization: `Bearer ${accessToken}`,
@@ -95,6 +98,34 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
     }
   };
 
+  // 수료조건 설정
+  const handleCreate = async () => {
+    const attendanceInput = prompt(
+      '수료에 필요한 출석 회수를 1회 이상 10회 이하로 설정해주세요',
+    );
+    if (attendanceInput === null || attendanceInput.trim() === '') {
+      alert('출석 회수를 1회 이상 10회 이하로 올바르게 입력해주세요!');
+      return;
+    }
+
+    const attendance = parseInt(attendanceInput);
+    if (attendance < 1 || attendance > 10) {
+      alert('출석 회수를 1회 이상 10회 이하로 올바르게 입력해주세요!');
+      return;
+    }
+
+    try {
+      await axios.post(
+        `${apiUrl}/attendance?requiredAttendance=${attendance}`,
+        {},
+        { headers },
+      );
+      nextTab();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <Container>
@@ -125,7 +156,7 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
         })}
       </Container>
       <AddWeekButton onClick={handleAddWeek}>주차 추가하기</AddWeekButton>
-      <OpenButton onClick={() => nextTab()}>다음으로</OpenButton>
+      <OpenButton onClick={handleCreate}>다음으로</OpenButton>
     </>
   );
 }

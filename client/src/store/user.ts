@@ -19,6 +19,7 @@ export interface UserState {
 
   setIsLoggedIn: () => void;
   setUserDetail: (info: UserState['userDetail']) => void;
+  clearUserDetail: () => void;
 }
 
 type UserPersist = (
@@ -48,7 +49,24 @@ export const useUserStore = create<UserState>(
         set(prevState => ({ isLoggedIn: !prevState.isLoggedIn })),
 
       setUserDetail: info => set(() => ({ userDetail: info })),
+
+      clearUserDetail: () =>
+        set(() => ({
+          userDetail: {
+            uid: undefined,
+            name: undefined,
+            phoneNumber: undefined,
+            encryptionCode: undefined,
+            job: undefined,
+            dateOfBirth: undefined,
+            category: undefined,
+            region: undefined,
+            imgKey: undefined,
+            updateDate: undefined,
+          },
+        })),
     }),
+
     { name: 'UserStore' },
   ),
 );
@@ -62,17 +80,6 @@ export const useLoginModalStore = create<LoginModalState>(set => ({
   loginModal: false,
   handleLoginModal: () =>
     set(prevState => ({ loginModal: !prevState.loginModal })),
-}));
-
-interface LoginUserModalState {
-  loginUserModal: boolean;
-  handleLoginUserModal: () => void;
-}
-
-export const useLoginUserModalStore = create<LoginUserModalState>(set => ({
-  loginUserModal: false,
-  handleLoginUserModal: () =>
-    set(prevState => ({ loginUserModal: !prevState.loginUserModal })),
 }));
 
 export interface LecturesState {

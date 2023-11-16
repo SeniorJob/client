@@ -35,7 +35,7 @@ function App() {
           <Route path="/mypage/lecture/application" element={<Application />} />
           <Route path="/mypage/lecture/suggestion" element={<Suggestion />} />
           <Route
-            path="/mypage/lecture/edit/:lecture_id"
+            path="/mypage/lecture/edit/:page/:lecture_id"
             element={<EditLecture />}
           />
 

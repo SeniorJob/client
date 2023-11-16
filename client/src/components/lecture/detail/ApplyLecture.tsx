@@ -40,7 +40,7 @@ type LectureApplyProps = {
   closeModal: () => void;
 };
 
-export const LectureApply: React.FC<LectureApplyProps> = ({
+export const ApplyLecture: React.FC<LectureApplyProps> = ({
   lectureId,
   closeModal,
 }) => {
@@ -59,6 +59,7 @@ export const LectureApply: React.FC<LectureApplyProps> = ({
       await applyLecture(lectureId, `${text}`); // lectureId와 applyReason을 적절히 수정
       alert('성공적으로 신청되었습니다!');
       closeModal(); // 성공적으로 신청하면 Modal을 닫음
+      location.reload();
     } catch (error) {
       console.error('강의 신청 중 오류 발생:', error);
       // 에러 처리: 필요한 경우 사용자에게 메시지 표시 등 추가 가능

@@ -66,7 +66,7 @@ const FilterBar = ({ type }: FilterBar_T) => {
       searchParams.delete('descending');
     } else if (filter === '오래된순') {
       searchParams.set('filter', 'latest');
-      searchParams.set('descending', 'true');
+      searchParams.set('descending', 'false');
     } else if (filter === '인기순') {
       searchParams.set('filter', 'popularity');
     } else if (filter === '가격높은순') {

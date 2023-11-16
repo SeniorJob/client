@@ -69,3 +69,24 @@ export const getLectureDetail = async (endpoint?: string) => {
     console.log(err);
   }
 };
+
+// 상단 배너 불러오기
+export const getBanner = async () => {
+  try {
+    const response = await axios.get(API + '/banner');
+    return response.data;
+  } catch (err) {
+    console.log(err, '배너 에러');
+  }
+};
+
+// 사용자가 신청한 강의 id 불러오기
+export const getAppliedLectureId = async () => {
+  try {
+    const response = await instance.get(`api/mypageApplyLecture/myApply`);
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    console.log(err, '강의 아이디 불러오기 오류');
+  }
+};
