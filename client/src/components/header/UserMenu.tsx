@@ -22,14 +22,13 @@ axios.defaults.withCredentials = true;
 export const UserMenu: React.FC = () => {
   const { loginModal, handleLoginModal } = useLoginModalStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { userDetail } = useUserStore();
   const [userInfo, setUserInfo] = useState('');
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
+  const setUserDetail = useUserStore().setUserDetail;
   const clearUserDetail = useUserStore().clearUserDetail;
   const accessToken = localStorage.getItem('accessToken');
   const LoginInfo = localStorage.getItem('isLogIn');
   const navigate = useNavigate();
-  console.log(userDetail);
 
   const handleLoginFormModal = () => {
     handleLoginModal();
@@ -70,7 +69,7 @@ export const UserMenu: React.FC = () => {
         },
       )
       .then(res => {
-        console.log(res.data);
+        setUserDetail(res.data);
         setUserInfo(res.data);
       })
       .catch(error => {
