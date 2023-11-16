@@ -139,6 +139,70 @@ const EnterClassInfomation: FC<EnterClassInfomationProps> = ({ nextTab }) => {
       console.error('환경변수 설정 에러');
       return;
     }
+    if (!selectedImage) {
+      alert('강좌 대표 이미지를 선택해주세요!');
+      return;
+    }
+    if (!selectedCategory) {
+      alert('카테고리를 선택해주세요!');
+      return;
+    }
+    if (!title) {
+      alert('제목을 입력해주세요!');
+      return;
+    }
+    if (!content) {
+      alert('강좌소개을 입력해주세요!');
+      return;
+    }
+    if (!learningTarget) {
+      alert('학습대상을 입력해주세요!');
+      return;
+    }
+    if (!week) {
+      alert('주차별 횟수를 입력해주세요!');
+      return;
+    }
+    if (week < 1 || week > 5) {
+      alert('주차별 횟수는 1회이상 5회 이하로 설정해 주세요');
+      return;
+    }
+    if (!recruitEndDate) {
+      alert('모집 마감 날짜를 입력해주세요!');
+      return;
+    }
+    if (!startDate) {
+      alert('시작 날짜를 입력해주세요!');
+      return;
+    }
+    if (!endDate) {
+      alert('종료 날짜를 입력해주세요!');
+      return;
+    }
+    if (!maxParticipants) {
+      alert('최대 인원 수를 입력해주세요!');
+      return;
+    }
+    if (!region) {
+      alert('지역을 입력해주세요!');
+      return;
+    }
+    if (!price) {
+      alert('가격을 입력해주세요!');
+      return;
+    }
+    if (!bankName) {
+      alert('은행명을 입력해주세요!');
+      return;
+    }
+    if (!accountName) {
+      alert('계좌주를 입력해주세요!');
+      return;
+    }
+    if (!accountNumber) {
+      alert('계좌번호를 입력해주세요!');
+      return;
+    }
 
     try {
       const accessToken = localStorage.getItem('accessToken');
