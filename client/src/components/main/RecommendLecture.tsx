@@ -7,6 +7,7 @@ import { LectureData } from '../lecture/LectureData';
 import { getLecture } from '../../api/lecture';
 import { Link } from 'react-router-dom';
 import { recommendProps, LectureObject } from '../../types/LectureTypes';
+import { recommendPopular } from './recommendType';
 
 const Nodata = styled.div`
   display: flex;
@@ -49,7 +50,7 @@ export const RecommendLecture = ({ recommendType }: recommendProps) => {
     const fetchData = async () => {
       try {
         const lectureData = await getLecture(
-          `lectures/${recommendType.endPoint}`,
+          recommendType.endPoint,
           recommendType.params,
         );
         lectureData.content
@@ -69,7 +70,11 @@ export const RecommendLecture = ({ recommendType }: recommendProps) => {
       <div className="container px-4">
         <LectureHeader>
           <div>
-            <Link to={'/'}>
+            <Link
+              to={`lectures/filter?filter=${
+                recommendType === recommendPopular ? 'popularity' : 'latest'
+              }`}
+            >
               <h1>{recommendType.title}</h1>
             </Link>
             <p>{recommendType.subTitle}</p>

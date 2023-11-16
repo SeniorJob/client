@@ -112,7 +112,7 @@ export const TopBanner = () => {
 
   const [banner, setBanner] = useState<Banner_T[]>([]);
 
-  useEffect(() => {
+   useEffect(() => {
     const fetchBanner = async () => {
       try {
         const res = await getBanner();
@@ -171,8 +171,8 @@ export const TopBanner = () => {
         <PageController>
           <div className="container flex items-center px-8">
             <ControllerBox>
-              <div className="custom-pagination flex-1">
-                {curIndex} / {maxLength}
+              <div className="custom-pagination flex-1 flex justify-center">
+                {curIndex} / {swiper?.slides.length}
               </div>
               {/* prev, next, pause 버튼 */}
               <BannerNav />

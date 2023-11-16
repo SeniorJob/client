@@ -31,7 +31,7 @@ export const NavMenu = () => {
     <Nav>
       <ul>
         <li>
-          <Link to="/lectures">
+          <Link to="/lectures/filter?filter=latest">
             <StyledMenu>강좌탐색</StyledMenu>
           </Link>
         </li>

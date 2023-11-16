@@ -1,9 +1,9 @@
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   FilterInput,
   FilterLabel,
   FilterTag,
 } from '../../../assets/styles/filterStyle';
-import { useSearchStore } from '../../../store/store';
 import { sortPriceData } from './filterData';
 import styled from 'styled-components';
 
@@ -26,26 +26,46 @@ const PriceFilterTag = styled(FilterTag)<LabelProps>`
 `;
 
 export const PriceSortFilter = () => {
-  const { filterMethod, descending, setFilterMethod, setDescending } =
-    useSearchStore();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const searchParams = new URLSearchParams(location.search);
+  const curMethod = searchParams.get('filter');
+  const curDescending = searchParams.get('descending');
 
-  const handleMethod = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    method: string,
-    descend: boolean,
-  ) => {
-    e.stopPropagation();
-    e.preventDefault();
-
-    if (filterMethod === method && descend === descending) {
-      setFilterMethod('');
-      setDescending(!descend);
+  const handlePriceFilter = (method: string, descend: boolean) => {
+    if (curMethod === method && descend === Boolean(curDescending)) {
+      searchParams.delete('filter');
+      searchParams.delete('descending');
     } else {
-      // 다른 필터를 클릭한 경우, 해당 필터를 설정
-      setFilterMethod(method);
-      setDescending(descend);
+      searchParams.set('filter', method);
+      searchParams.set('descending', String(descend));
     }
+    navigate(
+      {
+        pathname: '/lectures/filter',
+        search: searchParams.toString(),
+      },
+      { replace: true },
+    );
   };
+
+  // const handleMethod = (
+  //   e: React.ChangeEvent<HTMLInputElement>,
+  //   method: string,
+  //   descend: boolean,
+  // ) => {
+  //   e.stopPropagation();
+  //   e.preventDefault();
+
+  //   if (filterMethod === method && descend === descending) {
+  //     setFilterMethod('');
+  //     setDescending(!descend);
+  //   } else {
+  //     // 다른 필터를 클릭한 경우, 해당 필터를 설정
+  //     setFilterMethod(method);
+  //     setDescending(descend);
+  //   }
+  // };
 
   return (
     <div className="flex gap-1 items-center">
@@ -54,7 +74,8 @@ export const PriceSortFilter = () => {
           <PriceFilterTag
             name={data.name}
             className={
-              filterMethod === data.method && descending === data.descending
+              curMethod === data.method &&
+              curDescending === String(data.descending)
                 ? 'checked'
                 : ''
             }
@@ -63,9 +84,10 @@ export const PriceSortFilter = () => {
               type="checkbox"
               value={data.name}
               checked={
-                filterMethod === data.method && descending === data.descending
+                curMethod === data.method &&
+                curDescending === String(data.descending)
               }
-              onChange={e => handleMethod(e, data.method, data.descending)}
+              onChange={() => handlePriceFilter(data.method, data.descending)}
             />
             {data.name}
           </PriceFilterTag>
