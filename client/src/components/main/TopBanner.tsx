@@ -168,7 +168,7 @@ export const TopBanner = () => {
         <PageController>
           <div className="container flex items-center px-8">
             <ControllerBox>
-              <div className="custom-pagination flex-1">
+              <div className="custom-pagination flex-1 flex justify-center">
                 {curIndex} / {swiper?.slides.length}
               </div>
               {/* prev, next, pause 버튼 */}
