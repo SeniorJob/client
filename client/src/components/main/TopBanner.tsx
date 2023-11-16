@@ -103,7 +103,6 @@ const CustomBullets = styled.div<{ $curIndex: number }>`
 export const TopBanner = () => {
   const [swiper, setSwiper] = useState<SwiperClass>();
   const [curIndex, setCurIndex] = useState<number>();
-  const [maxLength, setMaxLength] = useState<number>();
   interface Banner_T {
     bannerId: number;
     bannerUrl: string;
@@ -117,8 +116,6 @@ export const TopBanner = () => {
       try {
         const res = await getBanner();
         if (res?.status === 200) setBanner(res?.data);
-        swiper?.update();
-        setMaxLength(swiper?.slides.length);
       } catch (err) {
         console.log(err, '배너 불러오기 오류');
       }
@@ -172,7 +169,7 @@ export const TopBanner = () => {
           <div className="container flex items-center px-8">
             <ControllerBox>
               <div className="custom-pagination flex-1">
-                {curIndex} / {maxLength}
+                {curIndex} / {swiper?.slides.length}
               </div>
               {/* prev, next, pause 버튼 */}
               <BannerNav />
