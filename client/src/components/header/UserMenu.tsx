@@ -22,7 +22,11 @@ axios.defaults.withCredentials = true;
 export const UserMenu: React.FC = () => {
   const { loginModal, handleLoginModal } = useLoginModalStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [userInfo, setUserInfo] = useState('');
+  type UserInfo_T = {
+    imgKey: string;
+    name: string;
+  };
+  const [userInfo, setUserInfo] = useState<UserInfo_T>();
   const setIsLoggedIn = useUserStore().setIsLoggedIn;
   const setUserDetail = useUserStore().setUserDetail;
   const clearUserDetail = useUserStore().clearUserDetail;
@@ -120,11 +124,11 @@ export const UserMenu: React.FC = () => {
         <div className="flex gap-2 relative" ref={dropdownRef}>
           <img
             className="w-8 h-8 rounded-[20px] hover:cursor-pointer mt-1"
-            src={userInfo.imgKey ? userInfo.imgKey : defaultImage}
+            src={userInfo?.imgKey ? userInfo?.imgKey : defaultImage}
             onClick={handleDropdown}
           />
           <StyledLoginUser>
-            <strong className="">{userInfo.name}님</strong> 어서오세요
+            <strong className="">{userInfo?.name}님</strong> 어서오세요
           </StyledLoginUser>
           {isMenuOpen && (
             <UserDropdownView>
