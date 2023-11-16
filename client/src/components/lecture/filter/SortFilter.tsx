@@ -34,7 +34,7 @@ const SortFilterTag = styled(FilterTag)<LabelProps>`
 `;
 
 export const SortFilter = () => {
-  const { filterMethod, setFilterMethod } = useSearchStore();
+  const { filterMethod, setFilterMethod, setDescending } = useSearchStore();
 
   const handleMethod = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -49,6 +49,7 @@ export const SortFilter = () => {
     } else {
       // 다른 필터를 클릭한 경우, 해당 필터를 설정
       setFilterMethod(method);
+      setDescending(true);
     }
   };
 
