@@ -4,7 +4,7 @@ import { deleteLecture } from '../../../api/mypage';
 import { Link } from 'react-router-dom';
 
 type EditOpeningModal_T = {
-  title: string;
+  title?: string;
   create_id?: number;
   setShowModal: Dispatch<boolean>;
 };
@@ -69,7 +69,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -101,12 +101,12 @@ const Button = styled.button.attrs({ type: 'button' })`
 `;
 
 const ModalBackground = styled.div`
-  border: 1px solid black;
   position: fixed;
-  width: 100vw;
-  height: 100vh;
-  left: 0;
   top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(4px);
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 100;
   cursor: pointer;
