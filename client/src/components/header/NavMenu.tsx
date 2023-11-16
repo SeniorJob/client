@@ -45,9 +45,13 @@ export const NavMenu = () => {
           )}
         </li>
         <li>
-          <Link to="/createsuggestion">
-            <StyledMenu>강좌제안</StyledMenu>
-          </Link>
+          {isLoggedIn ? (
+            <Link to="/createsuggestion">
+              <StyledMenu>강좌제안</StyledMenu>
+            </Link>
+          ) : (
+            <StyledMenu onClick={handleOpenCourse}>강좌제안</StyledMenu>
+          )}
         </li>
       </ul>
     </Nav>

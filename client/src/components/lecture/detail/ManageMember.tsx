@@ -1,21 +1,3 @@
-<<<<<<< HEAD
-import { Modal } from '../../common/Modal';
-import styled from 'styled-components';
-import { RegButton } from '../../../assets/styles/CommonStyles';
-
-const MemberManage_C = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 1rem 0 0.6rem 0;
-  gap: 1rem;
-  h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
-`;
-=======
 import { useState, useEffect } from 'react';
 import { Modal } from '../../common/Modal';
 import styled from 'styled-components';
@@ -23,7 +5,6 @@ import { getAppliedMembers, modifyApplyStatus } from '../../../api/lecture';
 import { MemberPagination } from './MemberPagination';
 import { LoadingSpinner } from '../LoadingSpinner';
 import CautionSVG from '../../../assets/images/caution.svg?react';
->>>>>>> 75c7b6d4cecf3c045f7d46ceb225c92bbf0f9c85
 
 type ManageMember_T = {
   title?: string;
@@ -31,8 +12,6 @@ type ManageMember_T = {
   closeModal: () => void;
 };
 
-<<<<<<< HEAD
-=======
 type AppliedMember_T = {
   uid: number;
   userName: string;
@@ -40,21 +19,10 @@ type AppliedMember_T = {
   lectureApplyStatus: string;
 };
 
->>>>>>> 75c7b6d4cecf3c045f7d46ceb225c92bbf0f9c85
 export const ManageMember: React.FC<ManageMember_T> = ({
   lectureId,
   closeModal,
 }) => {
-<<<<<<< HEAD
-  return (
-    <Modal closeModal={closeModal}>
-      <MemberManage_C>
-        <h2>강좌 신청인원 관리</h2>
-      </MemberManage_C>
-    </Modal>
-  );
-};
-=======
   const [data, setData] = useState<AppliedMember_T[]>([]);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>();
@@ -231,4 +199,3 @@ const ToggleStatusButton = styled.button<ToggleStatusButton_P>`
     opacity: 0.9;
   }
 `;
->>>>>>> 75c7b6d4cecf3c045f7d46ceb225c92bbf0f9c85
