@@ -3,16 +3,15 @@ import { useState } from 'react';
 import { useSwiper, SwiperClass } from 'swiper/react';
 import Pause from '../../assets/images/pause.svg?react';
 import Play from '../../assets/images/play.svg?react';
+import ArrowLeftSVG from '../../assets/images/arrowleft.svg?react';
+import ArrowRightSVG from '../../assets/images/arrowright.svg?react';
 
-interface PrevButtonProps {
-  direction: 'prev' | 'next'; // 타입을 'prev' 또는 'next'로 지정
-}
-
-const Button = styled.button<PrevButtonProps>`
-  &::before {
-    ${props =>
-      props.direction === 'prev' ? "content: '〈' " : "content: '〉'"};
-  }
+const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
 `;
 
 const CircleButton = styled(Button)`
@@ -33,10 +32,6 @@ const CircleButton = styled(Button)`
   background: hsla(0, 0%, 100%, 0.85);
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
   color: #333;
-  &::before {
-    ${props =>
-      props.direction === 'prev' ? "content: '〈' " : "content: '〉'"};
-  }
   &:hover {
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.4);
   }
@@ -75,11 +70,15 @@ export const BannerNav = () => {
   };
   return (
     <div className="flex flex-1 justify-between">
-      <Button direction="prev" onClick={() => goPrev(swiper)} />
+      <Button onClick={() => goPrev(swiper)}>
+        <ArrowLeftSVG width={20} height={20} />
+      </Button>
       <button onClick={toggleAutoplay}>
         {isPlaying ? <Pause /> : <Play />}
       </button>
-      <Button direction="next" onClick={() => goNext(swiper)} />
+      <Button onClick={() => goNext(swiper)}>
+        <ArrowRightSVG width={20} height={20} />
+      </Button>
     </div>
   );
 };
@@ -92,8 +91,12 @@ type NavButtonProps = {
 export const NavButton = ({ navName }: NavButtonProps) => {
   return (
     <div>
-      <CircleButton direction="prev" className={`${navName}-prev left-0`} />
-      <CircleButton direction="next" className={`${navName}-next right-0`} />
+      <CircleButton className={`${navName}-prev left-0`}>
+        <ArrowLeftSVG width={24} />
+      </CircleButton>
+      <CircleButton className={`${navName}-next right-0`}>
+        <ArrowRightSVG width={24} />
+      </CircleButton>
     </div>
   );
 };
