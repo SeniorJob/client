@@ -11,7 +11,10 @@ const CreateSuggestion: React.FC = () => {
   const userDetail = useUserStore().userDetail;
   return (
     <CreateSuggestionLayOut>
-      <SuggestUser>{userDetail.name}님의 제안 강좌</SuggestUser>
+      <SuggestUser>
+        <strong>{userDetail.name}님</strong>의 제안 강좌
+      </SuggestUser>
+
       <SuggestionFrom />
     </CreateSuggestionLayOut>
   );

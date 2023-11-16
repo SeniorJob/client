@@ -5,10 +5,12 @@ import {
   InputWrapper,
   InputLabel,
   Input,
+  InputBixBox,
+  CreateBtn,
 } from '../../assets/styles/CreateSuggestStyle';
 import { useState } from 'react';
-import { useUserStore } from '../../store/user';
-import PostCode from '../../components/signup/SignPostCode';
+import PostCode from './SuggstPostCode';
+import axios from 'axios';
 
 const CreateSuggestForm = () => {
   const [form, setForm] = useState({
@@ -17,6 +19,22 @@ const CreateSuggestForm = () => {
     category: '',
     address: '',
   });
+
+  const accessToken = localStorage.getItem('accessToken');
+  const CreateSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    axios.post(
+      `${import.meta.env.VITE_API_URL}/api/lectureproposal/apply`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+  };
+
   return (
     <CreateSuggestFormLayOut>
       <CreateSuggestionBox>
@@ -24,7 +42,6 @@ const CreateSuggestForm = () => {
           <InputWrapper>
             <InputLabel>제안강좌 제목</InputLabel>
             <Input
-              type="text"
               placeholder="강좌 제목을 입력해주세요"
               value={form.title}
               onChange={e => setForm({ ...form, title: e.target.value })}
@@ -33,12 +50,11 @@ const CreateSuggestForm = () => {
 
           <InputWrapper>
             <InputLabel>제안강좌 소개</InputLabel>
-            <Input
-              type="text"
-              placeholder="강좌의 내용을 입력해주세요"
+            <InputBixBox
+              placeholder="강좌의 간단한 설명을 입력해 주세요"
               value={form.Introduce}
               onChange={e => setForm({ ...form, Introduce: e.target.value })}
-            ></Input>
+            ></InputBixBox>
           </InputWrapper>
 
           <InputWrapper>
@@ -49,11 +65,15 @@ const CreateSuggestForm = () => {
             <InputLabel>강좌개설 지역</InputLabel>
             <PostCode setForm={setForm} />
             <Input
-              type="text"
               value={form.address}
               onChange={e => setForm({ ...form, address: e.target.value })}
             ></Input>
           </InputWrapper>
+          <InputWrapper>
+            <InputLabel>지도 API</InputLabel>
+          </InputWrapper>
+          <CreateBtn onClick={CreateSubmit}>강좌 제안</CreateBtn>
+          <CreateBtn>취소하기</CreateBtn>
         </Content>
       </CreateSuggestionBox>
     </CreateSuggestFormLayOut>
