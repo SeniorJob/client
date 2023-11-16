@@ -27,8 +27,6 @@ function App() {
           <Route path="/openclass" element={<OpenClassPage />} />
           <Route path="/signup" element={<SignUp />} />
 
-          <Route path="/lectures/filter?" element={<LectureList />} />
-
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/editprofile" element={<EditProfile />} />
           <Route path="/mypage/lecture/opening" element={<Opening />} />
@@ -39,8 +37,12 @@ function App() {
             element={<EditLecture />}
           />
 
-          <Route path="/lectures/detail/*" element={<LectureDetail />} />
-          <Route path="/lectures/*" element={<LectureList />} />
+          <Route path="/lectures/filter" element={<LectureList />} />
+          <Route
+            path="/lectures/detail/:lecture_id"
+            element={<LectureDetail />}
+          />
+
           <Route path="/createsuggestion" element={<CreateSuggestion />} />
         </Routes>
       </div>
