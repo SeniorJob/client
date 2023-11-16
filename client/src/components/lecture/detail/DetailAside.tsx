@@ -13,6 +13,8 @@ import { ParticipantsCard } from './menu/ParticipantsCard';
 import { RemainTimeCard } from './menu/RemainTimeCard';
 import { ApplyMenu } from './menu/ApplyMenu';
 import { PeriodMenu } from './menu/PeriodMenu';
+import { ManageMember } from './ManageMember';
+import { CloseLecture } from './CloseLecture';
 
 export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
   const { isLoggedIn, userDetail } = useUserStore();
@@ -115,7 +117,19 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
                 closeModal={() => setShowModal(false)}
               />
             )}
-            {modalType === '수정' && (
+            {modalType === '인원관리' && (
+              <ManageMember
+                lectureId={data?.create_id}
+                closeModal={() => setShowModal(false)}
+              />
+            )}
+            {modalType === '마감' && (
+              <CloseLecture
+                lectureId={data?.create_id}
+                closeModal={() => setShowModal(false)}
+              />
+            )}
+            {modalType === '강좌관리' && (
               <EditOpeningModal
                 title={data?.title}
                 create_id={data?.create_id}

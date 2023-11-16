@@ -9,10 +9,15 @@ export const AdminMenu = ({
 }) => (
   <AdminMenuCard>
     <h1>관리자 메뉴</h1>
-    <div className="w-full flex gap-3">
-      <ModifyButton onClick={() => handleModal('수정')}>수정하기</ModifyButton>
-      <DeleteButton onClick={() => handleModal('삭제')}>삭제하기</DeleteButton>
+    <div className="w-full flex gap-4">
+      <ManageButton onClick={() => handleModal('강좌관리')}>
+        강좌관리
+      </ManageButton>
+      <ManageButton onClick={() => handleModal('인원관리')}>
+        인원관리
+      </ManageButton>
     </div>
+    <RegButton onClick={() => handleModal('마감')}>모집 마감하기</RegButton>
   </AdminMenuCard>
 );
 
@@ -21,16 +26,9 @@ const AdminMenuCard = styled(AsideCard)`
   padding: 1rem;
 `;
 
-const ModifyButton = styled(RegButton)`
+const ManageButton = styled(RegButton)`
   background-color: #abc3eb;
   &:hover {
     background-color: #abc3ebd6;
-  }
-`;
-
-const DeleteButton = styled(RegButton)`
-  background-color: #f9827d;
-  &:hover {
-    background-color: #f9817dd6;
   }
 `;
