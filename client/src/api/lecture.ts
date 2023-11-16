@@ -74,7 +74,7 @@ export const getLectureDetail = async (endpoint?: string) => {
 export const getBanner = async () => {
   try {
     const response = await axios.get(API + '/banner');
-    return response.data;
+    return response;
   } catch (err) {
     console.log(err, '배너 에러');
   }
@@ -88,5 +88,29 @@ export const getAppliedLectureId = async () => {
     return response.data;
   } catch (err) {
     console.log(err, '강의 아이디 불러오기 오류');
+  }
+};
+
+// 강의 신청자 목록 불러오기
+export const getAppliedMembers = async (params?: LectureParamProps) => {
+  try {
+    const response = await axios.get(API + '/lectureapply/list', {
+      params: params,
+    });
+    return response;
+  } catch (err) {
+    console.log(err, '신청자 불러오기 오류');
+  }
+};
+
+// 강의 신청자 승인상태 변경하기
+export const modifyApplyStatus = async (params?: LectureParamProps) => {
+  try {
+    const response = await instance.put(API + '/lectureapply/approve', null, {
+      params: params,
+    });
+    return response;
+  } catch (err) {
+    console.log(err, '승인 상태 변경 오류');
   }
 };
