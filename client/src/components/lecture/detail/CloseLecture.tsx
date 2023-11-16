@@ -1,6 +1,7 @@
 import { Modal } from '../../common/Modal';
 import styled from 'styled-components';
 import { RegButton } from '../../../assets/styles/CommonStyles';
+import { closeLecture } from '../../../api/lecture';
 
 const Close_C = styled.div`
   display: flex;
@@ -17,16 +18,10 @@ const Close_C = styled.div`
 
 const CancelButton = styled(RegButton)`
   background-color: #abc3eb;
-  &:hover {
-    background-color: #abc3ebd6;
-  }
 `;
 
-const DeleteButton = styled(RegButton)`
+const CloseButton = styled(RegButton)`
   background-color: #f9827d;
-  &:hover {
-    background-color: #f9817dd6;
-  }
 `;
 
 type CloseLecture_T = {
@@ -37,16 +32,33 @@ type CloseLecture_T = {
 
 export const CloseLecture: React.FC<CloseLecture_T> = ({
   title,
+  lectureId,
   closeModal,
 }) => {
+  const handleLectureClose = async () => {
+    try {
+      const response = await closeLecture(lectureId!);
+      if (response?.status === 200) {
+        alert('성공적으로 모집이 마감되었습니다!');
+        closeModal();
+      }
+    } catch (error) {
+      console.error('강의 마감 오류', error);
+    }
+  };
   return (
     <Modal closeModal={closeModal}>
       <Close_C>
         <h2>{title}</h2>
-        <div>정말 마감하시겠습니까?</div>
-        <div className="w-full flex gap-2">
+        <div className="flex flex-col items-center">
+          <p>정말 모집을 마감하시겠습니까?</p>
+          <p>
+            해당 작업은 <strong>취소할 수 없습니다.</strong>
+          </p>
+        </div>
+        <div className="w-full flex gap-4">
           <CancelButton onClick={closeModal}>닫기</CancelButton>
-          <DeleteButton></DeleteButton>
+          <CloseButton onClick={handleLectureClose}>모집 마감</CloseButton>
         </div>
       </Close_C>
     </Modal>

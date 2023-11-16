@@ -86,7 +86,7 @@ const CustomBullets = styled.div<{ $curIndex: number }>`
     line-height: 36px;
     text-align: center;
     font-size: 0.875rem;
-    font-weight: 700;
+    font-weight: 600;
     color: #495057;
     border-radius: 20px;
     box-shadow: inset 0 0 0 1px #ced4da;
@@ -102,7 +102,8 @@ const CustomBullets = styled.div<{ $curIndex: number }>`
 
 export const TopBanner = () => {
   const [swiper, setSwiper] = useState<SwiperClass>();
-  const [curIndex, setCurIndex] = useState<number>(1);
+  const [curIndex, setCurIndex] = useState<number>();
+  const [maxLength, setMaxLength] = useState<number>();
   interface Banner_T {
     bannerId: number;
     bannerUrl: string;
@@ -115,8 +116,9 @@ export const TopBanner = () => {
     const fetchBanner = async () => {
       try {
         const res = await getBanner();
-        setBanner(res || []);
+        if (res?.status === 200) setBanner(res?.data);
         swiper?.update();
+        setMaxLength(swiper?.slides.length);
       } catch (err) {
         console.log(err, '배너 불러오기 오류');
       }
@@ -155,18 +157,22 @@ export const TopBanner = () => {
         modules={[Autoplay, Pagination]}
         className="mySwiper"
       >
-        {banner.map(data => (
-          <SwiperSlide key={data.bannerId}>
-            <CustomSlide>
-              <img src={data.bannerUrl} alt="banner" />
-            </CustomSlide>
-          </SwiperSlide>
-        ))}
+        {banner ? (
+          banner.map(data => (
+            <SwiperSlide key={data.bannerId}>
+              <CustomSlide>
+                <img src={data.bannerUrl} alt="banner" />
+              </CustomSlide>
+            </SwiperSlide>
+          ))
+        ) : (
+          <CustomSlide>준비중</CustomSlide>
+        )}
         <PageController>
           <div className="container flex items-center px-8">
             <ControllerBox>
               <div className="custom-pagination flex-1">
-                {curIndex} / {swiper?.slides.length}
+                {curIndex} / {maxLength}
               </div>
               {/* prev, next, pause 버튼 */}
               <BannerNav />
@@ -175,10 +181,14 @@ export const TopBanner = () => {
             <PaginationWrapper>
               <CustomBullets
                 className="swiper-pagination"
-                $curIndex={curIndex}
+                $curIndex={curIndex!}
               />
-              {curIndex >= 6 ? <div className="left-gradient" /> : null}
-              {curIndex <= 7 ? <div className="right-gradient" /> : null}
+              {curIndex && curIndex >= 6 ? (
+                <div className="left-gradient" />
+              ) : null}
+              {curIndex && curIndex <= 7 ? (
+                <div className="right-gradient" />
+              ) : null}
             </PaginationWrapper>
           </div>
         </PageController>
