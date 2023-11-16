@@ -11,21 +11,13 @@ import { useSearchStore } from '../../store/store';
 import { Helmet } from 'react-helmet-async';
 
 export const MainPage = () => {
-  const {
-    setInputValue,
-    setFilterMethod,
-    setDescending,
-    setCategory,
-    setRegion,
-  } = useSearchStore();
+  const { setInputValue, setCategory, setRegion } = useSearchStore();
 
   useEffect(() => {
     setCategory('');
     setInputValue('');
     setRegion('');
-    setFilterMethod('latest');
-    setDescending(true);
-  }, [setInputValue, setCategory, setRegion, setFilterMethod, setDescending]);
+  }, [setInputValue, setCategory, setRegion]);
 
   return (
     <main id="main">

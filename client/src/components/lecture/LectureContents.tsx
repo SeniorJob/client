@@ -7,7 +7,6 @@ import { LectureObject } from '../../types/LectureTypes';
 import { Nodata } from '../../pages/lectureList/NoData';
 import { getLecture } from '../../api/lecture';
 import { useLocation } from 'react-router-dom';
-import { useSearchStore } from '../../store/store';
 import { LectureFilter } from './LectureFilter';
 import { LectureFooter } from './LectureFooter';
 
@@ -55,7 +54,6 @@ export const LectureContents = () => {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number | null>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { filterMethod, descending } = useSearchStore();
   const location = useLocation();
   const searchParams = location.search;
   const searchParam = new URLSearchParams(location.search);
@@ -66,15 +64,9 @@ export const LectureContents = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const params: { filter?: string; descending?: boolean; page?: number } =
-          {};
-        if (filterMethod) params.filter = filterMethod;
-        if (!descending) params.descending = descending; // descending의 기본값은 true이므로 false일때만 추가
+        const params = searchParams.toString();
 
-        const lectureData = await getLecture(
-          `lectures/filter${searchParams}`,
-          params,
-        );
+        const lectureData = await getLecture(`filter${params}`);
         if (!lectureData) {
           setData([]);
           setTotalPages(null);
@@ -91,7 +83,7 @@ export const LectureContents = () => {
     };
 
     fetchData();
-  }, [searchParams, descending, filterMethod]);
+  }, [searchParams, curPage]);
 
   return (
     <Contents>
