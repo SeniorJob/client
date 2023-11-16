@@ -11,10 +11,10 @@ export const AdminMenu = ({
     <h1>관리자 메뉴</h1>
     <div className="w-full flex gap-4">
       <ManageButton onClick={() => handleModal('강좌관리')}>
-        강좌관리
+        강좌 관리
       </ManageButton>
       <ManageButton onClick={() => handleModal('인원관리')}>
-        인원관리
+        신청자 관리
       </ManageButton>
     </div>
     <RegButton onClick={() => handleModal('마감')}>모집 마감하기</RegButton>
@@ -28,7 +28,4 @@ const AdminMenuCard = styled(AsideCard)`
 
 const ManageButton = styled(RegButton)`
   background-color: #abc3eb;
-  &:hover {
-    background-color: #abc3ebd6;
-  }
 `;
