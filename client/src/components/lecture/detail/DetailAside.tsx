@@ -125,6 +125,7 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
             )}
             {modalType === '마감' && (
               <CloseLecture
+                title={data?.title}
                 lectureId={data?.create_id}
                 closeModal={() => setShowModal(false)}
               />
