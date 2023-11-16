@@ -73,7 +73,7 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
         console.log(weekDto);
         console.log(weekPlanDto);
       })
-      .catch(err => console.log(err));
+      .catch(err => alert(err.response.data.errorMessage));
   }, []);
 
   // 주차 추가하기
@@ -94,7 +94,7 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
       );
       setWeekDto([...weekDto, response.data]);
     } catch (err) {
-      console.error(err);
+      alert(err.response.data.errorMessage);
     }
   };
 
