@@ -17,16 +17,10 @@ const Close_C = styled.div`
 
 const CancelButton = styled(RegButton)`
   background-color: #abc3eb;
-  &:hover {
-    background-color: #abc3ebd6;
-  }
 `;
 
 const DeleteButton = styled(RegButton)`
   background-color: #f9827d;
-  &:hover {
-    background-color: #f9817dd6;
-  }
 `;
 
 type CloseLecture_T = {
