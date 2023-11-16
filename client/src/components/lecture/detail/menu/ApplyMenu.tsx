@@ -44,4 +44,10 @@ const ApplyCard = styled(AsideCard)`
 const Closed = styled(RegButton)`
   cursor: unset;
   opacity: 0.3;
+<<<<<<< HEAD
+=======
+  &:hover {
+    opacity: 0.3;
+  }
+>>>>>>> 75c7b6d4cecf3c045f7d46ceb225c92bbf0f9c85
 `;

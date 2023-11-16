@@ -28,4 +28,7 @@ export const RegButton = styled.button`
   font-size: 1rem;
   font-weight: 600;
   border-radius: 0.5rem;
+  &:hover {
+    opacity: 0.9;
+  }
 `;

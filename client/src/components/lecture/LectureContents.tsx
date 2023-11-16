@@ -86,7 +86,7 @@ export const LectureContents = () => {
       } catch (error) {
         console.error('에러 발생:', error);
       } finally {
-        setIsLoading(false); // .5초 후에 로딩 상태를 해제
+        setIsLoading(false);
       }
     };
 

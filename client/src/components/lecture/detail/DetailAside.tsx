@@ -80,7 +80,11 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
 
         {/* 어드민 메뉴 */}
         {isAdmin ? (
+<<<<<<< HEAD
           <AdminMenu handleModal={handleModal} />
+=======
+          <AdminMenu status={data?.status} handleModal={handleModal} />
+>>>>>>> 75c7b6d4cecf3c045f7d46ceb225c92bbf0f9c85
         ) : (
           <ApplyMenu
             data={data}
@@ -125,6 +129,10 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
             )}
             {modalType === '마감' && (
               <CloseLecture
+<<<<<<< HEAD
+=======
+                title={data?.title}
+>>>>>>> 75c7b6d4cecf3c045f7d46ceb225c92bbf0f9c85
                 lectureId={data?.create_id}
                 closeModal={() => setShowModal(false)}
               />

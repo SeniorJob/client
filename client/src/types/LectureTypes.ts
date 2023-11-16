@@ -12,6 +12,7 @@ export type LectureParamProps = {
   status?: string;
   category?: string;
   limit?: number;
+  lectureId?: number;
 };
 
 export type LectureProps = {

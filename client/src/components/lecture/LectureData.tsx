@@ -22,7 +22,7 @@ const LectureWrapper = styled.div`
 const CardContents = styled.div`
   padding: 0.4rem 0;
   h2 {
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.5em;
     /* height: 3rem; */
     font-size: 1rem;
