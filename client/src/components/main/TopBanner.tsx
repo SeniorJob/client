@@ -86,7 +86,7 @@ const CustomBullets = styled.div<{ $curIndex: number }>`
     line-height: 36px;
     text-align: center;
     font-size: 0.875rem;
-    font-weight: 700;
+    font-weight: 600;
     color: #495057;
     border-radius: 20px;
     box-shadow: inset 0 0 0 1px #ced4da;
