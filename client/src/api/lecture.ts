@@ -114,3 +114,15 @@ export const modifyApplyStatus = async (params?: LectureParamProps) => {
     console.log(err, '승인 상태 변경 오류');
   }
 };
+
+// 강의 모집 마감하기
+export const closeLecture = async (lectureId: number) => {
+  try {
+    const response = await instance.put(
+      `${API}/lectureapply/close?lectureId=${lectureId}`,
+    );
+    return response;
+  } catch (error) {
+    console.error('강의 모집 마감 오류', error);
+  }
+};
