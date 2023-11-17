@@ -103,7 +103,6 @@ const CustomBullets = styled.div<{ $curIndex: number }>`
 export const TopBanner = () => {
   const [swiper, setSwiper] = useState<SwiperClass>();
   const [curIndex, setCurIndex] = useState<number>();
-  const [maxLength, setMaxLength] = useState<number>();
   interface Banner_T {
     bannerId: number;
     bannerUrl: string;
@@ -112,13 +111,11 @@ export const TopBanner = () => {
 
   const [banner, setBanner] = useState<Banner_T[]>([]);
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchBanner = async () => {
       try {
         const res = await getBanner();
         if (res?.status === 200) setBanner(res?.data);
-        swiper?.update();
-        setMaxLength(swiper?.slides.length);
       } catch (err) {
         console.log(err, '배너 불러오기 오류');
       }
