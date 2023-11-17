@@ -189,7 +189,7 @@ const HeaderDesc = styled.div`
   .category {
     font-weight: 600;
     &::before {
-      content: '〉';
+      content: '>';
       margin-right: 0.5rem;
     }
   }
