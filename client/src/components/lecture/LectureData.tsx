@@ -98,7 +98,7 @@ const LectureHoverCard = styled.div`
     color: #fff;
   }
   h2 {
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 0.25rem;
   }
   p {
