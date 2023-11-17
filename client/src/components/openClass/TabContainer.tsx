@@ -1,5 +1,6 @@
 import tw from 'tailwind-styled-components';
 import { FC } from 'react';
+import { useUserStore } from '../../store/user';
 
 const Container = tw.div`
     flex-col
@@ -27,6 +28,7 @@ const Tabs = tw.div`
 interface TabContainerProps {
   activeTab: number;
   setActiveTab: (index: number) => void;
+  showGuide: boolean;
 }
 
 interface TabProps {
@@ -52,15 +54,24 @@ const Tab = tw.div<TabProps>`
    hover:text-black
 `;
 
-const TabContainer: FC<TabContainerProps> = ({ setActiveTab, activeTab }) => {
+const TabContainer: FC<TabContainerProps> = ({
+  activeTab,
+  setActiveTab,
+  showGuide,
+}) => {
+  const { userDetail } = useUserStore();
+  const userName = userDetail.name;
+
   const handleTabClick = (index: number) => {
-    setActiveTab(index);
+    if (showGuide) {
+      setActiveTab(index);
+    }
   };
 
   return (
     <>
       <Container>
-        <Title>{'OOO'}님의 강좌개설</Title>
+        <Title>{userName}님의 강좌개설</Title>
 
         <Tabs>
           <Tab active={activeTab === 0} onClick={() => handleTabClick(0)}>

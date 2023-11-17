@@ -73,7 +73,7 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
         console.log(weekDto);
         console.log(weekPlanDto);
       })
-      .catch(err => console.log(err));
+      .catch(err => alert(err.response.data.errorMessage));
   }, []);
 
   // 주차 추가하기
@@ -94,35 +94,7 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
       );
       setWeekDto([...weekDto, response.data]);
     } catch (err) {
-      console.error(err);
-    }
-  };
-
-  // 수료조건 설정
-  const handleCreate = async () => {
-    const attendanceInput = prompt(
-      '수료에 필요한 출석 회수를 1회 이상 10회 이하로 설정해주세요',
-    );
-    if (attendanceInput === null || attendanceInput.trim() === '') {
-      alert('출석 회수를 1회 이상 10회 이하로 올바르게 입력해주세요!');
-      return;
-    }
-
-    const attendance = parseInt(attendanceInput);
-    if (attendance < 1 || attendance > 10) {
-      alert('출석 회수를 1회 이상 10회 이하로 올바르게 입력해주세요!');
-      return;
-    }
-
-    try {
-      await axios.post(
-        `${apiUrl}/attendance?requiredAttendance=${attendance}`,
-        {},
-        { headers },
-      );
-      nextTab();
-    } catch (err) {
-      console.error(err);
+      alert(err.response.data.errorMessage);
     }
   };
 
@@ -156,7 +128,7 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
         })}
       </Container>
       <AddWeekButton onClick={handleAddWeek}>주차 추가하기</AddWeekButton>
-      <OpenButton onClick={handleCreate}>다음으로</OpenButton>
+      <OpenButton onClick={() => nextTab()}>다음으로</OpenButton>
     </>
   );
 }
