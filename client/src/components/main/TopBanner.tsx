@@ -127,7 +127,6 @@ export const TopBanner = () => {
     swiper?.on('slideChange', () => {
       setCurIndex(swiper.realIndex + 1);
     });
-    console.log(swiper);
   }, [swiper]);
 
   return (

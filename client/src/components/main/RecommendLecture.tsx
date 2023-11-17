@@ -56,7 +56,6 @@ export const RecommendLecture = ({ recommendType }: recommendProps) => {
         lectureData.content
           ? setData(lectureData.content)
           : setData(lectureData);
-        console.log(lectureData);
       } catch (error) {
         console.error('에러 발생:', error);
       }
