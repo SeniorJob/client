@@ -9,6 +9,7 @@ import { getLecture } from '../../api/lecture';
 import { useLocation } from 'react-router-dom';
 import { LectureFilter } from './LectureFilter';
 import { LectureFooter } from './LectureFooter';
+import { useSearchStore } from '../../store/store';
 
 const Contents = styled.div`
   min-height: 700px;
@@ -59,6 +60,8 @@ export const LectureContents = () => {
   const searchParam = new URLSearchParams(location.search);
   const curCategory = searchParam.get('category');
   const curPage = Number(searchParam.get('page'));
+  const { setInputValue } = useSearchStore();
+  const curQuery = searchParam.get('title');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,11 +82,12 @@ export const LectureContents = () => {
         console.error('에러 발생:', error);
       } finally {
         setIsLoading(false);
+        setInputValue(curQuery!);
       }
     };
 
     fetchData();
-  }, [searchParams, curPage]);
+  }, [searchParams, curPage, curQuery, setInputValue]);
 
   return (
     <Contents>

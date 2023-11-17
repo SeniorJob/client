@@ -14,6 +14,11 @@ export const searchSubmitHandler = (
   status?: string,
   region?: string,
 ) => {
+  const trimmedQuery = query?.trim();
+  if (!trimmedQuery || trimmedQuery.length < 2) {
+    alert('검색어는 2글자 이상이어야 합니다.');
+    return;
+  }
   const paramsObj: ParamProps = {};
   if (query) paramsObj.title = query;
   if (category) paramsObj.category = category;
