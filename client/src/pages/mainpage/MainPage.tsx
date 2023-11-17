@@ -15,7 +15,7 @@ import { useUserStore } from '../../store/user';
 export const MainPage = () => {
   const { setInputValue, setCategory, setRegion } = useSearchStore();
   const userStore = useUserStore();
-  const isLoggedIn = useUserStore();
+  const isLoggedIn = userStore.isLoggedIn;
   const userDetail = userStore.userDetail;
 
   useEffect(() => {
@@ -32,13 +32,13 @@ export const MainPage = () => {
       <TopBanner />
       <MainSearch />
       <Category />
-      <RecommendLecture
-        recommendType={
-          isLoggedIn
-            ? recommendUser(userDetail.name, userDetail.category)
-            : recommendPopular
-        }
-      />
+      {isLoggedIn ? (
+        <RecommendLecture
+          recommendType={recommendUser(userDetail.name, userDetail.category)}
+        />
+      ) : (
+        <RecommendLecture recommendType={recommendPopular} />
+      )}
       <RecommendLecture recommendType={recommendNewest} />
     </main>
   );
