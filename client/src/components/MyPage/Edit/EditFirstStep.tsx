@@ -151,7 +151,10 @@ const EditFirstStep = ({ id, firstInfo, setFirstInfo }: EditFirstStep_T) => {
             type="date"
             value={recruitEnd_date.slice(0, 10)}
             onChange={e =>
-              setFirstInfo({ ...firstInfo, recruitEnd_date: e.target.value })
+              setFirstInfo({
+                ...firstInfo,
+                recruitEnd_date: `${e.target.value}T00:00:00`,
+              })
             }
           />
         </Label>
@@ -161,9 +164,12 @@ const EditFirstStep = ({ id, firstInfo, setFirstInfo }: EditFirstStep_T) => {
           <Input
             type="date"
             value={start_date.slice(0, 10)}
-            onChange={e => {
-              setFirstInfo({ ...firstInfo, start_date: e.target.value });
-            }}
+            onChange={e =>
+              setFirstInfo({
+                ...firstInfo,
+                start_date: `${e.target.value}T00:00:00`,
+              })
+            }
           />
         </Label>
         <Label>
@@ -172,7 +178,10 @@ const EditFirstStep = ({ id, firstInfo, setFirstInfo }: EditFirstStep_T) => {
             type="date"
             value={end_date.slice(0, 10)}
             onChange={e =>
-              setFirstInfo({ ...firstInfo, end_date: e.target.value })
+              setFirstInfo({
+                ...firstInfo,
+                end_date: `${e.target.value}T00:00:00`,
+              })
             }
           />
         </Label>
