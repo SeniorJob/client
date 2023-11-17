@@ -3,11 +3,13 @@ import { Modal } from '../../common/Modal';
 import styled from 'styled-components';
 import { RegButton } from '../../../assets/styles/CommonStyles';
 import { applyLecture } from '../../../api/lecture';
+import axios from 'axios';
 
 const ApplyContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 260px;
   gap: 1rem;
   align-items: center;
   margin: 1rem 0 0.5rem 0;
@@ -55,14 +57,13 @@ export const ApplyLecture: React.FC<LectureApplyProps> = ({
 
   const handleApply = async () => {
     try {
-      // applyLecture API 호출
-      await applyLecture(lectureId, `${text}`); // lectureId와 applyReason을 적절히 수정
+      await applyLecture(lectureId, `${text}`);
       alert('성공적으로 신청되었습니다!');
-      closeModal(); // 성공적으로 신청하면 Modal을 닫음
+    } catch (err) {
+      if (axios.isAxiosError(err)) alert(err.response?.data.errorMessage);
+    } finally {
+      closeModal();
       location.reload();
-    } catch (error) {
-      console.error('강의 신청 중 오류 발생:', error);
-      // 에러 처리: 필요한 경우 사용자에게 메시지 표시 등 추가 가능
     }
   };
 

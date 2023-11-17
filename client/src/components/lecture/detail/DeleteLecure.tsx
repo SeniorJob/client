@@ -2,9 +2,11 @@ import { deleteLecture } from '../../../api/mypage';
 import { Modal } from '../../common/Modal';
 import styled from 'styled-components';
 import { RegButton } from '../../../assets/styles/CommonStyles';
+import axios from 'axios';
 
 const DeleteContainer = styled.div`
   display: flex;
+  width: 270px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -50,10 +52,11 @@ export const DeleteLecture: React.FC<DeleteLecture_T> = ({
       alert(
         `강좌가 성공적으로 ${type === '개설' ? '삭제' : '취소'}되었습니다.`,
       );
+    } catch (err) {
+      if (axios.isAxiosError(err)) alert(err.response?.data.errorMessage);
+    } finally {
       closeModal();
       location.reload();
-    } catch (error) {
-      console.error('API 요청에 실패했습니다:', error);
     }
   };
 
@@ -62,7 +65,7 @@ export const DeleteLecture: React.FC<DeleteLecture_T> = ({
       <DeleteContainer>
         <h2>{title}</h2>
         <div>정말 {type === '개설' ? '삭제' : '취소'}하시겠습니까?</div>
-        <div className="w-full flex gap-2">
+        <div className="w-full flex gap-4">
           <CancelButton onClick={closeModal}>닫기</CancelButton>
           <DeleteButton onClick={handleDeleteLecture}>
             {type === '개설' ? '삭제하기' : '신청 취소하기'}

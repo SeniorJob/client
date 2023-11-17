@@ -2,6 +2,7 @@ import { Modal } from '../../common/Modal';
 import styled from 'styled-components';
 import { RegButton } from '../../../assets/styles/CommonStyles';
 import { closeLecture } from '../../../api/lecture';
+import axios from 'axios';
 
 const Close_C = styled.div`
   display: flex;
@@ -40,10 +41,11 @@ export const CloseLecture: React.FC<CloseLecture_T> = ({
       const response = await closeLecture(lectureId!);
       if (response?.status === 200) {
         alert('성공적으로 모집이 마감되었습니다!');
-        closeModal();
       }
-    } catch (error) {
-      console.error('강의 마감 오류', error);
+    } catch (err) {
+      if (axios.isAxiosError(err)) alert(err.response?.data.errorMessage);
+    } finally {
+      closeModal();
     }
   };
   return (
