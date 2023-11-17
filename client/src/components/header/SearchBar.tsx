@@ -70,7 +70,7 @@ export const SearchBar = ({ option }: { option?: string }) => {
       <SearchBarInput
         type="text"
         placeholder=""
-        value={option === 'header' ? value : inputValue}
+        value={option === 'header' ? value : inputValue || ''}
         onChange={e => {
           option === 'header'
             ? searchHandleChange(e, setValue)

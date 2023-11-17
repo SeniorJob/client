@@ -82,7 +82,7 @@ export const LectureContents = () => {
         console.error('에러 발생:', error);
       } finally {
         setIsLoading(false);
-        setInputValue(curQuery!);
+        curQuery && setInputValue(curQuery);
       }
     };
 
