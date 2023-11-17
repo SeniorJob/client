@@ -5,13 +5,18 @@ import { RecommendLecture } from '../../components/main/RecommendLecture';
 import {
   recommendNewest,
   recommendPopular,
+  recommendUser,
 } from '../../components/main/recommendType';
 import { useEffect } from 'react';
 import { useSearchStore } from '../../store/store';
 import { Helmet } from 'react-helmet-async';
+import { useUserStore } from '../../store/user';
 
 export const MainPage = () => {
   const { setInputValue, setCategory, setRegion } = useSearchStore();
+  const userStore = useUserStore();
+  const isLoggedIn = userStore.isLoggedIn;
+  const userDetail = userStore.userDetail;
 
   useEffect(() => {
     setCategory('');
@@ -27,7 +32,13 @@ export const MainPage = () => {
       <TopBanner />
       <MainSearch />
       <Category />
-      <RecommendLecture recommendType={recommendPopular} />
+      {isLoggedIn ? (
+        <RecommendLecture
+          recommendType={recommendUser(userDetail.name, userDetail.category)}
+        />
+      ) : (
+        <RecommendLecture recommendType={recommendPopular} />
+      )}
       <RecommendLecture recommendType={recommendNewest} />
     </main>
   );

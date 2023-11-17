@@ -62,9 +62,16 @@ export const DetailAside = ({ data }: { data: LectureDto | undefined }) => {
       alert('로그인이 필요한 기능입니다.');
       handleLoginModal();
     } else {
-      setShowModal(true);
-      setModalType(type);
-      fetchAppliedLectureIds();
+      if (
+        type === '신청' &&
+        data?.current_participants === data?.max_participants
+      ) {
+        alert('모집 정원이 초과되었습니다.');
+      } else {
+        setShowModal(true);
+        setModalType(type);
+        fetchAppliedLectureIds();
+      }
     }
   };
 

@@ -16,7 +16,9 @@ export const ApplyMenu: React.FC<ApplyMenu_T> = ({
 }) => (
   <ApplyCard>
     <div>
-      <span className="price">{data?.price.toLocaleString()}원</span>
+      <span className="price">
+        {data?.price === 0 ? '무료' : data?.price.toLocaleString() + '원'}
+      </span>
     </div>
     {data?.status === '신청가능상태' ? (
       isApplied ? (

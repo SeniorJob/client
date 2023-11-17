@@ -94,7 +94,7 @@ function ClassDetail({ nextTab }: { nextTab: () => void }) {
       );
       setWeekDto([...weekDto, response.data]);
     } catch (err) {
-      alert(err.response.data.errorMessage);
+      if (axios.isAxiosError(err)) alert(err.response?.data.errorMessage);
     }
   };
 

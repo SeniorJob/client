@@ -7,7 +7,7 @@ import { LectureData } from '../lecture/LectureData';
 import { getLecture } from '../../api/lecture';
 import { Link } from 'react-router-dom';
 import { recommendProps, LectureObject } from '../../types/LectureTypes';
-import { recommendPopular } from './recommendType';
+import { recommendNewest, recommendPopular } from './recommendType';
 
 const Nodata = styled.div`
   display: flex;
@@ -17,7 +17,7 @@ const Nodata = styled.div`
   height: 150px;
   span {
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 600;
   }
 `;
 
@@ -56,7 +56,6 @@ export const RecommendLecture = ({ recommendType }: recommendProps) => {
         lectureData.content
           ? setData(lectureData.content)
           : setData(lectureData);
-        console.log(lectureData);
       } catch (error) {
         console.error('에러 발생:', error);
       }
@@ -71,9 +70,16 @@ export const RecommendLecture = ({ recommendType }: recommendProps) => {
         <LectureHeader>
           <div>
             <Link
-              to={`lectures/filter?filter=${
-                recommendType === recommendPopular ? 'popularity' : 'latest'
-              }`}
+              to={`lectures/filter?${(() => {
+                switch (recommendType) {
+                  case recommendPopular:
+                    return 'filter=popularity';
+                  case recommendNewest:
+                    return 'filter=latest';
+                  default:
+                    return `category=${recommendType.params?.category}&filter=latest`;
+                }
+              })()}`}
             >
               <h1>{recommendType.title}</h1>
             </Link>
