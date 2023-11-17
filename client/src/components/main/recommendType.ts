@@ -12,3 +12,13 @@ export const recommendNewest = {
   endPoint: 'filter',
   params: { filter: 'latest', descending: true },
 };
+
+export const recommendUser = (
+  user?: string | undefined,
+  category?: string | undefined,
+) => ({
+  name: 'user',
+  title: `${user} 님이 관심 있을만한 강좌들이에요! 😉`,
+  endPoint: 'filter',
+  params: { category: category, filter: 'latest' },
+});
