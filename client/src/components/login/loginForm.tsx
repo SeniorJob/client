@@ -60,7 +60,7 @@ const LoginForm: React.FC<LoginTopProps> = ({ handleModal }) => {
         setIsLoggedIn();
         localStorage.setItem('isLogIn', 'true');
         handleModal();
-        navigate('/');
+        // navigate('/');
       })
       .catch(error => {
         console.log(error.message, error);

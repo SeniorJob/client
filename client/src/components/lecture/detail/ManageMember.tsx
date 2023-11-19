@@ -92,49 +92,58 @@ export const ManageMember: React.FC<ManageMember_T> = ({
         {isLoading ? (
           <LoadingSpinner />
         ) : (
-          <Table>
-            <thead>
-              <TableRow>
-                <TableHeader>이름</TableHeader>
-                <TableHeader>신청 이유</TableHeader>
-                <TableHeader>신청 상태</TableHeader>
-              </TableRow>
-            </thead>
-            <tbody>
-              {data ? (
-                data.map((data, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{data.userName}</TableCell>
-                    <TableCell className="min-w-[200px]">
-                      {data.applyReason}
-                    </TableCell>
-                    <TableCell>
-                      <ToggleStatusButton
-                        status={data.lectureApplyStatus}
-                        onClick={() =>
-                          handleToggleStatus(
-                            data.uid,
-                            lectureId!,
-                            data.lectureApplyStatus,
-                          )
-                        }
-                      >
-                        {data.lectureApplyStatus}상태
-                      </ToggleStatusButton>
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <div className="flex flex-col items-center">
-                  <CautionSVG width={60} />
-                  불러오기 실패
-                </div>
-              )}
-            </tbody>
-          </Table>
+          <>
+            <Table>
+              <thead>
+                <TableRow>
+                  <TableHeader>이름</TableHeader>
+                  <TableHeader>신청 이유</TableHeader>
+                  <TableHeader>신청 상태</TableHeader>
+                </TableRow>
+              </thead>
+              <tbody>
+                {data &&
+                  data.length !== 0 &&
+                  data.map((data, index) => (
+                    <TableRow key={index}>
+                      <TableCell>{data.userName}</TableCell>
+                      <TableCell className="min-w-[200px]">
+                        {data.applyReason}
+                      </TableCell>
+                      <TableCell>
+                        <ToggleStatusButton
+                          status={data.lectureApplyStatus}
+                          onClick={() =>
+                            handleToggleStatus(
+                              data.uid,
+                              lectureId!,
+                              data.lectureApplyStatus,
+                            )
+                          }
+                        >
+                          {data.lectureApplyStatus}상태
+                        </ToggleStatusButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </tbody>
+            </Table>
+            {data.length === 0 && (
+              <div className="w-[300px] h-[320px] flex flex-col justify-center items-center">
+                <CautionSVG width={60} />
+                지금은 신청자가 없습니다.
+              </div>
+            )}
+          </>
         )}
       </MemberManageContainer>
-      <MemberPagination totalPages={totalPages} setPage={setPage} page={page} />
+      {totalPages !== 0 && (
+        <MemberPagination
+          totalPages={totalPages}
+          setPage={setPage}
+          page={page}
+        />
+      )}
     </Modal>
   );
 };

@@ -32,8 +32,8 @@ export const PriceSortFilter = () => {
   const curMethod = searchParams.get('filter');
   const curDescending = searchParams.get('descending');
 
-  const handlePriceFilter = (method: string, descend: boolean) => {
-    if (curMethod === method && descend === Boolean(curDescending)) {
+  const handlePriceFilter = (method: string, descend: string) => {
+    if (curMethod === method && descend === curDescending) {
       searchParams.delete('filter');
       searchParams.delete('descending');
     } else {
@@ -87,7 +87,9 @@ export const PriceSortFilter = () => {
                 curMethod === data.method &&
                 curDescending === String(data.descending)
               }
-              onChange={() => handlePriceFilter(data.method, data.descending)}
+              onChange={() =>
+                handlePriceFilter(data.method, String(data.descending))
+              }
             />
             {data.name}
           </PriceFilterTag>

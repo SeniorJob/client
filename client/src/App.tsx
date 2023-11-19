@@ -37,7 +37,7 @@ function App() {
             element={<EditLecture />}
           />
 
-          <Route path="/lectures/filter" element={<LectureList />} />
+          <Route path="/lectures/*" element={<LectureList />} />
           <Route
             path="/lectures/detail/:lecture_id"
             element={<LectureDetail />}

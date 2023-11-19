@@ -16,6 +16,7 @@ const StyledSearchBar = styled.form`
 const SearchBarInput = styled.input`
   width: 100%;
   height: 35px;
+  font-size: 0.9rem;
   padding: 7.8px 9.1px 7.8px 40px;
   border: 1px solid #ccc;
   background-color: #f6f6f6;
@@ -69,7 +70,7 @@ export const SearchBar = ({ option }: { option?: string }) => {
       </SearchButton>
       <SearchBarInput
         type="text"
-        placeholder=""
+        placeholder={option === 'header' ? '' : '제목으로 검색'}
         value={option === 'header' ? value : inputValue || ''}
         onChange={e => {
           option === 'header'
